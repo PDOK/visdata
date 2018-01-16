@@ -1,518 +1,609 @@
 DROP TABLE IF EXISTS visdata.infrastructure_line CASCADE;
 CREATE TABLE visdata.infrastructure_line (
-            lod1 text,
-            lod2 text,
-            name text,
-            z_index integer,
-            original_source text,
-            original_id text,
-            geom geometry(LINESTRING,28992) 
-        );
-
----bgt
-INSERT INTO visdata.infrastructure_line
-    SELECT
-            'railway' AS lod1,
-            CASE 
-                WHEN 
-                    s.bgt_functie= 'trein'
-                THEN 'train'
-                WHEN 
-                    s.bgt_functie= 'metro' 
-                    OR s.bgt_functie = 'sneltram' 
-                THEN 'metro'
-                WHEN 
-                    s.bgt_functie= 'tram'
-                THEN 'tram'
-                ELSE s.bgt_functie
-            END AS lod2,
-            ''         AS name,
-            s.relatievehoogteligging     AS z_index,
-            'BGT'          AS original_source,
-            s.namespace || s.lokaalid AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-    FROM 
-        bgt.spoor_2dactueelbestaand AS s;
-
---top10
-INSERT INTO visdata.infrastructure_line
-    SELECT
-             CASE 
-                WHEN 
-                    s.typeweg= '(1:autosnelweg)'
-                    OR s.typeweg= '(1:lokale weg)'
-                    OR s.typeweg = '(1:overig)'
-                    OR s.typeweg = '(1:straat)'
-                    OR s.typeweg= '(1:hoofdweg)' 
-                    OR s.typeweg = '(1:regionale weg)'
-                THEN 'roads'
-                WHEN 
-                    s.typeweg= '(1:veerverbinding)'
-                THEN 'ferry'
-                WHEN 
-                    s.typeweg = '(1:startbaan, landingsbaan)'
-                    OR s.typeweg = '(1:rolbaan, platform)'
-                THEN 'flight'
-                ELSE s.typeweg
-            END AS lod1,
-            CASE 
-                WHEN 
-                    s.typeweg= '(1:autosnelweg)'
-                THEN 'highway'
-                WHEN 
-                    s.typeweg= '(1:hoofdweg)' 
-                    OR s.typeweg = '(1:regionale weg)'
-                THEN 'artiary'
-                WHEN 
-                    s.typeweg= '(1:lokale weg)'
-                    OR s.typeweg = '(1:overig)'
-                    OR s.typeweg = '(1:straat)'
-                THEN 'local'
-                WHEN 
-                    s.typeweg= '(1:veerverbinding)'
-                THEN 'ferry'
-                WHEN 
-                    s.typeweg = '(1:startbaan, landingsbaan)'
-                    OR s.typeweg = '(1:rolbaan, platform)'
-                THEN 'flight'
-                ELSE s.typeweg
-            END  AS lod2,
-            s.naam              AS name,
-            s.hoogteniveau     AS z_index,
-            'Top10NL'         AS original_source,
-            s.gml_id            AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-    FROM 
-        latest.wegdeel_hartlijn AS s;
-
----top10
-INSERT INTO visdata.infrastructure_line
-    SELECT
-            'railway' AS lod1,
-            CASE 
-                WHEN 
-                    s.typespoorbaan= 'trein'
-                THEN 'train'
-                WHEN 
-                    s.typespoorbaan= 'metro' 
-                    OR s.typespoorbaan = 'sneltram' 
-                THEN 'metro'
-                WHEN 
-                    s.typespoorbaan= 'tram'
-                THEN 'tram'
-                ELSE s.typespoorbaan
-            END AS lod2,
-            s.baanvaknaam      AS name,
-            s.hoogteniveau     AS z_index,
-            'Top10NL'          AS original_source,
-            s.gml_id            AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-    FROM 
-        latest.spoorbaandeel_lijn AS s;
-
----Top50
-INSERT INTO visdata.infrastructure_line
-    SELECT
-            CASE 
-                WHEN 
-                    s.typeweg= 'hoofdweg' 
-                    OR s.typeweg = 'regionale weg'
-                    OR s.typeweg= 'autosnelweg'
-                    OR s.typeweg= 'lokale weg'
-                    OR s.typeweg = 'overig'
-                    OR s.typeweg = 'straat'
-                THEN 'roads'
-                WHEN 
-                    s.typeweg= 'veerverbinding'
-                THEN 'ferry'
-                WHEN 
-                    s.typeweg = 'startbaan, landingsbaan'
-                    OR s.typeweg = 'rolbaan, platform'
-                THEN 'flight'
-                ELSE s.typeweg
-                END  AS lod1,
-            CASE 
-                WHEN 
-                    s.typeweg= 'autosnelweg'
-                THEN 'highway'
-                WHEN 
-                    s.typeweg= 'hoofdweg' 
-                    OR s.typeweg = 'regionale weg'
-                THEN 'artiary'
-                WHEN 
-                	s.typeweg= 'lokale weg'
-                	OR s.typeweg = 'overig'
-                	OR s.typeweg = 'straat'
-                THEN 'local'
-                WHEN 
-                    s.typeweg= 'veerverbinding'
-                THEN 'ferry'
-                WHEN 
-                	s.typeweg = 'startbaan, landingsbaan'
-                THEN 'flight'
-                ELSE s.typeweg
-            END  AS lod2,
-            ''                  AS name,
-            0                   AS z_index,
-            'Top50NL'         AS original_source,
-            s.gml_id            AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-    FROM 
-        top50_3.wegdeel AS s
-    WHERE 
-        s.typeweg != 'parkeerplaats'
-        OR s.typeweg != 'parkeerplaats: carpool'
-        OR s.typeweg != 'parkeerplaats: P+R'
+  lod1 text,
+  lod2 text,
+  name text,
+  z_index integer,
+  original_source text,
+  original_id text,
+  geom geometry(LINESTRING,28992) 
+)
 ;
 
----top50
+---BGT Railway
 INSERT INTO visdata.infrastructure_line
-    SELECT
-            'railway' AS lod1,
-            CASE 
-                WHEN 
-                    s.typespoorbaan= 'trein'
-                THEN 'train'
-                WHEN 
-                    s.typespoorbaan= 'metro' 
-                    OR s.typespoorbaan = 'sneltram' 
-                THEN 'metro'
-                WHEN 
-                    s.typespoorbaan= 'tram'
-                THEN 'tram'
-                ELSE s.typespoorbaan
-            END AS lod2,
-            ''      AS name,
-            s.hoogteniveau     AS z_index,
-            'Top50NL'          AS original_source,
-            s.gml_id            AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-    FROM 
-        top50_3.spoorbaandeel AS s;
+  SELECT
+    'railway'                    AS lod1,
+    CASE 
+      WHEN 
+        s.functie = 'trein'
+      THEN 'train'
+      WHEN 
+        s.functie = 'metro' 
+        OR s.functie  = 'sneltram' 
+      THEN 'metro'
+      WHEN 
+        s.functie = 'tram'
+      THEN 'tram'
+      ELSE 
+        s.functie 
+    END                           AS lod2,
+    ''                            AS name,
+    s."relatieveHoogteligging"    AS z_index,
+    'BGT'                         AS original_source,
+    'NL.IMGeo.' || s."lokaalID"   AS original_id,
+    (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+  FROM 
+    bgtv3."Spoor" AS s
+;
 
-
---top100
+--TOP10NL Roads
 INSERT INTO visdata.infrastructure_line
-    SELECT
-            CASE 
-                WHEN 
-                    s.typeweg= 'hoofdweg' 
-                    OR s.typeweg = 'regionale weg'
-                    OR s.typeweg= 'autosnelweg'
-                    OR s.typeweg= 'lokale weg'
-                    OR s.typeweg = 'overig'
-                    OR s.typeweg = 'straat'
-                THEN 'roads'
-                WHEN 
-                    s.typeweg= 'veerverbinding'
-                THEN 'ferry'
-                WHEN 
-                    s.typeweg = 'startbaan, landingsbaan'
-                    OR s.typeweg = 'rolbaan, platform'
-                THEN 'flight'
-                ELSE s.typeweg
-                END  AS lod1,
-            CASE 
-                WHEN 
-                    s.typeweg= 'autosnelweg'
-                THEN 'highway'
-                WHEN 
-                    s.typeweg= 'hoofdweg' 
-                    OR s.typeweg = 'regionale weg'
-                THEN 'artiary'
-                WHEN 
-                    s.typeweg= 'lokale weg'
-                    OR s.typeweg = 'overig'
-                    OR s.typeweg = 'straat'
-                THEN 'local'
-                WHEN 
-                    s.typeweg= 'veerverbinding'
-                THEN 'ferry'
-                WHEN 
-                    s.typeweg = 'startbaan, landingsbaan'
-                THEN 'flight'
-                ELSE s.typeweg
-            END  AS lod2,
-            ''                  AS name,
-            0                   AS z_index,
-            'Top100NL'         AS original_source,
-            s.gml_id            AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-    FROM 
-        top100.wegdeel AS s
-    WHERE 
-        s.typeweg != 'parkeerplaats'
-        OR s.typeweg != 'parkeerplaats: carpool'
-        OR s.typeweg != 'parkeerplaats: P+R'
-    ;
+  SELECT
+    CASE 
+      WHEN
+        s.typeweg= 'autosnelweg'
+        OR s.typeweg= 'lokale weg'
+        OR s.typeweg = 'overig'
+        OR s.typeweg = 'straat'
+        OR s.typeweg= 'hoofdweg'
+        OR s.typeweg = 'regionale weg'
+      THEN 'roads'
+      WHEN 
+        s.typeweg= 'veerverbinding'
+      THEN 'ferry'
+      WHEN 
+        s.typeweg = 'startbaan, landingsbaan'
+        OR s.typeweg = 'rolbaan, platform'
+      THEN 'flight'
+      ELSE s.typeweg
+    END                         AS lod1,
+    CASE 
+      WHEN 
+        s.typeweg= 'autosnelweg'
+      THEN 'highway'
+      WHEN 
+        s.typeweg= 'hoofdweg' 
+        OR s.typeweg = 'regionale weg'
+      THEN 'artiary'
+      WHEN 
+        s.typeweg= 'lokale weg'
+        OR s.typeweg = 'overig'
+        OR s.typeweg = 'straat'
+      THEN 'local'
+      WHEN 
+        s.typeweg= 'veerverbinding'
+      THEN 'ferry'
+      WHEN 
+        s.typeweg = 'startbaan, landingsbaan'
+        OR s.typeweg = 'rolbaan, platform'
+      THEN 'flight'
+      ELSE s.typeweg
+    END                         AS lod2,
+    COALESCE(
+        NULLIF(s.naam, ''), 
+        NULLIF(s.brugnaam, ''), 
+        NULLIF(s.tunnelnaam, '') , 
+        NULLIF(s.knooppuntnaam, ''),
+        NULLIF(s.awegnummer, ''), 
+        NULLIF(s.nwegnummer, ''), 
+        NULLIF(s.swegnummer, ''), 
+        NULLIF(s.afritnaam, ''), 
+        NULLIF(s.afritnummer, ''), 
+        '')                     AS name,
+    s.hoogteniveau::integer     AS z_index,
+    'TOP10NL'                   AS original_source,
+    'NL.TOP10NL.' || s.lokaalid AS original_id,
+    (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.hartgeometrie,2)))).geom::geometry(LINESTRING,28992) AS geom
+  FROM 
+    top10nlv2.wegdeel AS s
+;
 
----top100
+---TOP10NL Railway
 INSERT INTO visdata.infrastructure_line
-    SELECT
-            'railway' AS lod1,
-            CASE 
-                WHEN 
-                    s.typespoorbaan= 'trein'
-                THEN 'train'
-                WHEN 
-                    s.typespoorbaan= 'metro' 
-                    OR s.typespoorbaan = 'sneltram' 
-                THEN 'metro'
-                WHEN 
-                    s.typespoorbaan= 'tram'
-                THEN 'tram'
-                ELSE s.typespoorbaan
-            END AS lod2,
-            ''      AS name,
-            s.hoogteniveau     AS z_index,
-            'Top100NL'          AS original_source,
-            s.gml_id            AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-    FROM 
-        top100.spoorbaandeel AS s;
+  SELECT
+    'railway'                   AS lod1,
+    CASE 
+      WHEN 
+        s.typespoorbaan= 'trein'
+      THEN 'train'
+      WHEN 
+        s.typespoorbaan= 'metro' 
+        OR s.typespoorbaan = 'sneltram' 
+      THEN 'metro'
+      WHEN 
+        s.typespoorbaan= 'tram'
+      THEN 'tram'
+      ELSE 
+        s.typespoorbaan
+    END                         AS lod2,
+    s.baanvaknaam               AS name,
+    s.hoogteniveau::integer     AS z_index,
+    'TOP10NL'                   AS original_source,
+    'NL.TOP10NL.' || s.lokaalid AS original_id,
+    (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+  FROM 
+    top10nlv2.spoorbaandeel AS s
+;
+
+---TOP50 Roads
+INSERT INTO visdata.infrastructure_line
+  SELECT
+    CASE 
+      WHEN 
+        s.typeweg= 'hoofdweg' 
+        OR s.typeweg = 'regionale weg'
+        OR s.typeweg= 'autosnelweg'
+        OR s.typeweg= 'lokale weg'
+        OR s.typeweg = 'overig'
+        OR s.typeweg = 'straat'
+      THEN 'roads'
+      WHEN 
+        s.typeweg= 'veerverbinding'
+      THEN 'ferry'
+      WHEN 
+        s.typeweg = 'startbaan, landingsbaan'
+        OR s.typeweg = 'rolbaan, platform'
+      THEN 'flight'
+      ELSE s.typeweg
+      END                           AS lod1,
+    CASE 
+      WHEN 
+        s.typeweg= 'autosnelweg'
+      THEN 'highway'
+      WHEN 
+        s.typeweg= 'hoofdweg' 
+        OR s.typeweg = 'regionale weg'
+      THEN 'artiary'
+      WHEN 
+        s.typeweg= 'lokale weg'
+        OR s.typeweg = 'overig'
+        OR s.typeweg = 'straat'
+      THEN 'local'
+      WHEN 
+        s.typeweg= 'veerverbinding'
+      THEN 'ferry'
+      WHEN 
+        s.typeweg = 'startbaan, landingsbaan'
+      THEN 'flight'
+      ELSE s.typeweg
+    END                           AS lod2,
+    COALESCE(
+        NULLIF(s.straatnaamfries, ''),
+        NULLIF(s.straatnaamnl, ''), 
+        NULLIF(s.brugnaam, ''), 
+        NULLIF(s.tunnelnaam, '') , 
+        NULLIF(s.knooppuntnaam, ''),
+        NULLIF(s.awegnummer, ''), 
+        NULLIF(s.nwegnummer, ''), 
+        NULLIF(s.swegnummer, ''), 
+        NULLIF(s.afritnaam, ''), 
+        NULLIF(s.afritnummer, ''), 
+        '')                       AS name,
+    0                             AS z_index,
+    'TOP50NL'                     AS original_source,
+    namespace || '.' || lokaalid  AS original_id,
+    (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+  FROM 
+    top50nl.wegdeel_lijn AS s
+  WHERE 
+    s.typeweg != 'parkeerplaats'
+    OR s.typeweg != 'parkeerplaats: carpool'
+    OR s.typeweg != 'parkeerplaats: P+R'
+;
+
+---top50 Railway
+INSERT INTO visdata.infrastructure_line
+  SELECT
+      'railway'                     AS lod1,
+      CASE 
+        WHEN 
+          s.typespoorbaan= 'trein'
+        THEN 'train'
+        WHEN 
+          s.typespoorbaan= 'metro' 
+          OR s.typespoorbaan = 'sneltram' 
+        THEN 'metro'
+        WHEN 
+          s.typespoorbaan= 'tram'
+        THEN 'tram'
+        ELSE s.typespoorbaan
+      END                           AS lod2,
+      ''                            AS name,
+      s.hoogteniveau                AS z_index,
+      'TOP50NL'                     AS original_source,
+      namespace || '.' || lokaalid  AS original_id,
+      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+  FROM 
+    top50nl.spoorbaandeel_lijn AS s
+;
+
+--TOP100NL Roads
+INSERT INTO visdata.infrastructure_line
+  SELECT
+    CASE 
+      WHEN 
+        s.typeweg= 'hoofdweg' 
+        OR s.typeweg = 'regionale weg'
+        OR s.typeweg= 'autosnelweg'
+        OR s.typeweg= 'lokale weg'
+        OR s.typeweg = 'overig'
+        OR s.typeweg = 'straat'
+      THEN 'roads'
+      WHEN 
+        s.typeweg= 'veerverbinding'
+      THEN 'ferry'
+      WHEN 
+        s.typeweg = 'startbaan, landingsbaan'
+        OR s.typeweg = 'rolbaan, platform'
+      THEN 'flight'
+      ELSE s.typeweg
+      END  AS lod1,
+    CASE 
+      WHEN 
+        s.typeweg= 'autosnelweg'
+      THEN 'highway'
+      WHEN 
+        s.typeweg= 'hoofdweg' 
+        OR s.typeweg = 'regionale weg'
+      THEN 'artiary'
+      WHEN 
+        s.typeweg= 'lokale weg'
+        OR s.typeweg = 'overig'
+        OR s.typeweg = 'straat'
+      THEN 'local'
+      WHEN 
+        s.typeweg= 'veerverbinding'
+      THEN 'ferry'
+      WHEN 
+        s.typeweg = 'startbaan, landingsbaan'
+      THEN 'flight'
+      ELSE s.typeweg
+    END                             AS lod2,
+    COALESCE(
+        NULLIF(s.straatnaamfries, ''),
+        NULLIF(s.straatnaamnl, ''), 
+        NULLIF(s.brugnaam, ''), 
+        NULLIF(s.tunnelnaam, '') , 
+        NULLIF(s.knooppuntnaam, ''),
+        NULLIF(s.awegnummer, ''), 
+        NULLIF(s.nwegnummer, ''), 
+        NULLIF(s.swegnummer, ''), 
+        NULLIF(s.afritnaam, ''), 
+        NULLIF(s.afritnummer, ''), 
+        '')                       AS name,
+    0                             AS z_index,
+    'TOP100NL'                    AS original_source,
+    namespace || '.' || lokaalid  AS original_id,
+    (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+  FROM 
+    top100nl.wegdeel_lijn AS s
+  WHERE 
+    s.typeweg != 'parkeerplaats'
+    OR s.typeweg != 'parkeerplaats: carpool'
+    OR s.typeweg != 'parkeerplaats: P+R'
+;
+
+---TOP100NL Railway
+INSERT INTO visdata.infrastructure_line
+  SELECT
+    'railway'                    AS lod1,
+    CASE 
+      WHEN 
+        s.typespoorbaan= 'trein'
+      THEN 'train'
+      WHEN 
+        s.typespoorbaan= 'metro' 
+        OR s.typespoorbaan = 'sneltram' 
+      THEN 'metro'
+      WHEN 
+        s.typespoorbaan= 'tram'
+      THEN 'tram'
+      ELSE s.typespoorbaan
+    END                           AS lod2,
+    ''                            AS name,
+    s.hoogteniveau                AS z_index,
+    'TOP100NL'                    AS original_source,
+    namespace || '.' || lokaalid  AS original_id,
+    (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+  FROM 
+    top100nl.spoorbaandeel_lijn AS s
+;
 
 --top250
 INSERT INTO visdata.infrastructure_line
-    SELECT
-            CASE 
-                WHEN 
-                    s.typeweg= 'hoofdweg' 
-                    OR s.typeweg = 'regionale weg'
-                    OR s.typeweg= 'autosnelweg'
-                    OR s.typeweg= 'lokale weg'
-                    OR s.typeweg = 'overig'
-                    OR s.typeweg = 'straat'
-                THEN 'roads'
-                WHEN 
-                    s.typeweg= 'veerverbinding'
-                THEN 'ferry'
-                WHEN 
-                    s.typeweg = 'startbaan, landingsbaan'
-                    OR s.typeweg = 'rolbaan, platform'
-                THEN 'flight'
-                ELSE s.typeweg
-                END  AS lod1,
-            CASE 
-                WHEN 
-                    s.typeweg= 'autosnelweg'
-                THEN 'highway'
-                WHEN 
-                    s.typeweg= 'hoofdweg' 
-                    OR s.typeweg = 'regionale weg'
-                THEN 'artiary'
-                WHEN 
-                    s.typeweg= 'lokale weg'
-                    OR s.typeweg = 'overig'
-                    OR s.typeweg = 'straat'
-                THEN 'local'
-                WHEN 
-                    s.typeweg= 'veerverbinding'
-                THEN 'ferry'
-                WHEN 
-                    s.typeweg = 'startbaan, landingsbaan'
-                THEN 'flight'
-                ELSE s.typeweg
-            END  AS lod2,
-            ''                  AS name,
-            0                   AS z_index,
-            'Top250NL'         AS original_source,
-            s.gml_id            AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-    FROM 
-        top250.wegdeel AS s
-    WHERE 
-        s.typeweg != 'parkeerplaats'
-        OR s.typeweg != 'parkeerplaats: carpool'
-        OR s.typeweg != 'parkeerplaats: P+R'
-    ;
+  SELECT
+    CASE 
+      WHEN 
+        s.typeweg= 'hoofdweg' 
+        OR s.typeweg = 'regionale weg'
+        OR s.typeweg= 'autosnelweg'
+        OR s.typeweg= 'lokale weg'
+        OR s.typeweg = 'overig'
+        OR s.typeweg = 'straat'
+      THEN 'roads'
+      WHEN 
+        s.typeweg= 'veerverbinding'
+      THEN 'ferry'
+      WHEN 
+        s.typeweg = 'startbaan, landingsbaan'
+        OR s.typeweg = 'rolbaan, platform'
+      THEN 'flight'
+      ELSE s.typeweg
+      END                             AS lod1,
+    CASE 
+      WHEN 
+        s.typeweg= 'autosnelweg'
+      THEN 'highway'
+      WHEN 
+        s.typeweg= 'hoofdweg' 
+        OR s.typeweg = 'regionale weg'
+      THEN 'artiary'
+      WHEN 
+        s.typeweg= 'lokale weg'
+        OR s.typeweg = 'overig'
+        OR s.typeweg = 'straat'
+      THEN 'local'
+      WHEN 
+        s.typeweg= 'veerverbinding'
+      THEN 'ferry'
+      WHEN 
+        s.typeweg = 'startbaan, landingsbaan'
+      THEN 'flight'
+      ELSE s.typeweg
+    END                               AS lod2,
+    COALESCE(
+      NULLIF(s.naam, ''), 
+      NULLIF(s.brugnaam, ''), 
+      NULLIF(s.tunnelnaam, '') , 
+      NULLIF(s.knooppuntnaam, ''),
+      NULLIF(s.awegnummer, ''), 
+      NULLIF(s.nwegnummer, ''), 
+      NULLIF(s.swegnummer, ''), 
+      NULLIF(s.afritnaam, ''), 
+      NULLIF(s.afritnummer, ''), 
+      '')                             AS name, 
+    0                                 AS z_index,
+    'TOP250NL'                        AS original_source,
+    namespace || '.' || lokaalid      AS original_id,
+    (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+  FROM 
+    top250nl.wegdeel_lijn AS s
+  WHERE 
+    s.typeweg != 'parkeerplaats'
+    OR s.typeweg != 'parkeerplaats: carpool'
+    OR s.typeweg != 'parkeerplaats: P+R'
+;
 
----top250
+---TOP250NL Railway
 INSERT INTO visdata.infrastructure_line
-    SELECT
-            'railway' AS lod1,
-            CASE 
-                WHEN 
-                    s.typespoorbaan= 'trein'
-                THEN 'train'
-                WHEN 
-                    s.typespoorbaan= 'metro' 
-                    OR s.typespoorbaan = 'sneltram' 
-                THEN 'metro'
-                WHEN 
-                    s.typespoorbaan= 'tram'
-                THEN 'tram'
-                ELSE s.typespoorbaan
-            END AS lod2,
-            ''      AS name,
-            0     AS z_index,
-            'Top250NL'          AS original_source,
-            s.gml_id            AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-    FROM 
-        top250.spoorbaandeel AS s;
+  SELECT
+    'railway'                     AS lod1,
+    CASE 
+      WHEN 
+        s.typespoorbaan= 'trein'
+      THEN 'train'
+      WHEN 
+        s.typespoorbaan= 'metro' 
+        OR s.typespoorbaan = 'sneltram' 
+      THEN 'metro'
+      WHEN 
+        s.typespoorbaan= 'tram'
+      THEN 'tram'
+      ELSE s.typespoorbaan
+    END                           AS lod2,
+    COALESCE(
+      NULLIF(s.baanvaknaam,''),
+      NULLIF( s.tunnelnaam,''),
+      NULLIF(s.brugnaam),''),
+      '')                         AS name,
+    0                             AS z_index,
+    'TOP250NL'                    AS original_source,
+    namespace || '.' || lokaalid  AS original_id,
+    (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+  FROM 
+    top250nl.spoorbaandeel_lijn AS s
+;
 
---top500
+--TOP500NL Roads
 INSERT INTO visdata.infrastructure_line
-    SELECT
-            CASE 
-                WHEN 
-                    s.typeweg= 'hoofdweg' 
-                    OR s.typeweg = 'regionale weg'
-                    OR s.typeweg= 'autosnelweg'
-                    OR s.typeweg= 'lokale weg'
-                    OR s.typeweg = 'overig'
-                    OR s.typeweg = 'straat'
-                THEN 'roads'
-                WHEN 
-                    s.typeweg= 'veerverbinding'
-                THEN 'ferry'
-                WHEN 
-                    s.typeweg = 'startbaan, landingsbaan'
-                    OR s.typeweg = 'rolbaan, platform'
-                THEN 'flight'
-                ELSE s.typeweg
-                END  AS lod1,
-            CASE 
-                WHEN 
-                    s.typeweg= 'autosnelweg'
-                THEN 'highway'
-                WHEN 
-                    s.typeweg= 'hoofdweg' 
-                    OR s.typeweg = 'regionale weg'
-                THEN 'artiary'
-                WHEN 
-                    s.typeweg= 'lokale weg'
-                    OR s.typeweg = 'overig'
-                    OR s.typeweg = 'straat'
-                THEN 'local'
-                WHEN 
-                    s.typeweg= 'veerverbinding'
-                THEN 'ferry'
-                WHEN 
-                    s.typeweg = 'startbaan, landingsbaan'
-                THEN 'flight'
-                ELSE s.typeweg
-            END  AS lod2,
-            ''                  AS name,
-            0                   AS z_index,
-            'Top500NL'         AS original_source,
-            s.gml_id            AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-    FROM 
-        top500.wegdeel AS s
-    WHERE 
-        s.typeweg != 'parkeerplaats'
-        OR s.typeweg != 'parkeerplaats: carpool'
-        OR s.typeweg != 'parkeerplaats: P+R'
-    ;
+  SELECT
+    CASE 
+      WHEN 
+        s.typeweg= 'hoofdweg' 
+        OR s.typeweg = 'regionale weg'
+        OR s.typeweg= 'autosnelweg'
+        OR s.typeweg= 'lokale weg'
+        OR s.typeweg = 'overig'
+        OR s.typeweg = 'straat'
+      THEN 'roads'
+      WHEN 
+        s.typeweg= 'veerverbinding'
+      THEN 'ferry'
+      WHEN 
+        s.typeweg = 'startbaan, landingsbaan'
+        OR s.typeweg = 'rolbaan, platform'
+      THEN 'flight'
+      ELSE s.typeweg
+      END                           AS lod1,
+    CASE 
+      WHEN 
+        s.typeweg= 'autosnelweg'
+      THEN 'highway'
+      WHEN 
+        s.typeweg= 'hoofdweg' 
+        OR s.typeweg = 'regionale weg'
+      THEN 'artiary'
+      WHEN 
+        s.typeweg= 'lokale weg'
+        OR s.typeweg = 'overig'
+        OR s.typeweg = 'straat'
+      THEN 'local'
+      WHEN 
+        s.typeweg= 'veerverbinding'
+      THEN 'ferry'
+      WHEN 
+        s.typeweg = 'startbaan, landingsbaan'
+      THEN 'flight'
+      ELSE s.typeweg
+    END                             AS lod2,
+    COALESCE(
+      NULLIF(s.naam, ''), 
+      NULLIF(s.brugnaam, ''), 
+      NULLIF(s.tunnelnaam, '') , 
+      NULLIF(s.knooppuntnaam, ''),
+      NULLIF(s.awegnummer, ''), 
+      NULLIF(s.nwegnummer, ''), 
+      NULLIF(s.swegnummer, ''), 
+      NULLIF(s.afritnaam, ''), 
+      NULLIF(s.afritnummer, ''), 
+      '')                           AS name,
+    0                               AS z_index,
+    'TOP500NL'                      AS original_source,
+    namespace || '.' || lokaalid    AS original_id,
+    (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+  FROM 
+    top500nl.wegdeel_lijn AS s
+  WHERE 
+    s.typeweg != 'parkeerplaats'
+    OR s.typeweg != 'parkeerplaats: carpool'
+    OR s.typeweg != 'parkeerplaats: P+R'
+;
 
----top500
+---TOP500NL Railway
 INSERT INTO visdata.infrastructure_line
-    SELECT
-            'railway' AS lod1,
-            CASE 
-                WHEN 
-                    s.typespoorbaan= 'trein'
-                THEN 'train'
-                WHEN 
-                    s.typespoorbaan= 'metro' 
-                    OR s.typespoorbaan = 'sneltram' 
-                THEN 'metro'
-                WHEN 
-                    s.typespoorbaan= 'tram'
-                THEN 'tram'
-                ELSE s.typespoorbaan
-            END AS lod2,
-            ''      AS name,
-            0     AS z_index,
-            'Top500NL'          AS original_source,
-            s.gml_id            AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-    FROM 
-        top500.spoorbaandeel AS s;
+  SELECT
+    'railway'                        AS lod1,
+    CASE 
+      WHEN 
+        s.typespoorbaan= 'trein'
+      THEN 'train'
+      WHEN 
+        s.typespoorbaan= 'metro' 
+        OR s.typespoorbaan = 'sneltram' 
+      THEN 'metro'
+      WHEN 
+        s.typespoorbaan= 'tram'
+      THEN 'tram'
+      ELSE 
+        s.typespoorbaan
+    END                               AS lod2,
+    COALESCE(
+      NULLIF(s.baanvaknaam,''),
+      NULLIF( s.tunnelnaam,''),
+      NULLIF(s.brugnaam),''),
+      '')                             AS name,
+    0                                 AS z_index,
+    'TOP500NL'                        AS original_source,
+    s.namespace || '.' || s.lokaalid  AS original_id,
+    (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+  FROM 
+    top500nl.spoorbaandeel_lijn AS s
+;
 
-
---top1000
+--TOP1000NL Roads
 INSERT INTO visdata.infrastructure_line
-    SELECT
-            CASE 
-                WHEN 
-                    s.typeweg= 'hoofdweg' 
-                    OR s.typeweg = 'regionale weg'
-                    OR s.typeweg= 'autosnelweg'
-                    OR s.typeweg= 'lokale weg'
-                    OR s.typeweg = 'overig'
-                    OR s.typeweg = 'straat'
-                THEN 'roads'
-                WHEN 
-                    s.typeweg= 'veerverbinding'
-                THEN 'ferry'
-                WHEN 
-                    s.typeweg = 'startbaan, landingsbaan'
-                    OR s.typeweg = 'rolbaan, platform'
-                THEN 'flight'
-                ELSE s.typeweg
-                END  AS lod1,
-            CASE 
-                WHEN 
-                    s.typeweg= 'autosnelweg'
-                THEN 'highway'
-                WHEN 
-                    s.typeweg= 'hoofdweg' 
-                    OR s.typeweg = 'regionale weg'
-                THEN 'artiary'
-                WHEN 
-                    s.typeweg= 'lokale weg'
-                    OR s.typeweg = 'overig'
-                    OR s.typeweg = 'straat'
-                THEN 'local'
-                WHEN 
-                    s.typeweg= 'veerverbinding'
-                THEN 'ferry'
-                WHEN 
-                    s.typeweg = 'startbaan, landingsbaan'
-                THEN 'flight'
-                ELSE s.typeweg
-            END  AS lod2,
-            ''                  AS name,
-            0                   AS z_index,
-            'Top1000NL'         AS original_source,
-            s.gml_id            AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-    FROM 
-        top1000.wegdeel AS s
-    WHERE 
-        s.typeweg != 'parkeerplaats'
-        OR s.typeweg != 'parkeerplaats: carpool'
-        OR s.typeweg != 'parkeerplaats: P+R'
-    ;
+  SELECT
+      CASE 
+        WHEN 
+          s.typeweg= 'hoofdweg' 
+          OR s.typeweg = 'regionale weg'
+          OR s.typeweg= 'autosnelweg'
+          OR s.typeweg= 'lokale weg'
+          OR s.typeweg = 'overig'
+          OR s.typeweg = 'straat'
+        THEN 'roads'
+        WHEN 
+          s.typeweg= 'veerverbinding'
+        THEN 'ferry'
+        WHEN 
+          s.typeweg = 'startbaan, landingsbaan'
+          OR s.typeweg = 'rolbaan, platform'
+        THEN 'flight'
+        ELSE s.typeweg
+        END                            AS lod1,
+      CASE 
+        WHEN 
+          s.typeweg= 'autosnelweg'
+        THEN 'highway'
+        WHEN 
+          s.typeweg= 'hoofdweg' 
+          OR s.typeweg = 'regionale weg'
+        THEN 'artiary'
+        WHEN 
+          s.typeweg= 'lokale weg'
+          OR s.typeweg = 'overig'
+          OR s.typeweg = 'straat'
+        THEN 'local'
+        WHEN 
+          s.typeweg= 'veerverbinding'
+        THEN 'ferry'
+        WHEN 
+          s.typeweg = 'startbaan, landingsbaan'
+        THEN 'flight'
+        ELSE s.typeweg
+      END                             AS lod2,
+      COALESCE(
+        NULLIF(s.naam, ''), 
+        NULLIF(s.brugnaam, ''), 
+        NULLIF(s.tunnelnaam, '') , 
+        NULLIF(s.knooppuntnaam, ''),
+        NULLIF(s.awegnummer, ''), 
+        NULLIF(s.nwegnummer, ''), 
+        NULLIF(s.swegnummer, ''), 
+        NULLIF(s.afritnaam, ''), 
+        NULLIF(s.afritnummer, ''), 
+        '')                         AS name,
+      0                             AS z_index,
+      'TOP1000NL'                   AS original_source,
+      namespace || '.' || lokaalid  AS original_id,
+      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+  FROM 
+    top1000nl.wegdeel_lijn AS s
+  WHERE 
+    s.typeweg != 'parkeerplaats'
+    OR s.typeweg != 'parkeerplaats: carpool'
+    OR s.typeweg != 'parkeerplaats: P+R'
+  ;
 
----top1000
+---TOP1000NL Railway
 INSERT INTO visdata.infrastructure_line
-    SELECT
-            'railway' AS lod1,
-            CASE 
-                WHEN 
-                    s.typespoorbaan= 'trein'
-                THEN 'train'
-                WHEN 
-                    s.typespoorbaan= 'metro' 
-                    OR s.typespoorbaan = 'sneltram' 
-                THEN 'metro'
-                WHEN 
-                    s.typespoorbaan= 'tram'
-                THEN 'tram'
-                ELSE s.typespoorbaan
-            END AS lod2,
-            ''      AS name,
-            0     AS z_index,
-            'Top1000NL'          AS original_source,
-            s.gml_id            AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-    FROM 
-        top1000.spoorbaandeel AS s;
---test
-SELECT distinct (lod1) FROM visdata.infrastructure_line;
-SELECT distinct (lod2) FROM visdata.infrastructure_line;
+  SELECT
+    'railway'                     AS lod1,
+    CASE 
+      WHEN 
+        s.typespoorbaan= 'trein'
+      THEN 'train'
+      WHEN 
+        s.typespoorbaan= 'metro' 
+        OR s.typespoorbaan = 'sneltram' 
+      THEN 'metro'
+      WHEN 
+        s.typespoorbaan= 'tram'
+      THEN 'tram'
+      ELSE s.typespoorbaan
+    END                           AS lod2,
+    COALESCE(
+      NULLIF(s.baanvaknaam,''),
+      NULLIF( s.tunnelnaam,''),
+      NULLIF(s.brugnaam),''),
+      '')                         AS name,
+    0                             AS z_index,
+    'TOP1000NL'                   AS original_source,
+    s.namespace || '.' || s.lokaalid  AS original_id,
+    (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+  FROM 
+    top1000nl.spoorbaandeel_lijn AS s
+;
+
+-- Controle
+SELECT
+  original_source,
+  lod1,
+  COUNT(*) AS aantal 
+FROM
+  visdata.infrastructure_line 
+GROUP BY original_source, lod1 
+ORDER BY original_source, lod1;
 
 SELECT count(*) FROM visdata.infrastructure_line WHERE ST_Length(geom)=0;
