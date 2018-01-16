@@ -11,97 +11,97 @@ CREATE TABLE visdata.urban_polygon (
       geom geometry(POLYGON,28992) 
     );
 
----------------------------------------------------
+	
 -- BGT panden to urban
+---------------------------------------------------
 
 INSERT INTO visdata.urban_polygon 
   SELECT
-      'buildings'               AS lod1,
-      'main_building'           AS lod2,
-      ''                        AS name,
-      s."relatieveHoogteligging"  AS z_index,
-      'BGT'                     AS original_source,
-     'NL.IMGeo.' || s."lokaalID"                 AS original_id,
-      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
+      'buildings'               	AS lod1,
+      'main_building'           	AS lod2,
+      ''                        	AS name,
+      s."relatieveHoogteligging"  	AS z_index,
+      'BGT'                     	AS original_source,
+      'NL.IMGeo.' || s."lokaalID" 	AS original_id,
+      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
-    bgt.pand AS s;
+    bgtv3."Pand" AS s;
 
 INSERT INTO visdata.urban_polygon 
   SELECT
-      'buildings'               AS lod1,
-      'other_buildings'         AS lod2,
-      ''                        AS name,
-      s."relatieveHoogteligging"  AS z_index,
-      'BGT'                     AS original_source,
-      'NL.IMGeo.' || s."lokaalID"                 AS original_id,
-      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
+      'buildings'               	AS lod1,
+      'other_buildings'         	AS lod2,
+      ''                        	AS name,
+      s."relatieveHoogteligging"  	AS z_index,
+      'BGT'                     	AS original_source,
+      'NL.IMGeo.' || s."lokaalID"	AS original_id,
+      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
-    bgt.installatie AS s;
+    bgtv3."OverigBouwwerk" AS s;
 
 INSERT INTO visdata.urban_polygon 
   SELECT
-      'buildings'               AS lod1,
-      'other_buildings'         AS lod2,
-      ''                        AS name,
-      s."relatieveHoogteligging"  AS z_index,
-      'BGT'                     AS original_source,
-      'NL.IMGeo.' || s."lokaalID"                 AS original_id,
-      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
+      'buildings'               	AS lod1,
+      'other_buildings'         	AS lod2,
+      ''                        	AS name,
+      s."relatieveHoogteligging"  	AS z_index,
+      'BGT'                     	AS original_source,
+      'NL.IMGeo.' || s."lokaalID"	AS original_id,
+      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
-    bgt.overigbouwwerk AS s;
+    bgtv3."Kunstwerkdeel" AS s;
 
 INSERT INTO visdata.urban_polygon 
   SELECT
-      'buildings'               AS lod1,
-      'other_buildings'         AS lod2,
-      ''                        AS name,
-      s."relatieveHoogteligging"  AS z_index,
-      'BGT'                     AS original_source,
-      'NL.IMGeo.' || s."lokaalID"                 AS original_id,
-      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
+      'buildings'               	AS lod1,
+      'other_buildings'         	AS lod2,
+      ''                        	AS name,
+      s."relatieveHoogteligging"  	AS z_index,
+      'BGT'                     	AS original_source,
+      'NL.IMGeo.' || s."lokaalID"	AS original_id,
+      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
-    bgt.kunstwerkdeel AS s;
+    bgtv3."GebouwInstallatie" AS s;
 
 INSERT INTO visdata.urban_polygon 
   SELECT
-      'buildings'               AS lod1,
-      'other_buildings'         AS lod2,
-      ''                        AS name,
-      s."relatieveHoogteligging"  AS z_index,
-      'BGT'                     AS original_source,
-      'NL.IMGeo.' || s."lokaalID"                 AS original_id,
-      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
+      'buildings'               	AS lod1,
+      'walls'              			AS lod2,
+      ''                        	AS name,
+      s."relatieveHoogteligging"  	AS z_index,
+      'BGT'                     	AS original_source,
+      'NL.IMGeo.' || s."lokaalID"	AS original_id,
+      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
-    bgt.gebouwinstallatie AS s;
+    bgtv3."OverigeScheiding" AS s;
 
 INSERT INTO visdata.urban_polygon 
   SELECT
-      'buildings'               AS lod1,
-      'structures'              AS lod2,
-      ''                        AS name,
-      s."relatieveHoogteligging"  AS z_index,
-      'BGT'                     AS original_source,
-      'NL.IMGeo.' || s."lokaalID"                 AS original_id,
-      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
+      'buildings'               	AS lod1,
+      'walls'              			AS lod2,
+      ''                        	AS name,
+      s."relatieveHoogteligging"  	AS z_index,
+      'BGT'                     	AS original_source,
+      'NL.IMGeo.' || s."lokaalID"	AS original_id,
+      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
-    bgt.overigescheiding AS s;
+    bgtv3."Scheiding" AS s;
 
 
-
+-- TOP10NL
 -------------------------------------------------------------
--- Top10NL
 
 INSERT INTO visdata.urban_polygon
   SELECT
-      'buildings'               AS lod1,
-      'main_building'           AS lod2,
-      s.naam                    AS name,
-      s.hoogteniveau            AS z_index,
-      'Top10NL'                 AS original_source,
-      'NL.TOP10NL.'|| s.lokaalid                  AS original_id,
-      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
+      'buildings'               	AS lod1,
+      'main_building'           	AS lod2,
+      s.naam                    	AS name,
+      s.hoogteniveau::integer      	AS z_index,
+      'Top10NL'                 	AS original_source,
+      'NL.TOP10NL.'|| s.lokaalid	AS original_id,
+      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
-    latest.gebouw_vlak AS s;
+    top10nlv2.gebouw AS s;
 
 -- INSERT INTO visdata.urban_polygon
 --   SELECT
@@ -127,109 +127,118 @@ INSERT INTO visdata.urban_polygon
 --   WHERE
 --     typelandgebruik = 'bebouwd gebied';
 
--- Top50 
+
+-- TOP50NL
 ----------------------------------------------------------
 
 INSERT INTO visdata.urban_polygon
   SELECT
-      'buildings'               AS lod1,
-      ''                        AS lod2,
-      s.naamnl                  AS name,
-      0                         AS z_index,
-      'Top50NL'                 AS original_source,
-      s.lokaalid                  AS original_id,
+      'buildings'               	AS lod1,
+      ''                        	AS lod2,
+      s.naamnl                  	AS name,
+      0                         	AS z_index,
+      'Top50NL'                 	AS original_source,
+      namespace || '.' || lokaalid 	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
-    top50_3.gebouw AS s;
+    top50nl.gebouw_vlak AS s;
 
 INSERT INTO visdata.urban_polygon
   SELECT
-      'urban_area'              AS lod1,
-      ''                        AS lod2,
-      ''                        AS name,
-      0                         AS z_index,
-      'Top50NL'                 AS original_source,
-      s.lokaalid                  AS original_id,
+      'urban_area'              	AS lod1,
+      ''                        	AS lod2,
+      ''                        	AS name,
+      0                         	AS z_index,
+      'Top50NL'                 	AS original_source,
+      namespace || '.' || lokaalid 	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
-    top50_3.terrein AS s
+    top50nl.terrein_vlak AS s
   WHERE s.typelandgebruik = 'bebouwd gebied';
 
---- TOP 100
+  
+-- TOP100NL
 ---------------------------------------------------------------
 INSERT INTO visdata.urban_polygon
   SELECT
-      'buildings'               AS lod1,
-      ''                        AS lod2,
-      s.naamnl                  AS name,
-      0                         AS z_index,
-      'Top100NL'                AS original_source,
-      s.lokaalid                  AS original_id,
+      'buildings'               	AS lod1,
+      ''                        	AS lod2,
+      s.naamnl                  	AS name,
+      0                         	AS z_index,
+      'Top100NL'                	AS original_source,
+      namespace || '.' || lokaalid 	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
-    top100.gebouw AS s;
+    top100nl.gebouw_vlak AS s;
 
 INSERT INTO visdata.urban_polygon
   SELECT
-      'urban_area'              AS lod1,
-      ''                        AS lod2,
-      ''                        AS name,
-      0                         AS z_index,
-      'Top100NL'                AS original_source,
-      s.lokaalid                  AS original_id,
+      'urban_area'              	AS lod1,
+      ''                        	AS lod2,
+      ''                        	AS name,
+      0                         	AS z_index,
+      'Top100NL'                	AS original_source,
+      namespace || '.' || lokaalid 	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
-    top100.terrein AS s
+    top100nl.terrein_vlak AS s
   WHERE s.typelandgebruik = 'bebouwd gebied';
 
 
---- TOP 250
+-- TOP250NL
 ---------------------------------------------------------------
 INSERT INTO visdata.urban_polygon
   SELECT
-      'urban_area'              AS lod1,
-      ''                        AS lod2,
-      s.naamnl                  AS name,
-      0                         AS z_index,
-      'Top250NL'                AS original_source,
-      s.lokaalid                  AS original_id,
+      'urban_area'              	AS lod1,
+      ''                        	AS lod2,
+      s.naamnl                  	AS name,
+      0                         	AS z_index,
+      'Top250NL'                	AS original_source,
+      namespace || '.' || lokaalid 	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
-    top250.plaats AS s;
+    top250nl.plaats_vlak AS s;
 
---- TOP 500
+	
+-- TOP500NL
 ---------------------------------------------------------------
 INSERT INTO visdata.urban_polygon
   SELECT
-      'urban_area'              AS lod1,
-      ''                        AS lod2,
-      s.naamnl                  AS name,
-      0                         AS z_index,
-      'Top500NL'                AS original_source,
-      s.lokaalid                  AS original_id,
+      'urban_area'              	AS lod1,
+      ''                        	AS lod2,
+      s.naamnl                  	AS name,
+      0                         	AS z_index,
+      'Top500NL'                	AS original_source,
+      namespace || '.' || lokaalid 	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
-    top500.plaats AS s;
+    top500nl.plaats_vlak AS s;
 
 
---- TOP 1000
+-- TOP1000NL
 ---------------------------------------------------------------
 INSERT INTO visdata.urban_polygon
   SELECT
-      'urban_area'              AS lod1,
-      ''                        AS lod2,
-      s.naamnl                  AS name,
-      0                         AS z_index,
-      'Top1000NL'               AS original_source,
-      s.lokaalid                  AS original_id,
+      'urban_area'              	AS lod1,
+      ''                        	AS lod2,
+      s.naamnl                  	AS name,
+      0                         	AS z_index,
+      'Top1000NL'               	AS original_source,
+      namespace || '.' || lokaalid 	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
-    top1000.plaats AS s;
+    top1000nl.plaats_vlak AS s;
 
 
+DELETE FROM visdata.water_polygon WHERE ST_Area(geom)=0;
 
-
--- test
-DELETE FROM visdata.urban_polygon WHERE ST_Area(geom)=0;
-SELECT distinct(lod1)       AS lod1 FROM visdata.urban_polygon;
-SELECT distinct(lod2)       AS lod2 FROM visdata.urban_polygon;
+-- Controle
+SELECT
+	original_source,
+	lod1,
+	lod2,
+	COUNT(*) AS aantal 
+FROM
+	visdata.urban_polygon 
+GROUP BY original_source, lod1, lod2 
+ORDER BY original_source, lod1, lod2;
