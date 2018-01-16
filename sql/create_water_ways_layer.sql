@@ -1,196 +1,181 @@
 -- CREATE TABLE water 
 
-DROP TABLE IF EXISTS visdata.water_way CASCADE;
-CREATE TABLE visdata.water_way (
-      lod1 text,
-      name text,
-      z_index integer,
-      original_source text,
-      original_id text,
-      geom geometry(LINESTRING,28992) 
-    );
+DROP TABLE IF EXISTS visdata.water_line CASCADE;
+CREATE TABLE visdata.water_line (
+            lod1 text,
+            name text,
+            z_index integer,
+            original_source text,
+            original_id text,
+            geom geometry(LINESTRING,28992) 
+        );
 
--- BGT waterdeel_vlak to water 
-INSERT INTO visdata.water_way 
-  SELECT
-      CASE 
-        WHEN 
-          s.bgt_type = 'watervlakte' 
-        THEN 'water_surface'
-        WHEN 
-          s.bgt_type = 'greppel, droge sloot' 
-          OR s.bgt_type = 'waterloop' 
-        THEN 'water_course' 
-      END AS lod1,
-      ''                          AS name,
-      s.relatievehoogteligging    AS z_index,
-      'BGT'                       AS original_source,
-      s.namespace || s.lokaalid   AS original_id,
-      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-  FROM 
-    bgt.waterdeel_2dactueelbestaand AS s;
+-- BGT: geen data
+		
+-- TOP10NL waterdeel_lijn to water 
+INSERT INTO visdata.water_line
+	SELECT
+            CASE 
+                WHEN 
+                    s.typewater = 'meer, plas, ven, vijver' OR
+                    s.typewater = 'meer, plas' OR 
+                    s.typewater = 'droogvallend (LAT)' OR 
+                    s.typewater = 'zee' OR 
+                    s.typewater = 'overig' OR 
+                    s.typewater = 'droogvallend' 
+                THEN 'water_surface'
+                WHEN 
+                    s.typewater = 'waterloop' OR
+                    s.typewater = 'greppel, droge sloot' 
+                THEN 'water_course'
+                ELSE 'undefined'
+            END  AS lod1,
+            s.naamofficieel 			AS name,
+            s.hoogteniveau::integer		AS z_index,
+            'TOP10NL' 					AS original_source,
+            'NL.TOP10NL.' || s.lokaalid	AS original_id,
+            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+    FROM 
+    	top10nlv2.waterdeel AS s;
 
--- TOP10NL waterdeel_vlak to water 
-INSERT INTO visdata.water_way
-  SELECT
-      CASE 
-        WHEN 
-          s.typewater =  'meer, plas, ven, vijver' OR
-          s.typewater = 'meer, plas' OR 
-          s.typewater = 'droogvallend (LAT)' OR 
-          s.typewater = 'zee' OR 
-          s.typewater = 'overig' OR 
-          s.typewater = 'droogvallend' 
-        THEN 'water_surface'
-        WHEN 
-          s.typewater = 'waterloop' OR
-          s.typewater = 'greppel, droge sloot' 
-        THEN 'water_course'
-        ELSE s.typewater
-      END  AS lod1,
-      s.naamofficieel     AS name,
-      s.hoogteniveau      AS z_index,
-      'Top10NL'           AS original_source,
-      s.gml_id            AS original_id,
-      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-  FROM 
-    latest.waterdeel_vlak AS s;
+-- TOP50NL waterdeel_lijn to water 
+INSERT INTO visdata.water_line
+    SELECT
+              CASE 
+                 WHEN 
+                    s.typewater = 'meer, plas, ven, vijver' OR
+                    s.typewater = 'meer, plas' OR 
+                    s.typewater = 'droogvallend (LAT)' OR 
+                    s.typewater = 'zee' OR 
+                    s.typewater = 'overig' OR 
+                    s.typewater = 'droogvallend' 
+                THEN 'water_surface'
+                WHEN 
+                    s.typewater = 'waterloop' OR
+                    s.typewater = 'greppel, droge sloot' 
+                THEN 'water_course'
+                ELSE 'undefined'
+            END  AS lod1,
+            ''                  			AS name,
+            s.hoogteniveau     				AS z_index,
+            'TOP50NL'           			AS original_source,
+            namespace || '.' || lokaalid	AS original_id,
+            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+    FROM 
+        top50nl.waterdeel_lijn AS s;
 
--- TOP50NL waterdeel_vlak to water 
-INSERT INTO visdata.water_way
-  SELECT
-        CASE 
-         WHEN 
-          s.typewater = 'meer, plas, ven, vijver' OR
-          s.typewater = 'meer, plas' OR 
-          s.typewater = 'droogvallend (LAT)' OR 
-          s.typewater = 'zee' OR 
-          s.typewater = 'overig' OR 
-          s.typewater = 'droogvallend' 
-        THEN 'water_surface'
-        WHEN 
-          s.typewater = 'waterloop' OR
-          s.typewater = 'greppel, droge sloot' 
-        THEN 'water_course'
-        ELSE s.typewater
-      END  AS lod1,
-      ''                  AS name,
-      s.hoogteniveau      AS z_index,
-      'Top50NL'           AS original_source,
-      s.gml_id            AS original_id,
-      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-  FROM 
-    top50_3.waterdeel AS s;
+-- TOP100NL waterdeel_lijn to water 
+INSERT INTO visdata.water_line
+    SELECT
+              CASE 
+                 WHEN 
+                    s.typewater = 'meer, plas, ven, vijver' OR
+                    s.typewater = 'meer, plas' OR 
+                    s.typewater = 'droogvallend (LAT)' OR 
+                    s.typewater = 'zee' OR 
+                    s.typewater = 'overig' OR 
+                    s.typewater = 'droogvallend' 
+                THEN 'water_surface'
+                WHEN 
+                    s.typewater = 'waterloop' OR
+                    s.typewater = 'greppel, droge sloot' 
+                THEN 'water_course'
+                ELSE 'undefined'
+            END  AS lod1,
+            ''                  			AS name,
+            s.hoogteniveau                  AS z_index,
+            'TOP100NL'          			AS original_source,
+            namespace || '.' || lokaalid	AS original_id,
+            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+    FROM 
+        top100nl.waterdeel_lijn AS s;
+		
+-- TOP250NL waterdeel_lijn to water 
+INSERT INTO visdata.water_line
+    SELECT
+              CASE 
+                 WHEN 
+                    s.typewater = 'meer, plas, ven, vijver' OR
+                    s.typewater = 'meer, plas' OR 
+                    s.typewater = 'droogvallend (LAT)' OR 
+                    s.typewater = 'zee' OR 
+                    s.typewater = 'overig' OR 
+                    s.typewater = 'droogvallend' 
+                THEN 'water_surface'
+                WHEN 
+                    s.typewater = 'waterloop' OR
+                    s.typewater = 'greppel, droge sloot' 
+                THEN 'water_course'
+                ELSE 'undefined'
+            END  AS lod1,
+            s.naamnl            			AS name,
+            0                   			AS z_index,
+            'TOP250NL'          			AS original_source,
+            namespace || '.' || lokaalid	AS original_id,
+            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+    FROM 
+        top250nl.waterdeel_lijn AS s;
+		
+-- TOP500NL waterdeel_lijn to water 
+INSERT INTO visdata.water_line
+    SELECT
+               CASE 
+                 WHEN 
+                    s.typewater = 'meer, plas, ven, vijver' OR
+                    s.typewater = 'meer, plas' OR 
+                    s.typewater = 'droogvallend (LAT)' OR 
+                    s.typewater = 'zee' OR 
+                    s.typewater = 'overig' OR 
+                    s.typewater = 'droogvallend' 
+                THEN 'water_surface'
+                WHEN 
+                    s.typewater = 'waterloop' OR
+                    s.typewater = 'greppel, droge sloot' 
+                THEN 'water_course'
+                ELSE 'undefined'
+            END  AS lod1,
+            s.naamnl            			AS name,
+            0                   			AS z_index,
+            'TOP500NL'          			AS original_source,
+            namespace || '.' || lokaalid	AS original_id,
+            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+    FROM 
+        top500nl.waterdeel_lijn AS s;
+	
+-- TOP1000NL waterdeel_lijn to water 
+INSERT INTO visdata.water_line
+    SELECT
+               CASE 
+                 WHEN 
+                    s.typewater = 'meer, plas, ven, vijver' OR
+                    s.typewater = 'meer, plas' OR 
+                    s.typewater = 'droogvallend (LAT)' OR 
+                    s.typewater = 'zee' OR 
+                    s.typewater = 'overig' OR 
+                    s.typewater = 'droogvallend' 
+                THEN 'water_surface'
+                WHEN 
+                    s.typewater = 'waterloop' OR
+                    s.typewater = 'greppel, droge sloot' 
+                THEN 'water_course'
+                ELSE 'undefined'
+            END  AS lod1,
+            s.naamnl            			AS name,
+            0                   			AS z_index,
+            'TOP1000NL'         			AS original_source,
+            namespace || '.' || lokaalid	AS original_id,
+            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
+    FROM 
+        top1000nl.waterdeel_lijn AS s;
 
+DELETE FROM visdata.water_line WHERE ST_Length(geom)=0;
 
--- TOP100NL waterdeel_vlak to water 
-INSERT INTO visdata.water_way
-  SELECT
-        CASE 
-         WHEN 
-          s.typewater =  'meer, plas, ven, vijver' OR
-          s.typewater = 'meer, plas' OR 
-          s.typewater = 'droogvallend (LAT)' OR 
-          s.typewater = 'zee' OR 
-          s.typewater = 'overig' OR 
-          s.typewater = 'droogvallend' 
-        THEN 'water_surface'
-        WHEN 
-          s.typewater = 'waterloop' OR
-          s.typewater = 'greppel, droge sloot' 
-        THEN 'water_course'
-        ELSE s.typewater
-      END  AS lod1,
-      ''                  AS name,
-      0                   AS z_index,
-      'Top100NL'          AS original_source,
-      s.gml_id            AS original_id,
-      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-  FROM 
-    top100.waterdeel AS s;
-
--- TOP250NL waterdeel_vlak to water 
-INSERT INTO visdata.water_way
-  SELECT
-        CASE 
-         WHEN 
-          s.typewater =  'meer, plas, ven, vijver' OR
-          s.typewater = 'meer, plas' OR 
-          s.typewater = 'droogvallend (LAT)' OR 
-          s.typewater = 'zee' OR 
-          s.typewater = 'overig' OR 
-          s.typewater = 'droogvallend' 
-        THEN 'water_surface'
-        WHEN 
-          s.typewater = 'waterloop' OR
-          s.typewater = 'greppel, droge sloot' 
-        THEN 'water_course'
-        ELSE s.typewater
-      END  AS lod1,
-      s.naamnl            AS name,
-      0                   AS z_index,
-      'Top250NL'          AS original_source,
-      s.gml_id            AS original_id,
-      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-  FROM 
-    top250.waterdeel AS s;
-
--- TOP500NL waterdeel_vlak to water 
-INSERT INTO visdata.water_way
-  SELECT
-         CASE 
-         WHEN 
-          s.typewater =  'meer, plas, ven, vijver' OR
-          s.typewater = 'meer, plas' OR 
-          s.typewater = 'droogvallend (LAT)' OR 
-          s.typewater = 'zee' OR 
-          s.typewater = 'overig' OR 
-          s.typewater = 'droogvallend' 
-        THEN 'water_surface'
-        WHEN 
-          s.typewater = 'waterloop' OR
-          s.typewater = 'greppel, droge sloot' 
-        THEN 'water_course'
-        ELSE s.typewater
-      END  AS lod1,
-      s.naamnl            AS name,
-      0                   AS z_index,
-      'Top500NL'          AS original_source,
-      s.gml_id            AS original_id,
-      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-  FROM 
-    top500.waterdeel AS s;
-
--- TOP1000NL waterdeel_vlak to water 
-INSERT INTO visdata.water_way
-  SELECT
-         CASE 
-         WHEN 
-          s.typewater =  'meer, plas, ven, vijver' OR
-          s.typewater = 'meer, plas' OR 
-          s.typewater = 'droogvallend (LAT)' OR 
-          s.typewater = 'zee' OR 
-          s.typewater = 'overig' OR 
-          s.typewater = 'droogvallend' 
-        THEN 'water_surface'
-        WHEN 
-          s.typewater = 'waterloop' OR
-          s.typewater = 'greppel, droge sloot' 
-        THEN 'water_course'
-        ELSE s.typewater
-      END  AS lod1,
-      s.naamnl            AS name,
-      0                   AS z_index,
-      'Top1000NL'         AS original_source,
-      s.gml_id            AS original_id,
-      (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,2)))).geom::geometry(LINESTRING,28992) AS geom
-  FROM 
-    top1000.waterdeel AS s;
-
-DELETE FROM visdata.water_way WHERE ST_Area(geom)=0;
-
--- test
-
-
-SELECT distinct(lod1) AS lod1 FROM visdata.water_way;
-
+-- Controle
+SELECT
+	original_source,
+	lod1,
+	COUNT(*) AS aantal 
+FROM
+	visdata.water_line 
+GROUP BY original_source, lod1 
+ORDER BY original_source, lod1;

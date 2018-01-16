@@ -14,23 +14,30 @@ CREATE TABLE visdata.water_polygon (
 INSERT INTO visdata.water_polygon 
 	SELECT
             CASE 
-                WHEN s.bgt_type = 'watervlakte' THEN 'water_surface'
-                WHEN s.bgt_type = 'greppel, droge sloot' OR s.bgt_type = 'waterloop' THEN 'water_course' 
+                WHEN
+					s.type = 'watervlakte' OR
+					s.type = 'zee'
+				THEN 'water_surface'
+                WHEN
+					s.type = 'greppel, droge sloot' OR 
+					s.type = 'waterloop'
+				THEN 'water_course' 
+				ELSE 'undefined'
             END AS lod1,
-            ''				 	AS name,
-            s.relatievehoogteligging	AS z_index,
-            'BGT' 				AS original_source,
-            s.namespace || s.lokaalid 			AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
+            ''				 			AS name,
+            s."relatieveHoogteligging"	AS z_index,
+            'BGT' 						AS original_source,
+            'NL.IMGeo.' || s."lokaalID" AS original_id,
+            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,3)))).geom::geometry(POLYGON,28992) AS geom
     FROM 
-    	bgt.waterdeel_2dactueelbestaand AS s;
-
+    	bgtv3."Waterdeel" AS s;
+		
 -- TOP10NL waterdeel_vlak to water 
 INSERT INTO visdata.water_polygon
 	SELECT
             CASE 
                 WHEN 
-                    s.typewater =  'meer, plas, ven, vijver' OR
+                    s.typewater = 'meer, plas, ven, vijver' OR
                     s.typewater = 'meer, plas' OR 
                     s.typewater = 'droogvallend (LAT)' OR 
                     s.typewater = 'zee' OR 
@@ -41,15 +48,15 @@ INSERT INTO visdata.water_polygon
                     s.typewater = 'waterloop' OR
                     s.typewater = 'greppel, droge sloot' 
                 THEN 'water_course'
-                ELSE s.typewater
+                ELSE 'undefined'
             END  AS lod1,
-            s.naamofficieel 	AS name,
-            s.hoogteniveau 		AS z_index,
-            'Top10NL' 			AS original_source,
-            s.gml_id 			AS original_id,
-            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
+            s.naamofficieel 			AS name,
+            s.hoogteniveau::integer		AS z_index,
+            'TOP10NL' 					AS original_source,
+            'NL.TOP10NL.' || s.lokaalid	AS original_id,
+            (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,3)))).geom::geometry(POLYGON,28992) AS geom
     FROM 
-    	latest.waterdeel_vlak AS s;
+    	top10nlv2.waterdeel AS s;
 
 -- TOP50NL waterdeel_vlak to water 
 INSERT INTO visdata.water_polygon
@@ -67,23 +74,22 @@ INSERT INTO visdata.water_polygon
                     s.typewater = 'waterloop' OR
                     s.typewater = 'greppel, droge sloot' 
                 THEN 'water_course'
-                ELSE s.typewater
+                ELSE 'undefined'
             END  AS lod1,
-            ''                  AS name,
-            s.hoogteniveau      AS z_index,
-            'Top50NL'           AS original_source,
-            s.gml_id            AS original_id,
+            ''                  			AS name,
+            s.hoogteniveau     				AS z_index,
+            'TOP50NL'           			AS original_source,
+            namespace || '.' || lokaalid	AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
     FROM 
-        top50_3.waterdeel AS s;
-
+        top50nl.waterdeel_vlak AS s;
 
 -- TOP100NL waterdeel_vlak to water 
 INSERT INTO visdata.water_polygon
     SELECT
               CASE 
                  WHEN 
-                    s.typewater =  'meer, plas, ven, vijver' OR
+                    s.typewater = 'meer, plas, ven, vijver' OR
                     s.typewater = 'meer, plas' OR 
                     s.typewater = 'droogvallend (LAT)' OR 
                     s.typewater = 'zee' OR 
@@ -94,22 +100,22 @@ INSERT INTO visdata.water_polygon
                     s.typewater = 'waterloop' OR
                     s.typewater = 'greppel, droge sloot' 
                 THEN 'water_course'
-                ELSE s.typewater
+                ELSE 'undefined'
             END  AS lod1,
-            ''                  AS name,
-            0                   AS z_index,
-            'Top100NL'          AS original_source,
-            s.gml_id            AS original_id,
+            ''                  			AS name,
+            s.hoogteniveau                  AS z_index,
+            'TOP100NL'          			AS original_source,
+            namespace || '.' || lokaalid	AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
     FROM 
-        top100.waterdeel AS s;
-
+        top100nl.waterdeel_vlak AS s;
+		
 -- TOP250NL waterdeel_vlak to water 
 INSERT INTO visdata.water_polygon
     SELECT
               CASE 
                  WHEN 
-                    s.typewater =  'meer, plas, ven, vijver' OR
+                    s.typewater = 'meer, plas, ven, vijver' OR
                     s.typewater = 'meer, plas' OR 
                     s.typewater = 'droogvallend (LAT)' OR 
                     s.typewater = 'zee' OR 
@@ -120,22 +126,22 @@ INSERT INTO visdata.water_polygon
                     s.typewater = 'waterloop' OR
                     s.typewater = 'greppel, droge sloot' 
                 THEN 'water_course'
-                ELSE s.typewater
+                ELSE 'undefined'
             END  AS lod1,
-            s.naamnl            AS name,
-            0                   AS z_index,
-            'Top250NL'          AS original_source,
-            s.gml_id            AS original_id,
+            s.naamnl            			AS name,
+            0                   			AS z_index,
+            'TOP250NL'          			AS original_source,
+            namespace || '.' || lokaalid	AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
     FROM 
-        top250.waterdeel AS s;
-
+        top250nl.waterdeel_vlak AS s;
+		
 -- TOP500NL waterdeel_vlak to water 
 INSERT INTO visdata.water_polygon
     SELECT
                CASE 
                  WHEN 
-                    s.typewater =  'meer, plas, ven, vijver' OR
+                    s.typewater = 'meer, plas, ven, vijver' OR
                     s.typewater = 'meer, plas' OR 
                     s.typewater = 'droogvallend (LAT)' OR 
                     s.typewater = 'zee' OR 
@@ -146,22 +152,22 @@ INSERT INTO visdata.water_polygon
                     s.typewater = 'waterloop' OR
                     s.typewater = 'greppel, droge sloot' 
                 THEN 'water_course'
-                ELSE s.typewater
+                ELSE 'undefined'
             END  AS lod1,
-            s.naamnl            AS name,
-            0                   AS z_index,
-            'Top500NL'          AS original_source,
-            s.gml_id            AS original_id,
+            s.naamnl            			AS name,
+            0                   			AS z_index,
+            'TOP500NL'          			AS original_source,
+            namespace || '.' || lokaalid	AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
     FROM 
-        top500.waterdeel AS s;
-
+        top500nl.waterdeel_vlak AS s;
+	
 -- TOP1000NL waterdeel_vlak to water 
 INSERT INTO visdata.water_polygon
     SELECT
                CASE 
                  WHEN 
-                    s.typewater =  'meer, plas, ven, vijver' OR
+                    s.typewater = 'meer, plas, ven, vijver' OR
                     s.typewater = 'meer, plas' OR 
                     s.typewater = 'droogvallend (LAT)' OR 
                     s.typewater = 'zee' OR 
@@ -172,20 +178,24 @@ INSERT INTO visdata.water_polygon
                     s.typewater = 'waterloop' OR
                     s.typewater = 'greppel, droge sloot' 
                 THEN 'water_course'
-                ELSE s.typewater
+                ELSE 'undefined'
             END  AS lod1,
-            s.naamnl            AS name,
-            0                   AS z_index,
-            'Top1000NL'         AS original_source,
-            s.gml_id            AS original_id,
+            s.naamnl            			AS name,
+            0                   			AS z_index,
+            'TOP1000NL'         			AS original_source,
+            namespace || '.' || lokaalid	AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
     FROM 
-        top1000.waterdeel AS s;
+        top1000nl.waterdeel_vlak AS s;
 
 DELETE FROM visdata.water_polygon WHERE ST_Area(geom)=0;
 
--- test
-
-
-SELECT distinct(lod1) AS lod1 FROM visdata.water_polygon;
-
+-- Controle
+SELECT
+	original_source,
+	lod1,
+	COUNT(*) AS aantal 
+FROM
+	visdata.water_polygon 
+GROUP BY original_source, lod1 
+ORDER BY original_source, lod1;
