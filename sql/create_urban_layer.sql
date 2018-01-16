@@ -182,7 +182,7 @@ INSERT INTO visdata.urban_polygon
       END AS lod2,
       s.naam                    	AS name,
       s.hoogteniveau::integer      	AS z_index,
-      'Top10NL'                 	AS original_source,
+      'TOP10NL'                 	AS original_source,
       'NL.TOP10NL.'|| s.lokaalid	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
@@ -222,7 +222,7 @@ INSERT INTO visdata.urban_polygon
       ''                        	AS lod2,
       s.naamnl                  	AS name,
       0                         	AS z_index,
-      'Top50NL'                 	AS original_source,
+      'TOP50NL'                 	AS original_source,
       namespace || '.' || lokaalid 	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
@@ -234,7 +234,7 @@ INSERT INTO visdata.urban_polygon
       ''                        	AS lod2,
       ''                        	AS name,
       0                         	AS z_index,
-      'Top50NL'                 	AS original_source,
+      'TOP50NL'                 	AS original_source,
       namespace || '.' || lokaalid 	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
@@ -250,7 +250,7 @@ INSERT INTO visdata.urban_polygon
       ''                        	AS lod2,
       s.naamnl                  	AS name,
       0                         	AS z_index,
-      'Top100NL'                	AS original_source,
+      'TOP100NL'                	AS original_source,
       namespace || '.' || lokaalid 	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
@@ -262,7 +262,7 @@ INSERT INTO visdata.urban_polygon
       ''                        	AS lod2,
       ''                        	AS name,
       0                         	AS z_index,
-      'Top100NL'                	AS original_source,
+      'TOP100NL'                	AS original_source,
       namespace || '.' || lokaalid 	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
@@ -278,7 +278,7 @@ INSERT INTO visdata.urban_polygon
       ''                        	AS lod2,
       s.naamnl                  	AS name,
       0                         	AS z_index,
-      'Top250NL'                	AS original_source,
+      'TOP250NL'                	AS original_source,
       namespace || '.' || lokaalid 	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
@@ -293,7 +293,7 @@ INSERT INTO visdata.urban_polygon
       ''                        	AS lod2,
       s.naamnl                  	AS name,
       0                         	AS z_index,
-      'Top500NL'                	AS original_source,
+      'TOP500NL'                	AS original_source,
       namespace || '.' || lokaalid 	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
@@ -308,7 +308,7 @@ INSERT INTO visdata.urban_polygon
       ''                        	AS lod2,
       s.naamnl                  	AS name,
       0                         	AS z_index,
-      'Top1000NL'               	AS original_source,
+      'TOP1000NL'               	AS original_source,
       namespace || '.' || lokaalid 	AS original_id,
       (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
   FROM 
