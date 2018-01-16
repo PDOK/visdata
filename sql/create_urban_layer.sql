@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS visdata.urban_polygon CASCADE;
 CREATE TABLE visdata.urban_polygon (
       lod1 text,
       lod2 text,
-      name_NL text,
+      name text,
       z_index integer,
       original_source text,
       original_id text,
@@ -18,7 +18,7 @@ INSERT INTO visdata.urban_polygon
   SELECT
       'buildings'               AS lod1,
       'main_building'           AS lod2,
-      ''                        AS name_NL,
+      ''                        AS name,
       s.relatievehoogteligging  AS z_index,
       'BGT'                     AS original_source,
       s.namespace || s.lokaalid                 AS original_id,
@@ -30,7 +30,7 @@ INSERT INTO visdata.urban_polygon
   SELECT
       'buildings'               AS lod1,
       'other_buildings'         AS lod2,
-      ''                        AS name_NL,
+      ''                        AS name,
       s.relatievehoogteligging  AS z_index,
       'BGT'                     AS original_source,
       s.namespace || s.lokaalid                 AS original_id,
@@ -42,7 +42,7 @@ INSERT INTO visdata.urban_polygon
   SELECT
       'buildings'               AS lod1,
       'other_buildings'         AS lod2,
-      ''                        AS name_NL,
+      ''                        AS name,
       s.relatievehoogteligging  AS z_index,
       'BGT'                     AS original_source,
       s.namespace || s.lokaalid                 AS original_id,
@@ -54,7 +54,7 @@ INSERT INTO visdata.urban_polygon
   SELECT
       'buildings'               AS lod1,
       'other_buildings'         AS lod2,
-      ''                        AS name_NL,
+      ''                        AS name,
       s.relatievehoogteligging  AS z_index,
       'BGT'                     AS original_source,
       s.namespace || s.lokaalid                 AS original_id,
@@ -66,7 +66,7 @@ INSERT INTO visdata.urban_polygon
   SELECT
       'buildings'               AS lod1,
       'other_buildings'         AS lod2,
-      ''                        AS name_NL,
+      ''                        AS name,
       s.relatievehoogteligging  AS z_index,
       'BGT'                     AS original_source,
       s.namespace || s.lokaalid                 AS original_id,
@@ -78,7 +78,7 @@ INSERT INTO visdata.urban_polygon
   SELECT
       'buildings'               AS lod1,
       'structures'              AS lod2,
-      ''                        AS name_NL,
+      ''                        AS name,
       s.relatievehoogteligging  AS z_index,
       'BGT'                     AS original_source,
       s.namespace || s.lokaalid                 AS original_id,
@@ -95,7 +95,7 @@ INSERT INTO visdata.urban_polygon
   SELECT
       'buildings'               AS lod1,
       'main_building'           AS lod2,
-      s.naam                    AS name_NL,
+      s.naam                    AS name,
       s.hoogteniveau            AS z_index,
       'Top10NL'                 AS original_source,
       s.gml_id                  AS original_id,
@@ -106,7 +106,7 @@ INSERT INTO visdata.urban_polygon
 -- INSERT INTO visdata.urban_polygon
 --   SELECT
 --       'urban_area'              AS lod1,
---       s.naamnl                  AS name_NL,
+--       s.naamnl                  AS name,
 --       0                         AS z_index,
 --       'Top10NL'                 AS original_source,
 --       s.gml_id                  AS original_id,
@@ -117,7 +117,7 @@ INSERT INTO visdata.urban_polygon
 -- INSERT INTO visdata.urban_polygon
 --   SELECT
 --       'urban_area'              AS lod1,
---       s.naam                  AS name_NL,
+--       s.naam                  AS name,
 --       0                         AS z_index,
 --       'Top10NL'                 AS original_source,
 --       s.gml_id                  AS original_id,
@@ -134,7 +134,7 @@ INSERT INTO visdata.urban_polygon
   SELECT
       'buildings'               AS lod1,
       ''                        AS lod2,
-      s.naamnl                  AS name_NL,
+      s.naamnl                  AS name,
       0                         AS z_index,
       'Top50NL'                 AS original_source,
       s.gml_id                  AS original_id,
@@ -146,7 +146,7 @@ INSERT INTO visdata.urban_polygon
   SELECT
       'urban_area'              AS lod1,
       ''                        AS lod2,
-      ''                        AS name_NL,
+      ''                        AS name,
       0                         AS z_index,
       'Top50NL'                 AS original_source,
       s.gml_id                  AS original_id,
@@ -161,7 +161,7 @@ INSERT INTO visdata.urban_polygon
   SELECT
       'buildings'               AS lod1,
       ''                        AS lod2,
-      s.naamnl                  AS name_NL,
+      s.naamnl                  AS name,
       0                         AS z_index,
       'Top100NL'                AS original_source,
       s.gml_id                  AS original_id,
@@ -173,7 +173,7 @@ INSERT INTO visdata.urban_polygon
   SELECT
       'urban_area'              AS lod1,
       ''                        AS lod2,
-      ''                        AS name_NL,
+      ''                        AS name,
       0                         AS z_index,
       'Top100NL'                AS original_source,
       s.gml_id                  AS original_id,
@@ -189,7 +189,7 @@ INSERT INTO visdata.urban_polygon
   SELECT
       'urban_area'              AS lod1,
       ''                        AS lod2,
-      s.naamnl                  AS name_NL,
+      s.naamnl                  AS name,
       0                         AS z_index,
       'Top250NL'                AS original_source,
       s.gml_id                  AS original_id,
@@ -203,7 +203,7 @@ INSERT INTO visdata.urban_polygon
   SELECT
       'urban_area'              AS lod1,
       ''                        AS lod2,
-      s.naamnl                  AS name_NL,
+      s.naamnl                  AS name,
       0                         AS z_index,
       'Top500NL'                AS original_source,
       s.gml_id                  AS original_id,
@@ -218,7 +218,7 @@ INSERT INTO visdata.urban_polygon
   SELECT
       'urban_area'              AS lod1,
       ''                        AS lod2,
-      s.naamnl                  AS name_NL,
+      s.naamnl                  AS name,
       0                         AS z_index,
       'Top1000NL'               AS original_source,
       s.gml_id                  AS original_id,

@@ -3,7 +3,7 @@
 DROP TABLE IF EXISTS visdata.water_polygon CASCADE;
 CREATE TABLE visdata.water_polygon (
             lod1 text,
-            name_NL text,
+            name text,
             z_index integer,
             original_source text,
             original_id text,
@@ -17,7 +17,7 @@ INSERT INTO visdata.water_polygon
                 WHEN s.bgt_type = 'watervlakte' THEN 'water_surface'
                 WHEN s.bgt_type = 'greppel, droge sloot' OR s.bgt_type = 'waterloop' THEN 'water_course' 
             END AS lod1,
-            ''				 	AS name_NL,
+            ''				 	AS name,
             s.relatievehoogteligging	AS z_index,
             'BGT' 				AS original_source,
             s.namespace || s.lokaalid 			AS original_id,
@@ -43,7 +43,7 @@ INSERT INTO visdata.water_polygon
                 THEN 'water_course'
                 ELSE s.typewater
             END  AS lod1,
-            s.naamofficieel 	AS name_NL,
+            s.naamofficieel 	AS name,
             s.hoogteniveau 		AS z_index,
             'Top10NL' 			AS original_source,
             s.gml_id 			AS original_id,
@@ -69,7 +69,7 @@ INSERT INTO visdata.water_polygon
                 THEN 'water_course'
                 ELSE s.typewater
             END  AS lod1,
-            ''                  AS name_NL,
+            ''                  AS name,
             s.hoogteniveau      AS z_index,
             'Top50NL'           AS original_source,
             s.gml_id            AS original_id,
@@ -96,7 +96,7 @@ INSERT INTO visdata.water_polygon
                 THEN 'water_course'
                 ELSE s.typewater
             END  AS lod1,
-            ''                  AS name_NL,
+            ''                  AS name,
             0                   AS z_index,
             'Top100NL'          AS original_source,
             s.gml_id            AS original_id,
@@ -122,7 +122,7 @@ INSERT INTO visdata.water_polygon
                 THEN 'water_course'
                 ELSE s.typewater
             END  AS lod1,
-            s.naamnl            AS name_NL,
+            s.naamnl            AS name,
             0                   AS z_index,
             'Top250NL'          AS original_source,
             s.gml_id            AS original_id,
@@ -148,7 +148,7 @@ INSERT INTO visdata.water_polygon
                 THEN 'water_course'
                 ELSE s.typewater
             END  AS lod1,
-            s.naamnl            AS name_NL,
+            s.naamnl            AS name,
             0                   AS z_index,
             'Top500NL'          AS original_source,
             s.gml_id            AS original_id,
@@ -174,7 +174,7 @@ INSERT INTO visdata.water_polygon
                 THEN 'water_course'
                 ELSE s.typewater
             END  AS lod1,
-            s.naamnl            AS name_NL,
+            s.naamnl            AS name,
             0                   AS z_index,
             'Top1000NL'         AS original_source,
             s.gml_id            AS original_id,

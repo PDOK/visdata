@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS visdata.admin CASCADE;
 CREATE TABLE visdata.admin (
             lod1 text,
-            name_NL text,
+            name text,
             z_index integer,
             original_source text,
             original_id text,
@@ -15,7 +15,7 @@ CREATE TABLE visdata.admin (
 --     17 AS minzoom,
 --     16 AS maxzoom,
 --     'neighborhood' AS lod1,
---     s.naam AS name_NL,
+--     s.naam AS name,
 --     0 AS z_index,
 --     'BGT' AS original_source,
 --     s.namespace || s.lokaalid AS original_id,
@@ -29,7 +29,7 @@ CREATE TABLE visdata.admin (
 --     17 AS minzoom,
 --     14 AS maxzoom,
 --     'city-district' AS lod1,
---     s.naam AS name_NL,
+--     s.naam AS name,
 --     0 AS z_index,
 --     'BGT' AS original_source,
 --     s.namespace || s.lokaalid AS original_id,
@@ -43,7 +43,7 @@ CREATE TABLE visdata.admin (
 --     17 AS minzoom,
 --     0 AS maxzoom,
 --     'waterhouse' AS lod1,
---     s.naam AS name_NL,
+--     s.naam AS name,
 --     0 AS z_index,
 --     'BGT' AS original_source,
 --     s.namespace || s.lokaalid AS original_id,
@@ -67,7 +67,7 @@ INSERT INTO visdata.admin
                 THEN 'municipality'
                 else s.typeregistratiefgebied
             END AS lod1,
-            s.naamnl             AS name_NL,
+            s.naamnl             AS name,
             0                    AS z_index,
             'Top10NL'          AS original_source,
             s.gml_id             AS original_id,
@@ -94,7 +94,7 @@ INSERT INTO visdata.admin
                 THEN 'municipality'
                 else s.typeregistratiefgebied
             END AS lod1,
-            s.naamnl             AS name_NL,
+            s.naamnl             AS name,
             0                    AS z_index,
             'Top50NL'          AS original_source,
             s.gml_id             AS original_id,
@@ -123,7 +123,7 @@ INSERT INTO visdata.admin
                 THEN 'municipality'
                 else s.typeregistratiefgebied
             END AS lod1,
-            s.naamnl             AS name_NL,
+            s.naamnl             AS name,
             0                    AS z_index,
             'Top100NL'          AS original_source,
             s.gml_id             AS original_id,
@@ -152,7 +152,7 @@ INSERT INTO visdata.admin
                 THEN 'municipality'
              else s.typeregistratiefgebied
             END AS lod1,
-            s.naamnl             AS name_NL,
+            s.naamnl             AS name,
             0                    AS z_index,
             'Top250NL'          AS original_source,
             s.gml_id             AS original_id,
@@ -181,7 +181,7 @@ INSERT INTO visdata.admin
                 THEN 'municipality'
              else s.typeregistratiefgebied
             END AS lod1,
-            s.naamnl             AS name_NL,
+            s.naamnl             AS name,
             0                    AS z_index,
             'Top500NL'          AS original_source,
             s.gml_id             AS original_id,
@@ -209,7 +209,7 @@ INSERT INTO visdata.admin
                 THEN 'municipality'
                else s.typeregistratiefgebied
             END AS lod1,
-            s.naamnl             AS name_NL,
+            s.naamnl             AS name,
             0                    AS z_index,
             'Top1000NL'          AS original_source,
             s.gml_id             AS original_id,

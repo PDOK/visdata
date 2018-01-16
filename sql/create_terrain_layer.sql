@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS visdata.terrain CASCADE;
 CREATE TABLE visdata.terrain (
             lod1 text,
             lod2 text,
-            name_NL text,
+            name text,
             z_index integer,
             original_source text,
             original_id text,
@@ -36,7 +36,7 @@ INSERT INTO visdata.terrain
                 THEN 'agriculture'
                 ELSE s.bgt_fysiekvoorkomen 
             END  AS lod2,
-            ''                            AS name_NL,
+            ''                            AS name,
             s.relatievehoogteligging      AS z_index,
             'BGT'                         AS original_source,
             s.namespace || s.lokaalid                     AS original_id,
@@ -61,7 +61,7 @@ INSERT INTO visdata.terrain
                 THEN 'open'
                 ELSE s.bgt_fysiekvoorkomen
             END AS lod2,
-            ''                            AS name_NL,
+            ''                            AS name,
             s.relatievehoogteligging      AS z_index,
             'BGT'                         AS original_source,
             s.namespace || s.lokaalid               AS original_id,
@@ -73,7 +73,7 @@ INSERT INTO visdata.terrain
       SELECT
             'natural'                     AS lod1,
             'low_vegetation'              AS lod2,
-            ''                            AS name_NL,
+            ''                            AS name,
             s.relatievehoogteligging      AS z_index,
             'BGT'                         AS original_source,
             s.namespace || s.lokaalid               AS original_id,
@@ -100,7 +100,7 @@ INSERT INTO visdata.terrain
                 THEN 'low_vegetation'
                 ELSE s.bgt_fysiekvoorkomen
             END AS lod2,
-            ''                            AS name_NL,
+            ''                            AS name,
             s.relatievehoogteligging      AS z_index,
             'BGT'                         AS original_source,
             s.namespace || s.lokaalid                     AS original_id,
@@ -112,7 +112,7 @@ INSERT INTO visdata.terrain
       SELECT
             'human-made'                  AS lod1,
             'closed'                      AS lod2,
-            ''                            AS name_NL,
+            ''                            AS name,
             s.relatievehoogteligging      AS z_index,
             'BGT'                         AS original_source,
             s.namespace || s.lokaalid               AS original_id,
@@ -137,7 +137,7 @@ INSERT INTO visdata.terrain
                 THEN 'open'
                 ELSE s.bgt_fysiekvoorkomen
             END AS lod2,
-            ''                            AS name_NL,
+            ''                            AS name,
             s.relatievehoogteligging      AS z_index,
             'BGT'                         AS original_source,
             s.namespace || s.lokaalid               AS original_id,
@@ -215,7 +215,7 @@ INSERT INTO visdata.terrain
                 THEN 'agriculture'
                 ELSE s.typelandgebruik
             END AS lod2,
-            s.naam                  AS name_NL,
+            s.naam                  AS name,
             s.hoogteniveau          AS z_index,
             'Top10NL'               AS original_source,
             s.gml_id                AS original_id,
@@ -296,7 +296,7 @@ INSERT INTO visdata.terrain
                 THEN 'agriculture'
                 ELSE s.typelandgebruik
             END AS lod2,
-            ''                  AS name_NL,
+            ''                  AS name,
             0                   AS z_index,
             'Top50NL'           AS original_source,
             s.gml_id            AS original_id,
@@ -319,7 +319,7 @@ INSERT INTO visdata.terrain
                 THEN 'human-made'
             END  AS lod1,
             'closed'            AS lod2,
-            ''                  AS name_NL,
+            ''                  AS name,
             0                   AS z_index,
             'Top50NL'           AS original_source,
             s.gml_id            AS original_id,
@@ -404,7 +404,7 @@ INSERT INTO visdata.terrain
                 THEN 'agriculture'
                 ELSE s.typelandgebruik
             END AS lod2,
-            ''                  AS name_NL,
+            ''                  AS name,
             0                   AS z_index,
             'Top100NL'         AS original_source,
             s.gml_id            AS original_id,
@@ -482,7 +482,7 @@ INSERT INTO visdata.terrain
                 THEN 'agriculture'
                 ELSE s.typelandgebruik
             END AS lod2,
-            ''                  AS name_NL,
+            ''                  AS name,
             0                   AS z_index,
             'Top250NL'         AS original_source,
             s.gml_id            AS original_id,
@@ -560,7 +560,7 @@ INSERT INTO visdata.terrain
                 THEN 'agriculture'
                 ELSE s.typelandgebruik
             END AS lod2,
-            ''                  AS name_NL,
+            ''                  AS name,
             0                   AS z_index,
             'Top500NL'         AS original_source,
             s.gml_id            AS original_id,
@@ -638,7 +638,7 @@ INSERT INTO visdata.terrain
                 THEN 'agriculture'
                 ELSE s.typelandgebruik
             END AS lod2,
-            ''                  AS name_NL,
+            ''                  AS name,
             0                   AS z_index,
             'Top1000NL'         AS original_source,
             s.gml_id            AS original_id,
