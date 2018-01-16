@@ -15,31 +15,31 @@ INSERT INTO visdata.terrain
             'natural'                     AS lod1,
             CASE 
                 WHEN 
-                    s.bgt_fysiekvoorkomen = 'gemengd bos' OR
-                    s.bgt_fysiekvoorkomen = 'loofbos' OR
-                    s.bgt_fysiekvoorkomen = 'houtwal' OR
-                    s.bgt_fysiekvoorkomen = 'naaldbos' 
+                    s.fysiekvoorkomen = 'gemengd bos' OR
+                    s.fysiekvoorkomen = 'loofbos' OR
+                    s.fysiekvoorkomen = 'houtwal' OR
+                    s.fysiekvoorkomen = 'naaldbos' 
                 THEN 'high_vegetation'
                 WHEN 
-                    s.bgt_fysiekvoorkomen = 'grasland overig' OR
-                    s.bgt_fysiekvoorkomen = 'groenvoorziening' OR
-                    s.bgt_fysiekvoorkomen = 'struiken' OR
-                    s.bgt_fysiekvoorkomen = 'moeras' OR
-                    s.bgt_fysiekvoorkomen = 'rietland' OR
-                    s.bgt_fysiekvoorkomen = 'transitie' 
+                    s.fysiekvoorkomen = 'grasland overig' OR
+                    s.fysiekvoorkomen = 'groenvoorziening' OR
+                    s.fysiekvoorkomen = 'struiken' OR
+                    s.fysiekvoorkomen = 'moeras' OR
+                    s.fysiekvoorkomen = 'rietland' OR
+                    s.fysiekvoorkomen = 'transitie' 
                 THEN 'low_vegetation'
                 WHEN
-                    s.bgt_fysiekvoorkomen = 'boomteelt' OR
-                    s.bgt_fysiekvoorkomen = 'bouwland' OR
-                    s.bgt_fysiekvoorkomen = 'grasland agrarisch' OR
-                    s.bgt_fysiekvoorkomen = 'fruitteelt'
+                    s.fysiekvoorkomen = 'boomteelt' OR
+                    s.fysiekvoorkomen = 'bouwland' OR
+                    s.fysiekvoorkomen = 'grasland agrarisch' OR
+                    s.fysiekvoorkomen = 'fruitteelt'
                 THEN 'agriculture'
-                ELSE s.bgt_fysiekvoorkomen 
+                ELSE s.fysiekvoorkomen 
             END  AS lod2,
             ''                            AS name,
-            s.relatievehoogteligging      AS z_index,
+            s."relatieveHoogteligging"    AS z_index,
             'BGT'                         AS original_source,
-            s.namespace || s.lokaalid                     AS original_id,
+            s.namespace || s.lokaalid     AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
     FROM 
       bgt.begroeidterreindeel_2dactueelbestaand AS s;
@@ -49,22 +49,22 @@ INSERT INTO visdata.terrain
             'human-made'                  AS lod1,
             CASE
                 WHEN 
-                    s.bgt_fysiekvoorkomen = 'gesloten verharding' OR
-                    s.bgt_fysiekvoorkomen = 'half verhard' OR
-                    s.bgt_fysiekvoorkomen = 'transitie' OR
-                    s.bgt_fysiekvoorkomen = 'open verharding'
+                    s.fysiekvoorkomen = 'gesloten verharding' OR
+                    s.fysiekvoorkomen = 'half verhard' OR
+                    s.fysiekvoorkomen = 'transitie' OR
+                    s.fysiekvoorkomen = 'open verharding'
                 THEN 'closed'
                 WHEN
-                    s.bgt_fysiekvoorkomen = 'onverhard' OR
-                    s.bgt_fysiekvoorkomen = 'zand' OR
-                    s.bgt_fysiekvoorkomen = 'erf'
+                    s.fysiekvoorkomen = 'onverhard' OR
+                    s.fysiekvoorkomen = 'zand' OR
+                    s.fysiekvoorkomen = 'erf'
                 THEN 'open'
-                ELSE s.bgt_fysiekvoorkomen
+                ELSE s.fysiekvoorkomen
             END AS lod2,
             ''                            AS name,
-            s.relatievehoogteligging      AS z_index,
+            s."relatieveHoogteligging"    AS z_index,
             'BGT'                         AS original_source,
-            s.namespace || s.lokaalid               AS original_id,
+            s.namespace || s.lokaalid     AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
     FROM 
       bgt.onbegroeidterreindeel_2dactueelbestaand AS s;
@@ -74,7 +74,7 @@ INSERT INTO visdata.terrain
             'natural'                     AS lod1,
             'low_vegetation'              AS lod2,
             ''                            AS name,
-            s.relatievehoogteligging      AS z_index,
+            s."relatieveHoogteligging"      AS z_index,
             'BGT'                         AS original_source,
             s.namespace || s.lokaalid               AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
@@ -86,22 +86,22 @@ INSERT INTO visdata.terrain
             'human-made'                    AS lod1,
             CASE
                 WHEN 
-                    s.bgt_fysiekvoorkomen = 'gesloten verharding' OR
-                    s.bgt_fysiekvoorkomen = 'half verhard' OR
-                    s.bgt_fysiekvoorkomen = 'transitie' OR
-                    s.bgt_fysiekvoorkomen = 'open verharding'
+                    s.fysiekvoorkomen = 'gesloten verharding' OR
+                    s.fysiekvoorkomen = 'half verhard' OR
+                    s.fysiekvoorkomen = 'transitie' OR
+                    s.fysiekvoorkomen = 'open verharding'
                 THEN 'closed'
                 WHEN
-                    s.bgt_fysiekvoorkomen = 'onverhard' OR
-                    s.bgt_fysiekvoorkomen = 'zand'
+                    s.fysiekvoorkomen = 'onverhard' OR
+                    s.fysiekvoorkomen = 'zand'
                 THEN 'open'
                 WHEN 
-                    s.bgt_fysiekvoorkomen = 'groenvoorziening'
+                    s.fysiekvoorkomen = 'groenvoorziening'
                 THEN 'low_vegetation'
-                ELSE s.bgt_fysiekvoorkomen
+                ELSE s.fysiekvoorkomen
             END AS lod2,
             ''                            AS name,
-            s.relatievehoogteligging      AS z_index,
+            s."relatieveHoogteligging"      AS z_index,
             'BGT'                         AS original_source,
             s.namespace || s.lokaalid                     AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
@@ -113,7 +113,7 @@ INSERT INTO visdata.terrain
             'human-made'                  AS lod1,
             'closed'                      AS lod2,
             ''                            AS name,
-            s.relatievehoogteligging      AS z_index,
+            s."relatieveHoogteligging"      AS z_index,
             'BGT'                         AS original_source,
             s.namespace || s.lokaalid               AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
@@ -126,19 +126,19 @@ INSERT INTO visdata.terrain
             'human-made'                  AS lod1,
             CASE
                 WHEN 
-                    s.bgt_fysiekvoorkomen = 'gesloten verharding' OR
-                    s.bgt_fysiekvoorkomen = 'half verhard' OR
-                    s.bgt_fysiekvoorkomen = 'transitie' OR
-                    s.bgt_fysiekvoorkomen = 'open verharding'
+                    s.fysiekvoorkomen = 'gesloten verharding' OR
+                    s.fysiekvoorkomen = 'half verhard' OR
+                    s.fysiekvoorkomen = 'transitie' OR
+                    s.fysiekvoorkomen = 'open verharding'
                 THEN 'closed'
                 WHEN
-                    s.bgt_fysiekvoorkomen = 'onverhard' OR
-                    s.bgt_fysiekvoorkomen = 'zand'
+                    s.fysiekvoorkomen = 'onverhard' OR
+                    s.fysiekvoorkomen = 'zand'
                 THEN 'open'
-                ELSE s.bgt_fysiekvoorkomen
+                ELSE s.fysiekvoorkomen
             END AS lod2,
             ''                            AS name,
-            s.relatievehoogteligging      AS z_index,
+            s."relatieveHoogteligging"      AS z_index,
             'BGT'                         AS original_source,
             s.namespace || s.lokaalid               AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
@@ -217,11 +217,11 @@ INSERT INTO visdata.terrain
             END AS lod2,
             s.naam                  AS name,
             s.hoogteniveau          AS z_index,
-            'Top10NL'               AS original_source,
+            'TOP10NL'               AS original_source,
             s.gml_id                AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
     FROM 
-      latest.terrein_vlak AS s
+      top10v2.terrein_vlak AS s
     WHERE 
         s.typelandgebruik != 'bebouwd gebied';
 
@@ -298,7 +298,7 @@ INSERT INTO visdata.terrain
             END AS lod2,
             ''                  AS name,
             0                   AS z_index,
-            'Top50NL'           AS original_source,
+            'TOP50NL'           AS original_source,
             s.gml_id            AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
     FROM 
@@ -321,7 +321,7 @@ INSERT INTO visdata.terrain
             'closed'            AS lod2,
             ''                  AS name,
             0                   AS z_index,
-            'Top50NL'           AS original_source,
+            'TOP50NL'           AS original_source,
             s.gml_id            AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
     FROM 
@@ -406,7 +406,7 @@ INSERT INTO visdata.terrain
             END AS lod2,
             ''                  AS name,
             0                   AS z_index,
-            'Top100NL'         AS original_source,
+            'TOP100NL'         AS original_source,
             s.gml_id            AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom 
     FROM 
@@ -484,7 +484,7 @@ INSERT INTO visdata.terrain
             END AS lod2,
             ''                  AS name,
             0                   AS z_index,
-            'Top250NL'         AS original_source,
+            'TOP250NL'         AS original_source,
             s.gml_id            AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom 
     FROM 
@@ -562,7 +562,7 @@ INSERT INTO visdata.terrain
             END AS lod2,
             ''                  AS name,
             0                   AS z_index,
-            'Top500NL'         AS original_source,
+            'TOP500NL'         AS original_source,
             s.gml_id            AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom 
     FROM 
@@ -640,7 +640,7 @@ INSERT INTO visdata.terrain
             END AS lod2,
             ''                  AS name,
             0                   AS z_index,
-            'Top1000NL'         AS original_source,
+            'TOP1000NL'         AS original_source,
             s.gml_id            AS original_id,
             (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,3)))).geom::geometry(POLYGON,28992) AS geom
     FROM 
