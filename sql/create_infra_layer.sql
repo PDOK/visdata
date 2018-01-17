@@ -395,7 +395,7 @@ INSERT INTO visdata.infrastructure_line
     COALESCE(
       NULLIF(s.baanvaknaam,''),
       NULLIF( s.tunnelnaam,''),
-      NULLIF(s.brugnaam),''),
+      NULLIF(s.brugnaam,''),
       '')                         AS name,
     0                             AS z_index,
     'TOP250NL'                    AS original_source,
@@ -491,7 +491,7 @@ INSERT INTO visdata.infrastructure_line
     COALESCE(
       NULLIF(s.baanvaknaam,''),
       NULLIF( s.tunnelnaam,''),
-      NULLIF(s.brugnaam),''),
+      NULLIF(s.brugnaam,''),
       '')                             AS name,
     0                                 AS z_index,
     'TOP500NL'                        AS original_source,
@@ -586,7 +586,7 @@ INSERT INTO visdata.infrastructure_line
     COALESCE(
       NULLIF(s.baanvaknaam,''),
       NULLIF( s.tunnelnaam,''),
-      NULLIF(s.brugnaam),''),
+      NULLIF(s.brugnaam,''),
       '')                         AS name,
     0                             AS z_index,
     'TOP1000NL'                   AS original_source,
