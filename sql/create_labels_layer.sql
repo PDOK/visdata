@@ -330,7 +330,7 @@ SELECT
     namespace,
     lokaalid,
     'TOP10NL'::text          AS original_source,
-    aantalinwoners,
+    aantalinwoners::integer,
     COALESCE(
       NULLIF(naamofficieel, ''),
       NULLIF(naamfries, ''), 
@@ -454,7 +454,7 @@ INSERT INTO visdata.labels_point_v1
     s.namespace,
     s.lokaalid,
     'TOP500NL'::text          AS original_source,
-    s.aantalinwoners,
+    s.aantalinwoners::integer,
     COALESCE(
       NULLIF(s.naamfries, ''), 
       NULLIF(s.naamnl, ''), 
@@ -478,7 +478,7 @@ SELECT
     lokaalid,
     namespace,
     'TOP500NL'::text          AS original_source,
-    aantalinwoners,
+    aantalinwoners::integer,
     COALESCE(
       NULLIF(naamofficieel, ''),
       NULLIF(naamfries, ''), 
@@ -529,7 +529,7 @@ INSERT INTO visdata.labels_point_v1
     s.namespace,
     s.lokaalid,
     'TOP1000NL'::text          AS original_source,
-    s.aantalinwoners,
+    s.aantalinwoners::integer,
     COALESCE(
       NULLIF(s.naamfries, ''), 
       NULLIF(s.naamnl, ''), 
@@ -553,7 +553,7 @@ SELECT
     lokaalid,
     namespace,
     'TOP1000NL'::text          AS original_source,
-    aantalinwoners,
+    aantalinwoners::integer,
     COALESCE(
       NULLIF(naamofficieel, ''),
       NULLIF(naamfries, ''), 
@@ -730,41 +730,20 @@ SET z_index = 1
 
 UPDATE visdata.labels_point_v1 AS s
 SET z_index = 0
-    WHERE aantalinwoners  = 0
+    WHERE aantalinwoners  IS NULL OR aantalinwoners = 0 
 ;
 
-
-SELECT z_index, count(*)  FROM visdata.labels_point_v1 GROUP BY z_index ORDER BY z_index ;
-
+SELECT z_index, count(*) FROM visdata.labels_point_v1 GROUP BY z_index ORDER BY z_index;
 
 INSERT INTO visdata.labels_point
   SELECT
     'residential'              AS lod1,
     ''                 AS lod2,
     name               AS name,
-    s.aantalinwoners   AS z_index,
+    s.z_index   AS z_index,
     s.original_source  AS original_source,
     s.namespace || '.' || s.lokaalid  AS original_id,
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,1)))).geom::geometry(POINT,28992) AS geom
   FROM 
     visdata.labels_point_v1 AS s ;
 
-
-
-
-
-0
-1
-10
-100
-1000      aantalinwoners < 15000 AND aantalinwoners >= 10000
-10000    aantalinwoners >= 150000
-
-
-150000  100000
-50000 0 
-
-
-WHEN 
-            
-          THEN
