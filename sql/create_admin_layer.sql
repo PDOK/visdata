@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS visdata.admin CASCADE;
-CREATE TABLE visdata.admin (
+DROP TABLE IF EXISTS visdata.admin_polygon CASCADE;
+CREATE TABLE visdata.admin_polygon (
   lod1 text,
   name text,
   z_index integer,
@@ -11,7 +11,7 @@ CREATE TABLE visdata.admin (
 -- BGT: Geen data
 
 -- TOP10NL
-INSERT INTO visdata.admin
+INSERT INTO visdata.admin_polygon
   SELECT
     CASE 
       WHEN 
@@ -39,7 +39,7 @@ INSERT INTO visdata.admin
 ;
 
 -- TOP50NL 
-INSERT INTO visdata.admin
+INSERT INTO visdata.admin_polygon
   SELECT
     CASE 
       WHEN 
@@ -67,7 +67,7 @@ INSERT INTO visdata.admin
 ;
 
 -- TOP100NL 
-INSERT INTO visdata.admin
+INSERT INTO visdata.admin_polygon
   SELECT
     CASE 
       WHEN 
@@ -95,7 +95,7 @@ INSERT INTO visdata.admin
 ;
 
 -- TOP250NL 
-INSERT INTO visdata.admin
+INSERT INTO visdata.admin_polygon
   SELECT
     CASE 
       WHEN 
@@ -123,7 +123,7 @@ INSERT INTO visdata.admin
 ;
 
 -- TOP500NL 
-INSERT INTO visdata.admin
+INSERT INTO visdata.admin_polygon
   SELECT
     CASE 
       WHEN 
@@ -151,7 +151,7 @@ INSERT INTO visdata.admin
 ;
 
 -- TOP1000NL 
-INSERT INTO visdata.admin
+INSERT INTO visdata.admin_polygon
   SELECT
     CASE 
       WHEN 
@@ -184,6 +184,6 @@ SELECT
   lod1,
   COUNT(*) AS aantal 
 FROM
-  visdata.admin 
+  visdata.admin_polygon 
 GROUP BY original_source, lod1 
 ORDER BY original_source, lod1;
