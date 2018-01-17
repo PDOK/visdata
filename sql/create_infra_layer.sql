@@ -598,12 +598,14 @@ INSERT INTO visdata.infrastructure_line
 
 -- Controle
 SELECT
-  original_source,
-  lod1,
-  COUNT(*) AS aantal 
+    original_source,
+    lod1,
+    lod2,
+    COUNT(*) AS aantal 
 FROM
-  visdata.infrastructure_line 
-GROUP BY original_source, lod1 
-ORDER BY original_source, lod1;
+    visdata.infrastructure_line 
+GROUP BY original_source, lod1, lod2 
+ORDER BY original_source, lod1, lod2;
+
 
 SELECT count(*) FROM visdata.infrastructure_line WHERE ST_Length(geom)=0;
