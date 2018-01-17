@@ -168,10 +168,6 @@ INSERT INTO visdata.water_line
     FROM 
         top1000nl.waterdeel_lijn AS s;
 
--- Indexen aanmaken
-CREATE INDEX water_line_sidx ON visdata.water_line USING GIST(geom);
-CREATE INDEX water_line_source ON visdata.water_line(original_source);
-
 -- Controle
 SELECT
 	original_source,
