@@ -96,28 +96,8 @@ INSERT INTO visdata.labels_point
 
 -- TOP10NL
 INSERT INTO visdata.labels_point
-  SELECT
-    CASE 
-      WHEN 
-        s.typefunctioneelgebied =  'boswachterij' 
-        OR s.typefunctioneelgebied =  'infiltratiegebied' 
-        OR s.typefunctioneelgebied =  'landgoed' 
-        OR s.typefunctioneelgebied =  'natuurgebied, natuurreservaat' 
-        OR s.typefunctioneelgebied =  'overig' 
-        OR s.typefunctioneelgebied =  'park' 
-        OR s.typefunctioneelgebied =  'tennispark' 
-        OR s.typefunctioneelgebied =  'werf' 
-      THEN 'natural_areas'
-      WHEN 
-        s.typefunctioneelgebied =  'haven' 
-      THEN 'water'
-      WHEN
-        s.typefunctioneelgebied =  'emplacement' 
-        OR s.typefunctioneelgebied =  'gebouwencomplex' 
-      THEN 'residential'
-      ELSE 
-        s.typefunctioneelgebied
-    END                                              AS lod1,
+  SELECT 
+    'functional' AS lod1,
     s.typefunctioneelgebied                          AS lod2,
     COALESCE(
       NULLIF(s.naamfries, ''), 
@@ -725,4 +705,3 @@ INSERT INTO visdata.labels_point
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,1)))).geom::geometry(POINT,28992) AS geom
   FROM 
     visdata.labels_point_v1 AS s ;
-
