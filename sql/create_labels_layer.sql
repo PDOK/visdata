@@ -623,6 +623,7 @@ SET z_index = 100000
          OR s.name='Groningen' 
          OR s.name='Leeuwarden' 
          OR s.name='Lelystad'
+         OR s.name='Amsterdam'
 ;
 
 UPDATE visdata.labels_point_v1 AS s
@@ -639,7 +640,9 @@ SET z_index = 10000
          AND s.name!='Assen' 
          AND s.name!='Groningen' 
          AND s.name!='Leeuwarden' 
-         AND s.name!='Lelystad')
+         AND s.name!='Lelystad'
+         AND s.name !='Amsterdam'
+)
 ;
 
 UPDATE visdata.labels_point_v1 AS s
@@ -696,35 +699,11 @@ SET z_index = 10
 UPDATE visdata.labels_point_v1 AS s
 SET z_index = 1
     WHERE aantalinwoners  < 10000 AND aantalinwoners >= 1
-    AND (s.name!='Haarlem' 
-         AND s.name!='''s-Gravenhage'
-         AND s.name!='Middelburg' 
-         AND s.name!='Utrecht' 
-         AND s.name!='''s-Hertogenbosch' 
-         AND s.name!='Maastricht' 
-         AND s.name!='Arnhem' 
-         AND s.name!='Zwolle' 
-         AND s.name!='Assen' 
-         AND s.name!='Groningen' 
-         AND s.name!='Leeuwarden' 
-         AND s.name!='Lelystad')
 ;
 
 UPDATE visdata.labels_point_v1 AS s
 SET z_index = 1
     WHERE aantalinwoners  < 10000 AND aantalinwoners >= 1
-    AND (s.name!='Haarlem' 
-         AND s.name!='''s-Gravenhage'
-         AND s.name!='Middelburg' 
-         AND s.name!='Utrecht' 
-         AND s.name!='''s-Hertogenbosch' 
-         AND s.name!='Maastricht' 
-         AND s.name!='Arnhem' 
-         AND s.name!='Zwolle' 
-         AND s.name!='Assen' 
-         AND s.name!='Groningen' 
-         AND s.name!='Leeuwarden' 
-         AND s.name!='Lelystad')
 ;
 
 
