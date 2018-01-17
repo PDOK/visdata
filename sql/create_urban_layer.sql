@@ -486,9 +486,6 @@ INSERT INTO visdata.urban_polygon
   FROM 
     top1000nl.plaats_vlak AS s;
 
-
-DELETE FROM visdata.water_polygon WHERE ST_Area(geom)=0;
-
 -- Controle
 SELECT
 	original_source,
@@ -499,3 +496,6 @@ FROM
 	visdata.urban_polygon 
 GROUP BY original_source, lod1, lod2 
 ORDER BY original_source, lod1, lod2;
+
+
+SELECT count(*) FROM visdata.urban_polygon WHERE ST_Area(geom)=0;

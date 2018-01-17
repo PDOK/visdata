@@ -188,8 +188,6 @@ INSERT INTO visdata.water_polygon
     FROM 
         top1000nl.waterdeel_vlak AS s;
 
-DELETE FROM visdata.water_polygon WHERE ST_Area(geom)=0;
-
 -- Controle
 SELECT
 	original_source,
@@ -199,3 +197,6 @@ FROM
 	visdata.water_polygon 
 GROUP BY original_source, lod1 
 ORDER BY original_source, lod1;
+
+
+SELECT count(*) FROM visdata.water_polygon WHERE ST_Area(geom)=0;

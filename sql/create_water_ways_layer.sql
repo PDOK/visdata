@@ -168,8 +168,6 @@ INSERT INTO visdata.water_line
     FROM 
         top1000nl.waterdeel_lijn AS s;
 
-DELETE FROM visdata.water_line WHERE ST_Length(geom)=0;
-
 -- Controle
 SELECT
 	original_source,
@@ -179,3 +177,6 @@ FROM
 	visdata.water_line 
 GROUP BY original_source, lod1 
 ORDER BY original_source, lod1;
+
+
+SELECT count(*) FROM visdata.water_line WHERE ST_Length(geom)=0;

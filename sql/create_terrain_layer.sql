@@ -493,9 +493,6 @@ INSERT INTO visdata.terrain_polygon
     FROM
         top1000nl.terrein_vlak AS s;
 
-
-DELETE FROM visdata.terrain_polygon WHERE ST_Area(geom)=0;
-
 -- Controle
 SELECT
     original_source,
@@ -517,3 +514,6 @@ FROM
     visdata.terrain_polygon 
 GROUP BY original_source, lod1, lod2, lod3 
 ORDER BY original_source, lod1, lod2, lod3;
+
+
+SELECT count(*) FROM visdata.terrain_polygon WHERE ST_Area(geom)=0;
