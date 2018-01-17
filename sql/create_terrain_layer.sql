@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS visdata.terrain CASCADE;
-CREATE TABLE visdata.terrain (
+DROP TABLE IF EXISTS visdata.terrain_polygon CASCADE;
+CREATE TABLE visdata.terrain_polygon (
             lod1 text,
             lod2 text,
             lod3 text,
@@ -11,7 +11,7 @@ CREATE TABLE visdata.terrain (
         );
 
 -- BGT terrein_vlak
-INSERT INTO visdata.terrain
+INSERT INTO visdata.terrain_polygon
       SELECT
             'natural'                     AS lod1,
             CASE
@@ -47,7 +47,7 @@ INSERT INTO visdata.terrain
     FROM
       bgtv3."BegroeidTerreindeel" AS s;
 
-INSERT INTO visdata.terrain
+INSERT INTO visdata.terrain_polygon
       SELECT
             'human-made'                  AS lod1,
             CASE
@@ -73,7 +73,7 @@ INSERT INTO visdata.terrain
     FROM
       bgtv3."OnbegroeidTerreindeel" AS s;
 
-INSERT INTO visdata.terrain
+INSERT INTO visdata.terrain_polygon
       SELECT
             'natural'                     AS lod1,
             'low_vegetation'              AS lod2,
@@ -86,7 +86,7 @@ INSERT INTO visdata.terrain
     FROM
       bgtv3."OndersteunendWaterdeel" AS s;
 
-INSERT INTO visdata.terrain
+INSERT INTO visdata.terrain_polygon
       SELECT
             CASE
                 WHEN
@@ -119,7 +119,7 @@ INSERT INTO visdata.terrain
     FROM
       bgtv3."OndersteunendWegdeel" AS s;
 
-INSERT INTO visdata.terrain
+INSERT INTO visdata.terrain_polygon
       SELECT
             'human-made'                  AS lod1,
             'closed'                      AS lod2,
@@ -132,7 +132,7 @@ INSERT INTO visdata.terrain
     FROM
       bgtv3."Overbruggingsdeel" AS s;
 
-INSERT INTO visdata.terrain
+INSERT INTO visdata.terrain_polygon
       SELECT
             'human-made'                  AS lod1,
             CASE
@@ -158,7 +158,7 @@ INSERT INTO visdata.terrain
       bgtv3."Wegdeel" AS s;
 
 -- TOP10NL terrein_vlak
-INSERT INTO visdata.terrain
+INSERT INTO visdata.terrain_polygon
       SELECT
              CASE
                 WHEN
@@ -236,7 +236,7 @@ INSERT INTO visdata.terrain
 -- TODO: wegdelen?
 
 -- TOP50NL terrein_vlak
-INSERT INTO visdata.terrain
+INSERT INTO visdata.terrain_polygon
     SELECT
             CASE
                 WHEN
@@ -311,7 +311,7 @@ INSERT INTO visdata.terrain
     WHERE
       s.typelandgebruik != 'bebouwd gebied';
 
-INSERT INTO visdata.terrain
+INSERT INTO visdata.terrain_polygon
     SELECT
             CASE
                 WHEN
@@ -340,7 +340,7 @@ INSERT INTO visdata.terrain
     ;
 
 -- TOP100NL terrein_vlak
-INSERT INTO visdata.terrain
+INSERT INTO visdata.terrain_polygon
     SELECT
          CASE
                 WHEN
@@ -398,7 +398,7 @@ INSERT INTO visdata.terrain
         top100nl.terrein_vlak AS s;
 
 -- TOP250NL terrein_vlak
-INSERT INTO visdata.terrain
+INSERT INTO visdata.terrain_polygon
     SELECT
            CASE
                 WHEN
@@ -432,7 +432,7 @@ INSERT INTO visdata.terrain
         top250nl.terrein_vlak AS s;
 
 -- TOP500NL terrein_vlak
-INSERT INTO visdata.terrain
+INSERT INTO visdata.terrain_polygon
     SELECT
             CASE
                 WHEN
@@ -466,7 +466,7 @@ INSERT INTO visdata.terrain
         top500nl.terrein_vlak AS s;
 
 -- TOP1000NL terrein_vlak
-INSERT INTO visdata.terrain
+INSERT INTO visdata.terrain_polygon
     SELECT
             CASE
                 WHEN
@@ -494,7 +494,7 @@ INSERT INTO visdata.terrain
         top1000nl.terrein_vlak AS s;
 
 
-DELETE FROM visdata.terrain WHERE ST_Area(geom)=0;
+DELETE FROM visdata.terrain_polygon WHERE ST_Area(geom)=0;
 
 -- Controle
 SELECT
@@ -503,7 +503,7 @@ SELECT
     lod2,
     COUNT(*) AS aantal 
 FROM
-    visdata.terrain 
+    visdata.terrain_polygon 
 GROUP BY original_source, lod1, lod2 
 ORDER BY original_source, lod1, lod2;
 
@@ -514,6 +514,6 @@ SELECT
     lod3,
     COUNT(*) AS aantal 
 FROM
-    visdata.terrain 
+    visdata.terrain_polygon 
 GROUP BY original_source, lod1, lod2, lod3 
 ORDER BY original_source, lod1, lod2, lod3;
