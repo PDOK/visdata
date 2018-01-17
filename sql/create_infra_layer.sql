@@ -596,6 +596,10 @@ INSERT INTO visdata.infrastructure_line
     top1000nl.spoorbaandeel_lijn AS s
 ;
 
+-- Indexen aanmaken
+CREATE INDEX infrastructure_line_sidx ON visdata.infrastructure_line USING GIST(geom);
+CREATE INDEX infrastructure_line_source ON visdata.infrastructure_line(original_source);
+
 -- Controle
 SELECT
     original_source,

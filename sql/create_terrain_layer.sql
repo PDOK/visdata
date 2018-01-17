@@ -493,6 +493,10 @@ INSERT INTO visdata.terrain_polygon
     FROM
         top1000nl.terrein_vlak AS s;
 
+-- Indexen aanmaken
+CREATE INDEX terrain_polygon_sidx ON visdata.terrain_polygon USING GIST(geom);
+CREATE INDEX terrain_polygon_source ON visdata.terrain_polygon(original_source);
+
 -- Controle
 SELECT
     original_source,

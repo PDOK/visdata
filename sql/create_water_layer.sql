@@ -188,6 +188,10 @@ INSERT INTO visdata.water_polygon
     FROM 
         top1000nl.waterdeel_vlak AS s;
 
+-- Indexen aanmaken
+CREATE INDEX water_polygon_sidx ON visdata.water_polygon USING GIST(geom);
+CREATE INDEX water_polygon_source ON visdata.water_polygon(original_source);
+
 -- Controle
 SELECT
 	original_source,

@@ -486,6 +486,10 @@ INSERT INTO visdata.urban_polygon
   FROM 
     top1000nl.plaats_vlak AS s;
 
+-- Indexen aanmaken
+CREATE INDEX urban_polygon_sidx ON visdata.urban_polygon USING GIST(geom);
+CREATE INDEX urban_polygon_source ON visdata.urban_polygon(original_source);
+
 -- Controle
 SELECT
 	original_source,

@@ -178,6 +178,10 @@ INSERT INTO visdata.admin_polygon
      AND s.typeregistratiefgebied != 'enclave'
 ;
 
+-- Indexen aanmaken
+CREATE INDEX admin_polygon_sidx ON visdata.admin_polygon USING GIST(geom);
+CREATE INDEX admin_polygon_source ON visdata.admin_polygon(original_source);
+
 --Controle
 SELECT
   original_source,
