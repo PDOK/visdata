@@ -1,0 +1,101 @@
+{
+    "version": 8,
+    "name": "data",
+    "sprite": "https://www.mapbox.com/mapbox-gl-styles/sprites/sprite",
+    "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+    "sources": {
+        "wm_vector":{
+            "type": "vector",
+            "tiles": ["http://geodata.nationaalgeoregister.nl/visdata/{z}/{x}/{y}.pbf"]
+       }
+    },
+    "layers": [
+        {
+            "id":  "background",
+            "type": "background",
+            "paint": {
+                "background-color":"#D6F1E9"
+            }
+        },
+        {
+            "id": "admin",
+            "type": "fill",
+            "source": "wm_vector",
+            "source-layer": "admin",
+            "maxzoom": 20,
+            "minzoom": 0,
+            "paint": {
+                "fill-color" : "#ffffff",
+                "fill-outline-color": "#cccccc"
+            }
+        },
+        {
+            "id": "water",
+            "type": "fill",
+            "source": "wm_vector",
+            "source-layer": "water",
+            "maxzoom": 20,
+            "minzoom": 0,
+            "paint": {
+                "fill-color" : "#80bde3",
+                "fill-outline-color": "#80bde3"
+            }
+        },
+         {
+            "id": "terrain",
+            "type": "fill",
+            "source": "wm_vector",
+            "source-layer": "terrain",
+            "maxzoom": 20,
+            "minzoom": 0,
+            "paint": {
+                "fill-color": "#ffffff"
+            }
+        },
+        {
+            "id": "water_line",
+            "type": "line",
+            "source": "wm_vector",
+            "source-layer": "water-line",
+            "maxzoom": 20,
+            "minzoom": 0,
+            "paint": {
+                "line-color" : "#80bde3",
+                "line-width": {
+                    "stops":[
+                        [10, 0.1],
+                        [11, 0.3]
+                ]
+                }
+            }
+        },
+        {
+            "id": "urban",
+            "type": "fill",
+            "source": "wm_vector",
+            "source-layer": "urban",
+            "maxzoom": 20,
+            "minzoom": 0,
+            "paint": {
+                "fill-color" : "#E3DCE7"
+            }
+        },
+        {
+            "id": "infra",
+            "type": "line",
+            "source": "wm_vector",
+            "source-layer": "infra",
+            "filter": ["==", "lod1", "railway"],
+            "maxzoom": 20,
+            "minzoom": 6,
+            "layout" :{
+                "line-cap" : "butt"
+            },
+            "paint": {
+                "line-color" : "#d1c1be",
+                "line-width" :  2
+            }
+        }
+    ]
+}
+

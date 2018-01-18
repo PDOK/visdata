@@ -6,13 +6,9 @@
     "attribution": "Kaartgegevens: <a href=\"https://www.kadaster.nl\">Kadaster</a>. Cartografie: <a href=\"https://webmapper.net\" target=\"_blank\">Webmapper</a>",
     "scheme": "xyz",
     "tiles": [
-                "http://vt1.maps.geocoders.nl/visdata/{z}/{x}/{y}.pbf",
-                "http://vt2.maps.geocoders.nl/visdata/{z}/{x}/{y}.pbf",
-                "http://vt3.maps.geocoders.nl/visdata/{z}/{x}/{y}.pbf",
-                "http://vt4.maps.geocoders.nl/visdata/{z}/{x}/{y}.pbf"
+                "http://geodata.nationaalgeoregister.nl/visdata/{z}/{x}/{y}.pbf"
             ],
     "minzoom": 0,
-    "maxzoom": 20,
-    "bounds":  [3.09326, 50.72915, 7.25636, 53.76957]
+    "maxzoom": 20
 }
 

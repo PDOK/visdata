@@ -8,15 +8,13 @@ var bounds = [
 var options = {
   container: 'map',
   hash: true,
-  style: 'simple_style.json',
+  style: 'test.json',
   zoom: 6,
   pitch: 0,
   bearing: 0,
   center: [5.19,52.33],
   attributionControl: false
 }
-
-mapboxgl.accessToken =  "pk.eyJ1IjoibmllbmViIiwiYSI6IlR6NWEzdmMifQ.dRVGdAluvTb9EIXVBREbzw";
 
 // INITIALIZE MAP
 var map = new mapboxgl.Map(options);

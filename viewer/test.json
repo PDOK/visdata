@@ -1,0 +1,30 @@
+{
+    "version": 8,
+    "name": "data",
+    "sources": {
+        "wm_vector":{
+            "type": "vector",
+            "tiles": ["http://vt1.maps.geocoders.nl/visdata/{z}/{x}/{y}.pbf"]
+       }
+    },
+    "layers": [
+        {
+            "id":  "background",
+            "type": "background",
+            "paint": {
+                "background-color":"#474747"
+            }
+        },
+        {
+            "id": "infra",
+            "type": "line",
+            "source": "wm_vector",
+            "source-layer": "infra",
+            "maxzoom": 22,
+            "minzoom": 0,
+            "paint": {
+                "line-color": "#f9e11e"
+            }
+        }
+    ]
+}
