@@ -1,11 +1,11 @@
-docker-compose run --rm gdal ogr2ogr -f GeoJSON /data/admin_10.geojson -s_srs EPSG:28992 -t_srs EPSG:4326 PG:"host=postgres port=5432 user=DataVIS dbname=DataVIS password=DataVIS" -sql "SELECT * FROM visdata.admin WHERE original_source='TOP10NL'"
+ogr2ogr -f GeoJSON /data/geojson/admin_10.geojson -s_srs EPSG:28992 -t_srs EPSG:4326 PG:"host=postgis port=5432 user=pdok_owner dbname=visdata password=Ip8pVdIM3eJKzs4aSU1ylfiJaubBRrKu" -sql "SELECT * FROM visdata.admin_polygon WHERE original_source='TOP10NL'"
 
-docker-compose run --rm gdal ogr2ogr -f GeoJSON /data/admin_50.geojson -s_srs EPSG:28992 -t_srs EPSG:4326 PG:"host=postgres port=5432 user=DataVIS dbname=DataVIS password=DataVIS" -sql "SELECT * FROM visdata.admin WHERE original_source='TOP50NL'"
+ogr2ogr -f GeoJSON /data/geojson/admin_50.geojson -s_srs EPSG:28992 -t_srs EPSG:4326 PG:"host=postgis port=5432 user=pdok_owner dbname=visdata password=Ip8pVdIM3eJKzs4aSU1ylfiJaubBRrKu" -sql "SELECT * FROM visdata.admin_polygon WHERE original_source='TOP50NL'"
 
-docker-compose run --rm gdal ogr2ogr -f GeoJSON /data/admin_100.geojson -s_srs EPSG:28992 -t_srs EPSG:4326 PG:"host=postgres port=5432 user=DataVIS dbname=DataVIS password=DataVIS" -sql "SELECT * FROM visdata.admin WHERE original_source='TOP100NL'"
+ogr2ogr -f GeoJSON /data/geojson/admin_100.geojson -s_srs EPSG:28992 -t_srs EPSG:4326 PG:"host=postgis port=5432 user=pdok_owner dbname=visdata password=Ip8pVdIM3eJKzs4aSU1ylfiJaubBRrKu" -sql "SELECT * FROM visdata.admin_polygon WHERE original_source='TOP100NL'"
 
-docker-compose run --rm gdal ogr2ogr -f GeoJSON /data/admin_250.geojson -s_srs EPSG:28992 -t_srs EPSG:4326 PG:"host=postgres port=5432 user=DataVIS dbname=DataVIS password=DataVIS" -sql "SELECT * FROM visdata.admin WHERE original_source='TOP250NL'"
+ogr2ogr -f GeoJSON /data/geojson/admin_250.geojson -s_srs EPSG:28992 -t_srs EPSG:4326 PG:"host=postgis port=5432 user=pdok_owner dbname=visdata password=Ip8pVdIM3eJKzs4aSU1ylfiJaubBRrKu" -sql "SELECT * FROM visdata.admin_polygon WHERE original_source='TOP250NL'"
 
-docker-compose run --rm gdal ogr2ogr -f GeoJSON /data/admin_500.geojson -s_srs EPSG:28992 -t_srs EPSG:4326 PG:"host=postgres port=5432 user=DataVIS dbname=DataVIS password=DataVIS" -sql "SELECT * FROM visdata.admin WHERE original_source='TOP500NL'"
+ogr2ogr -f GeoJSON /data/geojson/admin_500.geojson -s_srs EPSG:28992 -t_srs EPSG:4326 PG:"host=postgis port=5432 user=pdok_owner dbname=visdata password=Ip8pVdIM3eJKzs4aSU1ylfiJaubBRrKu" -sql "SELECT * FROM visdata.admin_polygon WHERE original_source='TOP500NL'"
 
-docker-compose run --rm gdal ogr2ogr -f GeoJSON /data/admin_1000.geojson -s_srs EPSG:28992 -t_srs EPSG:4326 PG:"host=postgres port=5432 user=DataVIS dbname=DataVIS password=DataVIS" -sql "SELECT * FROM visdata.admin WHERE original_source='TOP1000NL'"
+ogr2ogr -f GeoJSON /data/geojson/admin_1000.geojson -s_srs EPSG:28992 -t_srs EPSG:4326 PG:"host=postgis port=5432 user=pdok_owner dbname=visdata password=Ip8pVdIM3eJKzs4aSU1ylfiJaubBRrKu" -sql "SELECT * FROM visdata.admin_polygon WHERE original_source='TOP1000NL'"
