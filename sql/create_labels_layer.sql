@@ -4,6 +4,7 @@ CREATE TABLE visdata.labels_point (
   lod2 text, 
   name text,
   z_index integer,
+  rotation integer,
   original_source text,
   original_id text,
   geom geometry(POINT,28992) 
@@ -15,7 +16,8 @@ INSERT INTO visdata.labels_point
     'building_number'             AS lod1,
     ''                            AS lod2,
     s.tekst                       AS name,
-    s.hoek                        AS z_index,
+    0                             AS z_index,
+    s.hoek                        AS rotation,
     'BGT'                         AS original_source,
     'NL.IMGeo.' || s."_id"   AS original_id,
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,1)))).geom::geometry(POINT,28992) AS geom
@@ -46,7 +48,8 @@ INSERT INTO visdata.labels_point
     END                           AS lod1,
     s."openbareRuimteType"        AS lod2,
     s."openbareRuimteNaam"        AS name,
-    s.hoek                        AS z_index,
+    0                             AS z_index,
+    s.hoek                        AS rotation,
     'BGT'                         AS original_source,
     'NL.IMGeo.' || s."_id"   AS original_id,
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,1)))).geom::geometry(POINT,28992) AS geom
@@ -87,6 +90,7 @@ INSERT INTO visdata.labels_point
       NULLIF(s.naamnl, ''), 
       '')                                            AS name,
     0                                                AS z_index,
+    0                                                AS rotation,
     'TOP10NL'                                        AS original_source,
     'NL.TOP10NL.' || s.lokaalid                      AS original_id,
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,1)))).geom::geometry(POINT,28992) AS geom
@@ -104,6 +108,7 @@ INSERT INTO visdata.labels_point
       NULLIF(s.naamnl, ''), 
       '')                                            AS name,
     0                                                AS z_index,
+    0                                                AS rotation,
     'TOP10NL'                                        AS original_source,
     'NL.TOP10NL.' || s.lokaalid                      AS original_id,
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry,1)))).geom::geometry(POINT,28992) AS geom
@@ -124,6 +129,7 @@ INSERT INTO visdata.labels_point
       NULLIF(s.naamnl, ''), 
       '')             AS name,
     0                    AS z_index,
+    0                                                AS rotation,
     'TOP50NL'          AS original_source,
     s.namespace || '.' || s.lokaalid  AS original_id,
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,1)))).geom::geometry(POINT,28992) AS geom
@@ -145,6 +151,7 @@ INSERT INTO visdata.labels_point
       NULLIF(s.naamnl, ''), 
       '')             AS name,
     0                    AS z_index,
+    0                                                AS rotation,
     'TOP100NL'          AS original_source,
     s.namespace || '.' || s.lokaalid  AS original_id,
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,1)))).geom::geometry(POINT,28992) AS geom
@@ -164,6 +171,7 @@ INSERT INTO visdata.labels_point
       NULLIF(s.naamnl, ''), 
       '')             AS name,
     0                    AS z_index,
+    0                                                AS rotation,
     'TOP250NL'          AS original_source,
     s.namespace || '.' || s.lokaalid  AS original_id,
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,1)))).geom::geometry(POINT,28992) AS geom
@@ -189,6 +197,7 @@ INSERT INTO visdata.labels_point
       NULLIF(s.naamnl, ''), 
       '')                AS name,
     0                    AS z_index,
+    0                                                AS rotation,
     'TOP250NL'          AS original_source,
     s.namespace || '.' || s.lokaalid  AS original_id,
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,1)))).geom::geometry(POINT,28992) AS geom
@@ -205,6 +214,7 @@ INSERT INTO visdata.labels_point
       NULLIF(s.naamnl, ''), 
       '')             AS name,
     0                    AS z_index,
+    0                                                AS rotation,
     'TOP500NL'          AS original_source,
     s.namespace || '.' || s.lokaalid  AS original_id,
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,1)))).geom::geometry(POINT,28992) AS geom
@@ -230,6 +240,7 @@ INSERT INTO visdata.labels_point
       NULLIF(s.naamnl, ''), 
       '')                AS name,
     0                    AS z_index,
+    0                                                AS rotation,
     'TOP500NL'          AS original_source,
     s.namespace || '.' || s.lokaalid  AS original_id,
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,1)))).geom::geometry(POINT,28992) AS geom
@@ -248,6 +259,7 @@ INSERT INTO visdata.labels_point
       NULLIF(s.naamnl, ''), 
       '')             AS name,
     0                    AS z_index,
+    0                    AS rotation,
     'TOP1000NL'          AS original_source,
     s.namespace || '.' || s.lokaalid  AS original_id,
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,1)))).geom::geometry(POINT,28992) AS geom
@@ -263,6 +275,7 @@ INSERT INTO visdata.labels_point
       NULLIF(s.naamnl, ''), 
       '')                AS name,
     0                    AS z_index,
+    0                    AS rotation,
     'TOP1000NL'          AS original_source,
     s.namespace || '.' || s.lokaalid  AS original_id,
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,1)))).geom::geometry(POINT,28992) AS geom
@@ -700,6 +713,7 @@ INSERT INTO visdata.labels_point
     ''                 AS lod2,
     name               AS name,
     s.z_index   AS z_index,
+    0                    AS rotation,
     s.original_source  AS original_source,
     s.namespace || '.' || s.lokaalid  AS original_id,
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,1)))).geom::geometry(POINT,28992) AS geom
