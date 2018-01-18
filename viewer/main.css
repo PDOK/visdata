@@ -1,0 +1,33 @@
+html, body {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased; 
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  -webkit-overflow-scrolling: auto;
+  position: absolute;
+}
+
+h1 {
+  color: #535353;
+  font-size: 3em;  
+}
+
+p {
+  color: #535353;
+  white-space: normal;
+}
+
+/*MAP*/
+#map {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #f9f9f9;
+  cursor: move;
+  -webkit-tap-highlight-color: transparent;
+}

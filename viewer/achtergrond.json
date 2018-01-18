@@ -1,0 +1,74 @@
+{
+    "version": 8,
+    "name": "data",
+    "sources": {
+        "wm_vector":{
+            "type": "vector",
+            "url": "tilejson.json"
+       }
+    },
+    "layers": [
+        {
+            "id":  "background",
+            "type": "background",
+            "paint": {
+                "background-color":"#474747"
+            }
+        },
+        {
+            "id": "admin",
+            "type": "line",
+            "source": "wm_vector",
+            "source-layer": "admin",
+            "maxzoom": 22,
+            "minzoom": 0,
+            "paint": {
+                "line-color" : "#ff4d4d"
+            }
+        },
+        {
+            "id": "water",
+            "type": "line",
+            "source": "wm_vector",
+            "source-layer": "water",
+            "maxzoom": 22,
+            "minzoom": 0,
+            "paint": {
+                "line-color" :"#80bde3"
+            }
+        },
+        {
+            "id": "terrain",
+            "type": "line",
+            "source": "wm_vector",
+            "source-layer": "terrain",
+            "maxzoom": 22,
+            "minzoom": 0,
+            "paint": {
+                "line-color" : "#c3dbb6"
+            }
+        },
+        {
+            "id": "urban",
+            "type": "line",
+            "source": "wm_vector",
+            "source-layer": "urban",
+            "maxzoom": 22,
+            "minzoom": 0,
+            "paint": {
+                "line-color" : "#ff4d99"
+            }
+        },
+        {
+            "id": "infra",
+            "type": "line",
+            "source": "wm_vector",
+            "source-layer": "infra",
+            "maxzoom": 22,
+            "minzoom": 0,
+            "paint": {
+                "line-color": "#f9e11e"
+            }
+        }
+    ]
+}
