@@ -7,12 +7,17 @@ html, body {
 }
 
 h1 {
-  color: #535353;
+  color: #ffffff;
   font-size: 3em;  
 }
 
+h2, h3, h4 {
+    color: #ffffff;
+
+}
+
 p {
-  color: #535353;
+  color: #f9f9f9;
 }
 
 /* Map canvas related styles */
@@ -67,7 +72,7 @@ p {
 }
 
 .step {
-  background-color: #f9f9f9;
+  background-color: #E17000;
   opacity: 0.7;
   padding: 1rem;
   margin-bottom: 30px;
@@ -75,7 +80,7 @@ p {
 
 .step.is-active {
   opacity: 1;
-  background-color: lightgoldenrodyellow;
+  background-color: #E17000;
 }
 
 .step.is-disabled {

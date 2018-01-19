@@ -2,7 +2,7 @@
     "version": 8,
     "name": "data",
     "sprite": "mapbox://sprites/mapbox/bright-v8",
-    "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+    "glyphs": "/font/{fontstack}/{range}.pbf",
     "sources": {
         "wm_vector":{
             "type": "vector",
@@ -304,7 +304,7 @@
                 ]
                 },
                 "text-field":"{name}",
-                "text-font": ["Open Sans Bold"],
+                "text-font": ["Rijksoverheid Sans Text TT Regular_2_0"],
                 "text-size":{
                     "stops":[
                         [0,0],
@@ -343,7 +343,7 @@
                 },
                 "text-rotation-alignment":"map",
                 "text-field":"{name}",
-                "text-font": ["Open Sans Regular"],
+                "text-font": ["Rijksoverheid Sans Text TT Italic_2_0"],
                 "text-size":10,
                 "text-max-width": 100,
                 "text-anchor": "center",
@@ -374,8 +374,8 @@
                 },
                 "text-rotation-alignment":"map",
                 "text-field":"{name}",
-                "text-font": ["Open Sans Regular"],
-                "text-size":7,
+                "text-font": ["Rijksoverheid Sans Text TT Regular_2_0"],
+                "text-size":14,
                 "text-max-width": 5,
                 "text-anchor": "center",
                 "text-line-height": 1.5,
@@ -400,19 +400,19 @@
             "filter": ["==", "lod1", "residential"],
             "layout": {
                 "text-field":"{name}",
-                "text-font": ["Open Sans Bold"],
+                "text-font": ["Rijksoverheid Sans Text TT Bold_2_0"],
                 "text-size":{
                     "property": "z_index",
                     "type": "categorical",
                     "stops":[
-                        [1, 10],
-                        [10, 10],
-                        [100, 10],
-                        [1000, 10],
-                        [10000, 12],
-                        [100000, 16]
+                        [1, 18],
+                        [10, 18],
+                        [100, 18],
+                        [1000, 20],
+                        [10000, 20],
+                        [100000, 26]
                     ],
-                    "default": 8
+                    "default": 16
                 },
                 "text-max-width": 10,
                 "text-anchor": "center",

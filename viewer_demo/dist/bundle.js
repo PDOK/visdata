@@ -18608,44 +18608,21 @@ function switchStyle(){
 
 // STEP 2. LABELS TOGGLE ON OFF
 var click2 = 0;
-    var toggleableLayerIds = ['labels'];
+var toggleableLayerIds = ['labels', 'building_labels', 'water_labels', 'labels_highway'];
 
 document.getElementById('toggle').addEventListener('click', toggleOnOff);
 function toggleOnOff(){
-      if ( click2 < (toggleableLayerIds.length-1)){ 
-        map.setLayoutProperty(toggleableLayerIds[click2], 'visibility', 'none');
-        click2 += 1;
-      } else {
-        click2 = 0;
-        map.setLayoutProperty(toggleableLayerIds[click2], 'visibility', 'visible');
+    var visibility = map.getLayoutProperty('labels', 'visibility');
+    if (visibility == 'visible'){
+        for (var i = 0; i < toggleableLayerIds.length; i++){
+         map.setLayoutProperty(toggleableLayerIds[i], 'visibility', 'none');
+        }
+    } else {
+        for (var i = 0; i < toggleableLayerIds.length; i++){
+         map.setLayoutProperty(toggleableLayerIds[i], 'visibility', 'visible');
+        }
     }
 };
-
-
-
-
-// function toggle(){
-//     for (var i = 0; i < toggleableLayerIds.length; i++) {
-//         var id = toggleableLayerIds[i];
-
-//         var link = document.createElement('a');
-//         link.href = '#';
-//         link.className = 'active';
-//         link.textContent = id;
-
-//         link.onclick = function (e) {
-//             var clickedLayer = this.textContent;
-//             e.preventDefault();
-//             e.stopPropagation();
-
-
-            
-//         };
-
-//         var layers = document.getElementById('menu');
-//         layers.appendChild(link);
-//     }
-// }
 
 
 // STEP 3. COLORS
