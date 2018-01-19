@@ -19,6 +19,11 @@ FROM visdata.infrastructure_line
 GROUP BY original_source;
 
 INSERT INTO visdata.visdata_counts 
+SELECT 'labels_point', original_source, COUNT(*) 
+FROM visdata.labels_point 
+GROUP BY original_source;
+
+INSERT INTO visdata.visdata_counts 
 SELECT 'terrain_polygon', original_source, COUNT(*) 
 FROM visdata.terrain_polygon 
 GROUP BY original_source;
