@@ -288,8 +288,8 @@ SELECT
     lod1,
     COUNT(*) AS aantal 
 FROM
-    visdata.labels_point
-GROUP BY original_source, lod1
+    visdata.labels_point 
+GROUP BY original_source, lod1 
 ORDER BY original_source, lod1;
 
 
@@ -317,7 +317,7 @@ CREATE TABLE visdata.labels_point_v1 AS
 
 -- TOP10
 DROP TABLE IF EXISTS visdata.top10_labels_point_from_polygon CASCADE;
-CREATE TABLE visdata.top10_labels_point_from_polygon AS
+CREATE TABLE visdata.top10_labels_point_from_polygon AS 
 SELECT
     ST_Area(_geometry) AS area,
     namespace,
@@ -342,10 +342,10 @@ SELECT
     _geometry
 ;
 
-DELETE
+DELETE 
 FROM
     visdata.top10_labels_point_from_polygon a
-        USING visdata.top10_labels_point_from_polygon b
+        USING visdata.top10_labels_point_from_polygon b 
 WHERE
     a.area < b.area
     AND a.name = b.name
@@ -358,7 +358,7 @@ SELECT
   original_source::text,
   aantalinwoners::integer,
   name,
-  wkb_geometry
+  wkb_geometry 
 FROM 
     visdata.top10_labels_point_from_polygon 
 ;
@@ -465,7 +465,7 @@ INSERT INTO visdata.labels_point_v1
 --- plaats polygonene naar punt
 DROP TABLE IF EXISTS visdata.top500_labels_point_from_polygon CASCADE;
 
-CREATE TABLE visdata.top500_labels_point_from_polygon AS
+CREATE TABLE visdata.top500_labels_point_from_polygon AS 
 SELECT
     ST_Area(wkb_geometry) AS area,
     lokaalid,
@@ -490,10 +490,10 @@ SELECT
     wkb_geometry
 ;
 
-DELETE
+DELETE 
 FROM
     visdata.top500_labels_point_from_polygon a
-        USING visdata.top500_labels_point_from_polygon b
+        USING visdata.top500_labels_point_from_polygon b 
 WHERE
     a.area < b.area
     AND a.name = b.name;
@@ -505,7 +505,7 @@ SELECT
   s.original_source::text,
   s.aantalinwoners::integer,
   s.name,
-  s.wkb_geometry
+  s.wkb_geometry 
 FROM 
     visdata.top500_labels_point_from_polygon as s
   left join
@@ -540,7 +540,7 @@ INSERT INTO visdata.labels_point_v1
 --- plaats polygonene naar punt
 DROP TABLE IF EXISTS visdata.top1000_labels_point_from_polygon CASCADE;
 
-CREATE TABLE visdata.top1000_labels_point_from_polygon AS
+CREATE TABLE visdata.top1000_labels_point_from_polygon AS 
 SELECT
     ST_Area(wkb_geometry) AS area,
     lokaalid,
@@ -565,10 +565,10 @@ SELECT
     wkb_geometry
 ;
 
-DELETE
+DELETE 
 FROM
     visdata.top1000_labels_point_from_polygon a
-        USING visdata.top1000_labels_point_from_polygon b
+        USING visdata.top1000_labels_point_from_polygon b 
 WHERE
     a.area < b.area
     AND a.name = b.name;
@@ -580,7 +580,7 @@ SELECT
   s.original_source::text,
   s.aantalinwoners::integer,
   s.name,
-  s.wkb_geometry
+  s.wkb_geometry 
 FROM 
     visdata.top1000_labels_point_from_polygon as s
   left join
@@ -601,7 +601,7 @@ FROM
 ALTER TABLE visdata.labels_point_v1 ADD COLUMN z_index integer; 
 
 
-UPDATE visdata.labels_point_v1 AS s
+UPDATE visdata.labels_point_v1 AS s 
 SET z_index = 100000
     WHERE 
         s.name='Haarlem' 
@@ -619,93 +619,41 @@ SET z_index = 100000
          OR s.name='Amsterdam'
 ;
 
-UPDATE visdata.labels_point_v1 AS s
+UPDATE visdata.labels_point_v1 AS s 
 SET z_index = 10000
-    WHERE aantalinwoners >=150000  
-    AND (s.name!='Haarlem' 
-         AND s.name!='''s-Gravenhage'
-         AND s.name!='Middelburg' 
-         AND s.name!='Utrecht' 
-         AND s.name!='''s-Hertogenbosch' 
-         AND s.name!='Maastricht' 
-         AND s.name!='Arnhem' 
-         AND s.name!='Zwolle' 
-         AND s.name!='Assen' 
-         AND s.name!='Groningen' 
-         AND s.name!='Leeuwarden' 
-         AND s.name!='Lelystad'
-         AND s.name !='Amsterdam'
-)
+    WHERE aantalinwoners >=150000
+    AND z_index IS NULL
 ;
 
-UPDATE visdata.labels_point_v1 AS s
+UPDATE visdata.labels_point_v1 AS s 
 SET z_index = 1000
     WHERE aantalinwoners  <150000 AND aantalinwoners >= 100000
-    AND (s.name!='Haarlem' 
-         AND s.name!='''s-Gravenhage'
-         AND s.name!='Middelburg' 
-         AND s.name!='Utrecht' 
-         AND s.name!='''s-Hertogenbosch' 
-         AND s.name!='Maastricht' 
-         AND s.name!='Arnhem' 
-         AND s.name!='Zwolle' 
-         AND s.name!='Assen' 
-         AND s.name!='Groningen' 
-         AND s.name!='Leeuwarden' 
-         AND s.name!='Lelystad')
+    AND z_index IS NULL
 ;
 
-UPDATE visdata.labels_point_v1 AS s
+UPDATE visdata.labels_point_v1 AS s 
 SET z_index = 100
     WHERE aantalinwoners  <100000 AND aantalinwoners >= 50000
-    AND (s.name!='Haarlem' 
-         AND s.name!='''s-Gravenhage'
-         AND s.name!='Middelburg' 
-         AND s.name!='Utrecht' 
-         AND s.name!='''s-Hertogenbosch' 
-         AND s.name!='Maastricht' 
-         AND s.name!='Arnhem' 
-         AND s.name!='Zwolle' 
-         AND s.name!='Assen' 
-         AND s.name!='Groningen' 
-         AND s.name!='Leeuwarden' 
-         AND s.name!='Lelystad')
+    AND z_index IS NULL
 ;
 
-UPDATE visdata.labels_point_v1 AS s
+UPDATE visdata.labels_point_v1 AS s 
 SET z_index = 10
     WHERE aantalinwoners  <50000 AND aantalinwoners >= 10000
-    AND (s.name!='Haarlem' 
-         AND s.name!='''s-Gravenhage'
-         AND s.name!='Middelburg' 
-         AND s.name!='Utrecht' 
-         AND s.name!='''s-Hertogenbosch' 
-         AND s.name!='Maastricht' 
-         AND s.name!='Arnhem' 
-         AND s.name!='Zwolle' 
-         AND s.name!='Assen' 
-         AND s.name!='Groningen' 
-         AND s.name!='Leeuwarden' 
-         AND s.name!='Lelystad')
+    AND z_index IS NULL
 ;
 
-UPDATE visdata.labels_point_v1 AS s
+UPDATE visdata.labels_point_v1 AS s 
 SET z_index = 1
     WHERE aantalinwoners  < 10000 AND aantalinwoners >= 1
 ;
 
-UPDATE visdata.labels_point_v1 AS s
-SET z_index = 1
-    WHERE aantalinwoners  < 10000 AND aantalinwoners >= 1
-;
-
-
-UPDATE visdata.labels_point_v1 AS s
+UPDATE visdata.labels_point_v1 AS s 
 SET z_index = 0
     WHERE aantalinwoners  IS NULL OR aantalinwoners = 0 
 ;
 
-SELECT z_index, count(*) FROM visdata.labels_point_v1 GROUP BY z_index ORDER BY z_index;
+SELECT z_index, COUNT(*) FROM visdata.labels_point_v1 GROUP BY z_index ORDER BY z_index;
 
 INSERT INTO visdata.labels_point
   SELECT
@@ -719,3 +667,8 @@ INSERT INTO visdata.labels_point
     (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s.wkb_geometry,1)))).geom::geometry(POINT,28992) AS geom
   FROM 
     visdata.labels_point_v1 AS s ;
+
+DROP TABLE IF EXISTS visdata.top10_labels_point_from_polygon CASCADE;
+DROP TABLE IF EXISTS visdata.top500_labels_point_from_polygon CASCADE;
+DROP TABLE IF EXISTS visdata.top1000_labels_point_from_polygon CASCADE;
+DROP TABLE IF EXISTS visdata.labels_point_v1 CASCADE;
