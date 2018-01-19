@@ -1,0 +1,66 @@
+{
+    "version": 8,
+    "name": "roads",
+    "sources": {
+         "wm_vector":{
+            "type": "vector",
+            "url": "./styles/tilejson.json"
+       }
+    },
+    "layers": [
+        {
+            "id":  "background",
+            "type": "background",
+            "paint": {
+                "background-color":"#ffffff"
+            }
+        },
+        {
+            "id": "water",
+            "type": "fill",
+            "source": "wm_vector",
+            "source-layer": "water",
+            "maxzoom": 20,
+            "minzoom": 0,
+            "paint": {
+                "fill-color" : "#80bde3",
+                "fill-outline-color": "#80bde3",
+                "fill-opacity": 0.5
+            }
+        },
+        {
+            "id": "urban",
+            "type": "fill",
+            "source": "wm_vector",
+            "source-layer": "urban",
+            "maxzoom": 20,
+            "minzoom": 0,
+            "paint": {
+                "fill-color" : "#d4b9da",
+                "fill-opacity": 0.5,
+                "fill-outline-color": "#d4b9da"
+            }
+        },
+        {
+            "id": "admin",
+            "type": "line",
+            "source": "wm_vector",
+            "source-layer": "admin",
+            "maxzoom": 20,
+            "minzoom": 0,
+            "paint": {
+                "line-color": "#737373",
+                "line-width": {
+                    "property": "lod1",
+                    "type": "categorical",
+                    "stops": [
+                        ["country" , 3],
+                        ["province", 5]
+                    ],
+                    "default" : 2
+                },
+                "line-dasharray": [2,2]
+            }
+        }
+    ]
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="nl">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>VISdata - Webmapper</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="img/favicon.ico">
+		<link rel="stylesheet" href="css/mapbox-gl.css">
+		<link rel="stylesheet" href="css/main.css">
+	</head>
+	<body>
+		<section id="scroll">
+			<div class="scroll__text">
+				<div class="step is-active" id="first-step"> 
+					<h1>VISdata</h1>
+					<p><b>Navigatie</b>: kantel de kaart door de <i>rechtermuisknop</i> in te houden. Zoom in en uit met het <i>wieltje</i>.</p>
+					<hr />
+					<p>Scroll hier naar beneden voor meer.</p>
+				</div>
+				<div class="step is-disabled" data-step="0">
+					<h2>Vector tiles</h2>
+					<p>De kaart bestaat uit zogenaamde <b>vector tiles</b> in plaats van raster tegels. De kaart verschijnt sneller op het scherm en je kan makkelijk de stijl aanpassen. De kaart wordt namelijk in de browser getekend.</p>
+					<p>De data wordt 1 keer opgehaald, maar we kunnen oneindig veel stijlen toepassen.</p>
+					<p><button class="mybutton" id="switch" >Klik hier</button> voor een andere stijl.</p>
+				</div>	
+				<div class="step is-disabled" data-step="1">
+					<h2>Nederlandse data: makkelijker</h2>
+					<p> Om het stijlen en laden van de kaart nog makkelijker en sneller te maken is de data op een eenvoudiger georganiseerd.</p>
+					<h4>Beschikbare lagen:</h4>
+					<ul>
+						<li>Admin</li>
+						<li>Urban</li>
+						<li>Terrain</li>
+						<li>Infrastructure</li>
+						<li>Water</li>
+					</ul>
+					<p>In plaats van de termen uit de informatiemodellen voor de <abbr title="Basisregistratie Grootschalige Topografie">BGT</abbr> en <abbr title="Basisregistratie Topografie">BRT</abbr> zijn de eigenschappen van de data omgezet naar begrijpelijke, Engelse termen. Zo blijft het eenvoudig en begrijpbaar voor iedereen.</p>
+					<p>Met slechts 5 thema's maak je nu snel en eenvoudig een eigen kaart van heel Nederland op elk zoomniveau! Probeer maar uit:</p>
+					<form id="layer">
+						<input type="radio" name="layer" value="admin">
+						<label>Admin</label>
+						<input type="radio" name="layer" value="urban">
+						<label>Urban</label>
+						<input type="radio" name="layer" value="terrain">
+						<label>Terrain</label>
+						<input type="radio" name="layer" value="water" checked="checked">
+						<label>Water</label>
+						<input type="radio" name="layer" value="infra" checked="checked">
+						<label>Infra</label>
+					</form>
+					<fieldset>
+						<label>Kies een kleur:</label>
+						<div id="swatches"></div>
+					</fieldset>
+				</div>
+				<div class="step is-disabled" data-step="2">
+					<h2>Labels aan/uit?</h2>
+					<p><button class="mybutton" id="toggle" >Klik hier</button> voor een andere stijl.</p>
+				</div>
+				<div class="step is-disabled" data-step="3">
+					<h2>Brondata</h2>
+					<p>De kaart bestaat uit data uit de <abbr title="Basisregistratie Grootschalige Topografie">BGT</abbr> en <abbr title="Basisregistratie Topografie">BRT</abbr>. Op elk zoomniveau staat vast welke data je ziet. Zo begint de <abbr title="Basisregistratie Grootschalige Topografie">BGT</abbr> pas bij zoomniveau 16 en zie je de Top1000NL op zoomniveau 0 tot 6.</p>
+					<h4>Bekijk het hier:</h4>
+					<div id="opties"></div>
+					<div>
+						<h4>Je ziet nu zoomniveau: </h4>
+						<fieldset>
+							<label id="current_zoom"> 00 </label>
+						</fieldset>
+					</div>
+				</div>
+				<div class="step is-disabled" data-step="4" id="last-step">
+					<h2>Koppeling naar originele data</h2>
+					<p>Vector-tegels bevatten naast de geometrie ook de eigenschappen (attributen) van de kaartobjecten. Hiermee kan je deze stijlen, filteren en er interactie aan  toevoegen. Om de vector-tegels snel te houden is een selectie van de objecteigenschappen gemaakt, bedoeld om makkelijk te stijlen. Om de relatie met de originele data te houden is ook het originele ID van de objecten meegegeven.</p>
+					<p>Beweeg je muis over de kaart om het originele ID te zien:</p>
+					<h4> <label id="original_id"> GMLid	</label> </h4>
+				</div>
+			</div>
+			<div class="scroll__graphic is-fixed" id="map">
+				<!-- SEARCH BAR -->
+				<div id="search_bar">
+					<div id="ttinput">
+						<input class="typeahead"  type="text" placeholder="Mijn woonplaats"/>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div id="step-1-scrollmagic"></div>
+		<script src="dist/bundle.js"></script>
+	</body>
+</html>

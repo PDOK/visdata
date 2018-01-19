@@ -1,0 +1,90 @@
+{
+    "version": 8,
+    "name": "fancy",
+    "sources": {
+         "wm_vector":{
+            "type": "vector",
+            "url": "./styles/tilejson.json"
+       }
+    },
+    "layers": [
+        {
+            "id":  "background",
+            "type": "background",
+            "paint": {
+                "background-color":"#474747"
+            }
+        },
+        {
+            "id": "admin",
+            "type": "line",
+            "source": "wm_vector",
+            "source-layer": "admin",
+            "maxzoom": 20,
+            "minzoom": 0,
+            "paint": {
+                "line-color": "#f1f2f3"
+            }
+        },
+        {
+            "id": "water",
+            "type": "line",
+            "source": "wm_vector",
+            "source-layer": "water",
+            "maxzoom": 20,
+            "minzoom": 0,
+            "paint": {
+                    "line-color": "#80bde3"
+            }
+        },
+         {
+            "id": "terrain",
+            "type": "line",
+            "source": "wm_vector",
+            "source-layer": "terrain",
+            "maxzoom": 20,
+            "minzoom": 0,
+            "paint": {
+                "line-color": "#c3dbb6"
+
+            }
+        },
+        {
+            "id": "urban",
+            "type": "line",
+            "source": "wm_vector",
+            "source-layer": "urban",
+            "maxzoom": 20,
+            "minzoom": 0,
+            "paint": {
+                "line-color" :"#ff4d4d"
+            }
+        },
+        {
+            "id": "infra",
+            "type": "line",
+            "source": "wm_vector",
+            "source-layer": "infra",
+            "maxzoom": 12,
+            "minzoom": 5,
+            "layout" :{
+                "line-cap" : "butt"
+            },
+            "paint": {
+                "line-color" : "#f9e11e",
+                "line-width" : {
+                    "property": "lod1",
+                    "type": "categorical",
+                    "stops": [
+                        ["highway" , 3],
+                        ["artiary", 2],
+                        ["local", 1],
+                        ["ferry", 0]
+                    ]
+                },
+                "line-opacity": 0.4
+
+            }
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "tilejson": "1.0.0",
+    "name": "visdata",
+    "description": "Referentiekaart gebaseerd op de BRT en BGT",
+    "version": "1.0.0",
+    "attribution": "Kaartgegevens: <a href=\"https://www.kadaster.nl\">Kadaster</a>. Cartografie: <a href=\"https://webmapper.net\" target=\"_blank\">Webmapper</a>",
+    "scheme": "xyz",
+    "tiles": ["http://geodata.nationaalgeoregister.nl/visdata/{z}/{x}/{y}.pbf"],
+    "minzoom": 0,
+    "maxzoom": 20
+}
+
