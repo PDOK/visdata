@@ -8,7 +8,7 @@ var bounds = [
 var options = {
   container: 'map',
   hash: true,
-  style: 'simple_style.json',
+  style: 'achtergrond.json',
   zoom: 6,
   pitch: 0,
   bearing: 0,

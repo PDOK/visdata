@@ -116,7 +116,8 @@
             "minzoom": 6,
             "filter": ["==", "lod1", "roads"],
             "layout" :{
-                "line-cap" : "butt"
+                "line-cap" : "butt",
+                "line-join": "round"
             },
             "paint": {
                 "line-color" : {
@@ -150,7 +151,8 @@
             "minzoom": 6,
             "filter": ["==", "lod1", "roads"],
             "layout" :{
-                "line-cap" : "butt"
+                "line-cap" : "butt",
+                "line-join": "round"
             },
             "paint": {
                 "line-color" : {
@@ -232,31 +234,6 @@
             }
         },
         {
-            "id": "labels",
-            "type": "symbol",
-            "source": "wm_vector",
-            "source-layer": "labels",
-            "maxzoom": 20,
-            "minzoom": 0,
-            "symbol-placement": "point",
-            "symbol-avoid-edges" : false,
-            "layout": {
-                "text-field":"{name}",
-                "text-font": ["Open Sans Regular"],
-                "text-size":12,
-                "text-max-width": 500,
-                "text-anchor": "center",
-                "text-line-height": 1.5,
-                "text-justify": "center",
-                "text-padding": 5,
-                "text-allow-overlap": false
-            },
-            "paint":{
-                "text-opacity": 1,
-                "text-color": "#535353"
-            }
-        },
-        {
             "id": "labels_hightway",
             "type": "symbol",
             "source": "wm_vector",
@@ -284,7 +261,7 @@
                         [10, 16]
                 ]
                 },
-                "text-max-width": 5,
+                "text-max-width": 500,
                 "text-anchor": "center",
                 "text-line-height": 1.5,
                 "text-justify": "center",
@@ -296,6 +273,42 @@
                 "text-color": "#FFF",
                 "text-halo-color": "#FF7F7F",
                 "text-halo-width": 5
+            }
+        },
+        {
+            "id": "labels",
+            "type": "symbol",
+            "source": "wm_vector",
+            "source-layer": "label",
+            "maxzoom": 20,
+            "minzoom": 7,
+            "symbol-placement": "point",
+            "symbol-avoid-edges" : false,
+            "filter": ["==", "lod1", "residential"],
+            "layout": {
+                "text-field":"{name}",
+                "text-font": ["Open Sans Bold"],
+                "text-size":{
+                    "property": "z_index",
+                    "type": "categorical",
+                    "stops":[
+                        [100, 8],
+                        [1000, 10],
+                        [10000, 12],
+                        [100000, 16]
+                    ],
+                    "default": 6
+                },
+                "text-max-width": 10,
+                "text-anchor": "center",
+                "text-line-height": 1.5,
+                "text-justify": "center",
+                "text-padding": 2,
+                "text-allow-overlap": true
+            },
+            "paint":{
+                "text-opacity": 1,
+                "text-color": "#535353"
             }
         }
     ]
