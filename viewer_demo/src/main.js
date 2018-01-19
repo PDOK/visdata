@@ -117,7 +117,7 @@ function switchStyle(){
 
 // STEP 2. LABELS TOGGLE ON OFF
 var click2 = 0;
-var toggleableLayerIds = ['labels', 'building_labels', 'water_labels', 'labels_highway'];
+var toggleableLayerIds = ['labels', 'labels_roads_top10', 'building_labels', 'water_labels', 'labels_highway'];
 
 document.getElementById('toggle').addEventListener('click', toggleOnOff);
 function toggleOnOff(){
