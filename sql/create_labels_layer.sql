@@ -601,6 +601,14 @@ FROM
 ALTER TABLE visdata.labels_point_v1 ADD COLUMN z_index integer; 
 
 
+
+
+UPDATE visdata.labels_point_v1 AS s 
+SET z_index = 1000000
+    WHERE 
+      s.name='Amsterdam'
+;
+
 UPDATE visdata.labels_point_v1 AS s 
 SET z_index = 100000
     WHERE 
@@ -616,7 +624,6 @@ SET z_index = 100000
          OR s.name='Groningen' 
          OR s.name='Leeuwarden' 
          OR s.name='Lelystad'
-         OR s.name='Amsterdam'
 ;
 
 UPDATE visdata.labels_point_v1 AS s 
