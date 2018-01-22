@@ -325,8 +325,7 @@ CREATE TABLE visdata.top10_labels_point_from_polygon AS
 		(ST_Dump(ST_PointOnSurface(_geometry))).geom::geometry(POINT, 28992) AS wkb_geometry
 	FROM
 		top10nlv2.plaats
-	WHERE GeometryType(_geometry) = 'POLYGON'
-		AND typegebied = 'buurtschap'
+	WHERE (GeometryType(_geometry) = 'POLYGON' AND typegebied = 'buurtschap')
 		OR typegebied = 'gehucht'
 		OR typegebied = 'woonkern'
 	GROUP BY
@@ -395,8 +394,7 @@ CREATE TABLE visdata.top500_labels_point_from_polygon AS
 		(ST_Dump(ST_PointOnSurface(wkb_geometry))).geom::geometry(POINT, 28992) AS wkb_geometry
 	FROM
 		top500nl.plaats_vlak
-	WHERE GeometryType(wkb_geometry) = 'POLYGON'
-		AND typegebied = 'buurtschap'
+	WHERE (GeometryType(wkb_geometry) = 'POLYGON' AND typegebied = 'buurtschap')
 		OR typegebied = 'gehucht'
 		OR typegebied = 'woonkern'
 	GROUP BY
@@ -471,8 +469,7 @@ CREATE TABLE visdata.top1000_labels_point_from_polygon AS
 		(ST_Dump(ST_PointOnSurface(wkb_geometry))).geom::geometry(POINT, 28992) AS wkb_geometry
 	FROM
 		top1000nl.plaats_vlak
-	WHERE GeometryType(wkb_geometry) = 'POLYGON'
-		AND typegebied = 'buurtschap'
+	WHERE (GeometryType(wkb_geometry) = 'POLYGON' AND typegebied = 'buurtschap')
 		OR typegebied = 'gehucht'
 		OR typegebied = 'woonkern'
 	GROUP BY
@@ -509,7 +506,7 @@ INSERT INTO visdata.labels_point_v1
 		b.name IS NULL;
 
 
-	-- Set Z-index
+-- Set Z-index
 ALTER TABLE visdata.labels_point_v1 ADD COLUMN z_index integer;
 
 UPDATE visdata.labels_point_v1 AS s
