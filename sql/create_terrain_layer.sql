@@ -244,7 +244,32 @@ INSERT INTO visdata.terrain_polygon
     WHERE
         s.typelandgebruik != 'bebouwd gebied';
 
--- TODO: wegdelen?
+INSERT INTO visdata.terrain_polygon
+    SELECT
+        CASE
+        WHEN
+            s.typeweg = 'parkeerplaats' OR
+            s.typeweg = 'parkeerplaats: carpool' OR
+            s.typeweg = 'parkeerplaats: P+R' OR
+            s.typeweg = 'rolbaan, platform' OR
+            s.typeweg = 'startbaan, landingsbaan'
+        THEN 'human-made'
+        END                        AS lod1,
+        'closed'                   AS lod2,
+        s.typeweg                  AS lod3,
+        ''                         AS name,
+        0                          AS z_index,
+        'TOP10NL'                  AS original_source,
+        'NL.TOP10NL.'|| s.lokaalid AS original_id,
+        (ST_Dump(ST_ForceRHR(ST_CollectionExtract(s._geometry, 3)))).geom::geometry(POLYGON, 28992) AS geom
+    FROM
+        top10nlv2.wegdeel AS s
+    WHERE
+        s.typeweg = 'parkeerplaats' OR
+        s.typeweg = 'parkeerplaats: carpool' OR
+        s.typeweg = 'parkeerplaats: P+R' OR
+        s.typeweg = 'rolbaan, platform' OR
+        s.typeweg = 'startbaan, landingsbaan';
 
 
 -- TOP50NL
