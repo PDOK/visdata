@@ -6,7 +6,7 @@ CREATE TABLE visdata.labels_point (
     lod2 TEXT,
     name TEXT,
     z_index INTEGER,
-    rotation INTEGER,
+    rotation DOUBLE PRECISION,
     original_source TEXT,
     original_id TEXT,
     geom GEOMETRY(POINT, 28992)
