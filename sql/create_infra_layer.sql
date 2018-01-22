@@ -68,7 +68,7 @@ INSERT INTO visdata.infrastructure_line
         WHEN
             s.typeweg = 'hoofdweg' OR
             s.typeweg = 'regionale weg'
-        THEN 'artiary'
+        THEN 'arterial'
         WHEN
             s.typeweg = 'lokale weg' OR
             s.typeweg = 'overig' OR
@@ -159,7 +159,7 @@ INSERT INTO visdata.infrastructure_line
         WHEN
             s.typeweg = 'hoofdweg' OR
             s.typeweg = 'regionale weg'
-        THEN 'artiary'
+        THEN 'arterial'
         WHEN
             s.typeweg = 'lokale weg' OR
             s.typeweg = 'overig' OR
@@ -254,7 +254,7 @@ INSERT INTO visdata.infrastructure_line
         WHEN
             s.typeweg = 'hoofdweg' OR
             s.typeweg = 'regionale weg'
-        THEN 'artiary'
+        THEN 'arterial'
         WHEN
             s.typeweg = 'lokale weg' OR
             s.typeweg = 'overig' OR
@@ -348,7 +348,7 @@ INSERT INTO visdata.infrastructure_line
         WHEN
             s.typeweg = 'hoofdweg' OR
             s.typeweg = 'regionale weg'
-        THEN 'artiary'
+        THEN 'arterial'
         WHEN
             s.typeweg = 'lokale weg' OR
             s.typeweg = 'overig' OR
@@ -446,7 +446,7 @@ INSERT INTO visdata.infrastructure_line
         WHEN
             s.typeweg = 'hoofdweg' OR
             s.typeweg = 'regionale weg'
-        THEN 'artiary'
+        THEN 'arterial'
         WHEN
             s.typeweg = 'lokale weg' OR
             s.typeweg = 'overig' OR
@@ -544,7 +544,7 @@ INSERT INTO visdata.infrastructure_line
         WHEN
             s.typeweg = 'hoofdweg' OR
             s.typeweg = 'regionale weg'
-        THEN 'artiary'
+        THEN 'arterial'
         WHEN
             s.typeweg = 'lokale weg' OR
             s.typeweg = 'overig' OR

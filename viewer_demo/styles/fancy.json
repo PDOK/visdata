@@ -77,7 +77,7 @@
                     "type": "categorical",
                     "stops": [
                         ["highway" , 3],
-                        ["artiary", 2],
+                        ["arterial", 2],
                         ["local", 1],
                         ["ferry", 0]
                     ]

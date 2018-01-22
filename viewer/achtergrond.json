@@ -125,7 +125,7 @@
                     "type": "categorical",
                     "stops": [
                         ["local", "#d1c1be"],
-                        ["artiary", "#d1c1be"],
+                        ["arterial", "#d1c1be"],
                         ["highway" , "#E69801"]
                     ]
                 },
@@ -134,7 +134,7 @@
                     "type": "categorical",
                     "stops": [
                         ["local", 2],
-                        ["artiary", 3.4],
+                        ["arterial", 3.4],
                         ["highway" , 4.1]
 
                     ]
@@ -160,7 +160,7 @@
                     "type": "categorical",
                     "stops": [
                         ["local", "#ffffff"],
-                        ["artiary", "#fdf6bb"],
+                        ["arterial", "#fdf6bb"],
                         ["highway" , "#f9e11e"]
                     ]
                 },
@@ -169,7 +169,7 @@
                     "type": "categorical",
                     "stops": [
                         [ "local", 1],
-                        ["artiary", 1.8],
+                        ["arterial", 1.8],
                         ["highway" , 2.1]
                     ]
                 },
