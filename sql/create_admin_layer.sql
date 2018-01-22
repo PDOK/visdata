@@ -30,7 +30,7 @@ INSERT INTO visdata.admin_polygon
         ELSE
             s.typeregistratiefgebied
         END                                              AS lod1,
-        COALESCE(s.naamfries, s.naamofficieel, s.naamnl) AS name,
+        COALESCE(s.naamofficieel, s.naamfries, s.naamnl) AS name,
         0                                                AS z_index,
         'TOP10NL'                                        AS original_source,
         'NL.TOP10NL.' || s.lokaalid                      AS original_id,
@@ -114,7 +114,7 @@ INSERT INTO visdata.admin_polygon
         ELSE
             s.typeregistratiefgebied
         END                                              AS lod1,
-        COALESCE(s.naamfries, s.naamofficieel, s.naamnl) AS name,
+        COALESCE(s.naamofficieel, s.naamfries, s.naamnl) AS name,
         0                                                AS z_index,
         'TOP250NL'                                       AS original_source,
         s.namespace || '.' || s.lokaalid                 AS original_id,
@@ -142,7 +142,7 @@ INSERT INTO visdata.admin_polygon
         ELSE
             s.typeregistratiefgebied
         END                                              AS lod1,
-        COALESCE(s.naamfries, s.naamofficieel, s.naamnl) AS name,
+        COALESCE(s.naamofficieel, s.naamfries, s.naamnl) AS name,
         0                                                AS z_index,
         'TOP500NL'                                       AS original_source,
         s.namespace || '.' || s.lokaalid                 AS original_id,
@@ -170,7 +170,7 @@ INSERT INTO visdata.admin_polygon
         ELSE
             s.typeregistratiefgebied
         END                                              AS lod1,
-        COALESCE(s.naamfries, s.naamofficieel, s.naamnl) AS name,
+        COALESCE(s.naamofficieel, s.naamfries, s.naamnl) AS name,
         0                                                AS z_index,
         'TOP1000NL'                                      AS original_source,
         s.namespace || '.' || s.lokaalid                 AS original_id,
