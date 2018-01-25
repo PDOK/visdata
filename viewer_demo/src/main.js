@@ -225,28 +225,24 @@ myDataSets.forEach(function(zoomlevel) {
 });
 
 // GET CURRENT ZOOM LEVEL
-function getZoom() {
-    map.on('zoom', function() {
-        var curZoom = map.getZoom();
-        current_zoom.innerHTML = curZoom.toFixed(1);
-    });
-    map.on('load', function(){
-       var curZoom = map.getZoom();
-       current_zoom.innerHTML = curZoom.toFixed(1);
-    });
-};
+map.on('zoom', function() {
+    var curZoom = map.getZoom();
+    current_zoom.innerHTML = curZoom.toFixed(1);
+});
 
+map.on('load', function(){
+   var curZoom = map.getZoom();
+   current_zoom.innerHTML = curZoom.toFixed(1);
+});
 
 // STEP 5 GET OBJECT ID
-function getID() {
-    map.on('mousemove', function(e) {
-            var features = map.queryRenderedFeatures(e.point);
-            if (features.length > 0) {
-                var idText = features[0].properties.original_id ;
-                original_id.innerHTML = idText;
-            }
-        });
-}
+map.on('mousemove', function(e) {
+    var features = map.queryRenderedFeatures(e.point);
+    if (features.length > 0) {
+        var idText = features[0].properties.original_id ;
+        original_id.innerHTML = idText;
+    }
+});
 
 // // SCROLLAMA
 // function init( ){
@@ -287,7 +283,7 @@ function getID() {
 
 
 
-init();
+// init();
 
 // SEARCH BAR
 var searchdata = {};
