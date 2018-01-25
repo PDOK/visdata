@@ -178,7 +178,11 @@ myDataSets.forEach(function(zoomlevel) {
 function getZoom() {
     map.on('zoom', function() {
         var curZoom = map.getZoom();
-        current_zoom.innerHTML = curZoom;
+        current_zoom.innerHTML = curZoom.toFixed(1);
+    });
+    map.on('load', function(){
+       var curZoom = map.getZoom();
+       current_zoom.innerHTML = curZoom.toFixed(1);
     });
 };
 
