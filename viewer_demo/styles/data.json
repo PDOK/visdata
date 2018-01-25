@@ -69,6 +69,18 @@
             "paint": {
                 "line-color": "#f9e11e"
             }
+        },
+        {
+            "id": "labels",
+            "type": "circle",
+            "source": "wm_vector",
+            "source-layer": "label",
+            "maxzoom": 22,
+            "minzoom": 0,
+            "paint": {
+                "circle-radius": 2,
+                "circle-color": "#fff"
+            }
         }
     ]
 }

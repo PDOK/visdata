@@ -1,6 +1,8 @@
 {
     "version": 8,
     "name": "purple",
+    "sprite": "mapbox://sprites/mapbox/bright-v8",
+    "glyphs": "font/{fontstack}/{range}.pbf",
     "sources": {
          "wm_vector":{
             "type": "vector",
@@ -120,6 +122,140 @@
                     ]
                 },
                 "line-opacity": 0.3
+            }
+        },
+        {
+            "id": "water_labels",
+            "type": "symbol",
+            "source": "wm_vector",
+            "source-layer": "label",
+            "maxzoom": 20,
+            "minzoom": 10,
+            "filter": ["==", "lod1", "water"],
+            "layout": {
+                "symbol-placement": "point",
+                "symbol-avoid-edges" : false,
+                "text-rotate": {
+                    "type": "identity",
+                    "property": "rotation"
+                },
+                "text-rotation-alignment":"map",
+                "text-field":"{name}",
+                "text-font": ["Rijksoverheid Sans Text TT Italic_2_0"],
+                "text-size":14,
+                "text-max-width": 100,
+                "text-anchor": "center",
+                "text-line-height": 1.5,
+                "text-justify": "center",
+                "text-padding": 2,
+                "text-allow-overlap": true
+            },
+            "paint":{
+                "text-opacity": 1,
+                "text-color": "#fff"
+            }
+        },
+         {
+            "id": "building_labels",
+            "type": "symbol",
+            "source": "wm_vector",
+            "source-layer": "label",
+            "maxzoom": 20,
+            "minzoom": 17,
+            "filter": ["==", "lod1", "building_number"],
+            "layout": {
+                "symbol-placement": "point",
+                "symbol-avoid-edges" : false,
+                "text-rotate": {
+                    "type": "identity",
+                    "property": "rotation"
+                },
+                "text-rotation-alignment":"map",
+                "text-field":"{name}",
+                "text-font": ["Rijksoverheid Sans Text TT Regular_2_0"],
+                "text-size":14,
+                "text-max-width": 5,
+                "text-anchor": "center",
+                "text-line-height": 1.5,
+                "text-justify": "center",
+                "text-padding": 5,
+                "text-allow-overlap": false
+            },
+            "paint":{
+                "text-opacity": 1,
+                "text-color": "#535353"
+            }
+        },
+         {
+            "id": "labels_roads_top10",
+            "type": "symbol",
+            "source": "wm_vector",
+            "source-layer": "infra",
+            "maxzoom": 15,
+            "minzoom": 11,
+            "filter": ["==", "lod2", "arterial"],
+            "layout": {
+                "symbol-placement": "line",
+                "symbol-avoid-edges" : false,
+                "symbol-spacing" : 10,
+                "text-field":"{name}",
+                "text-font": ["Rijksoverheid Sans Text TT Regular_2_0"],
+                "text-size":{
+                    "stops":[
+                        [11, 14],
+                        [15, 14]
+                    ]
+                },
+                "text-rotation-alignment": "map",
+                "text-max-width": 100,
+                "text-anchor": "center",
+                "text-line-height": 1.5,
+                "text-justify": "center",
+                "text-padding": 30,
+                "text-allow-overlap": false
+            },
+            "paint":{
+                "text-opacity": 1,
+                "text-color": "#535353"
+            }
+        },
+        {
+            "id": "labels",
+            "type": "symbol",
+            "source": "wm_vector",
+            "source-layer": "label",
+            "maxzoom": 20,
+            "minzoom": 7,
+            "filter": ["==", "lod1", "residential"],
+            "layout": {
+                "symbol-placement": "point",
+                "symbol-avoid-edges" : false,
+                "text-field":"{name}",
+                "text-font": ["Rijksoverheid Sans Text TT Bold_2_0"],
+                "text-size":{
+                    "property": "z_index",
+                    "type": "categorical",
+                    "stops":[
+                        [1, 10],
+                        [10, 12],
+                        [100, 14],
+                        [1000, 16],
+                        [10000, 16],
+                        [100000, 18],
+                        [1000000, 20]
+                    ],
+                    "default": 10
+                },
+                "text-max-width": 5,
+                "text-anchor": "center",
+                "text-line-height": 1,
+                "text-justify": "center",
+                "text-padding": 20,
+                "text-allow-overlap": false
+            },
+            "paint":{
+                "text-opacity": 1,
+                "text-color": "#535353"
             }
         }
     ]
