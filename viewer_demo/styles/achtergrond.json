@@ -43,7 +43,7 @@
             }
         },
          {
-            "id": "terrain_z0-12",
+            "id": "terrain_z0-Z12",
             "type": "fill",
             "source": "wm_vector",
             "source-layer": "terrain",
@@ -65,7 +65,7 @@
             }
         },
          {
-            "id": "terrain_z12-20",
+            "id": "terrain_z12-Z20",
             "type": "fill",
             "source": "wm_vector",
             "source-layer": "terrain",
@@ -106,7 +106,7 @@
             }
         },
         {
-            "id": "urban_z0-12",
+            "id": "urban_z0-Z12",
             "type": "fill",
             "source": "wm_vector",
             "source-layer": "urban",
@@ -132,7 +132,7 @@
             }
         },
         {
-            "id": "urban_z12-20",
+            "id": "urban_z12-Z20",
             "type": "fill",
             "source": "wm_vector",
             "source-layer": "urban",
