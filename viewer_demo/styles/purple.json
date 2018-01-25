@@ -1,7 +1,6 @@
 {
     "version": 8,
     "name": "purple",
-    "sprite": "mapbox://sprites/mapbox/bright-v8",
     "glyphs": "font/{fontstack}/{range}.pbf",
     "sources": {
          "wm_vector":{
