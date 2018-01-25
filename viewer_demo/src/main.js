@@ -13,8 +13,6 @@ var bounds = [
     [8.85636, 54.76957]  // Northeast coordinates
 ];
 
-
-
 var myStyles = [
     "./styles/achtergrond.json", 
     "./styles/data.json",
@@ -99,6 +97,7 @@ var container = d3.select('#scroll');
 var graphic = container.select('.scroll__graphic');
 var text = container.select('.scroll__text');
 var step = text.selectAll('.step');
+var dropdown = document.getElementById('myDropdown');
 
 
 //STEP 1 - switch bewteen styles
@@ -108,9 +107,50 @@ function switchStyle(){
   if ( click < (myStyles.length-1)){ 
     click += 1;
     map.setStyle(myStyles[click], {diff:true});
+    map.once('styledata', function(data){
+        if (data.dataType === 'style'){
+            while (dropdown.firstChild) {
+                dropdown.removeChild(dropdown.firstChild);
+            }
+            var allLayers = map.getStyle().layers;
+            allLayers = allLayers.filter(function( obj ) {
+                return obj.id !== 'labels' && obj.id !== 'labels_roads_top10' && obj.id !== 'building_labels' && obj.id !== 'water_labels' && obj.id !== 'labels_highway' && obj.id !== 'airports';
+            });
+            allLayers.forEach(function(layer){
+                var drop = document.createElement('option');
+                var text = document.createTextNode(layer.id);
+                drop.appendChild(text);
+                drop.value = layer.type;
+                drop.addEventListener('click', function(){
+                });
+                dropdown.appendChild(drop)
+            })
+        }
+    })
   } else {
     click = 0;
     map.setStyle(myStyles[click], {diff:true});
+     map.once('styledata', function(data){
+        if (data.dataType === 'style'){
+        while (dropdown.firstChild) {
+            dropdown.removeChild(dropdown.firstChild);
+        }
+            var allLayers = map.getStyle().layers;
+            allLayers = allLayers.filter(function( obj ) {
+                return obj.id !== 'labels' && obj.id !== 'labels_roads_top10' && obj.id !== 'building_labels' && obj.id !== 'water_labels' && obj.id !== 'labels_highway' && obj.id !== 'airports';
+            });
+            allLayers.forEach(function(layer){
+                var drop = document.createElement('option');
+                var text = document.createTextNode(layer.id);
+                drop.appendChild(text);
+                drop.value = layer.type;
+                drop.addEventListener('click', function(){
+                });
+                dropdown.appendChild(drop)
+            })
+        }
+    })
+   
   };
 };
 
@@ -124,41 +164,50 @@ function toggleOnOff(){
     var visibility = map.getLayoutProperty('labels', 'visibility');
     if (visibility == 'visible'){
         for (var i = 0; i < toggleableLayerIds.length; i++){
-         map.setLayoutProperty(toggleableLayerIds[i], 'visibility', 'none');
+         map.setLayoutProperty(toggleableLayerIds[i], 'visibility', 'visible');
         }
     } else {
         for (var i = 0; i < toggleableLayerIds.length; i++){
-         map.setLayoutProperty(toggleableLayerIds[i], 'visibility', 'visible');
+         map.setLayoutProperty(toggleableLayerIds[i], 'visibility', 'none');
         }
     }
 };
 
 
 // STEP 3. COLORS
-// GET GEOM TYPE 
-var geomType = "fill-color";
-function setGeom(){
-    current_style = map.getStyle();
-    if (current_style.name == "data"){
-        geomType = "line-color";}
-    else { 
-        geomType = "fill-color";}
+//Get Layers from map
+function getLayers(){
+    map.on('load', function(){
+       var allLayers = map.getStyle().layers;
+        allLayers = allLayers.filter(function( obj ) {
+            return obj.id !== 'labels' && obj.id !== 'labels_roads_top10' && obj.id !== 'building_labels' && obj.id !== 'water_labels' && obj.id !== 'labels_highway' && obj.id !== 'airports';
+        });
+        // console.log(allLayers);
+        allLayers.forEach(function(layer){
+            var drop = document.createElement('option');
+            var text = document.createTextNode(layer.id);
+            drop.appendChild(text);
+            drop.value = layer.type;
+            drop.addEventListener('click', function(){
+            });
+            dropdown.appendChild(drop)
+        })
+    });
 };
+getLayers();
 
+// Set swatches and paint actions
 colors.forEach(function(color) {
     var swatch = document.createElement('button');
     swatch.style.backgroundColor = color;
     swatch.addEventListener('click', function() {
-        var layer = document.querySelector('input[name=layer]:checked');
-        if(layer.value == "infra"){
-            map.setPaintProperty(layer.value, "line-color", color)}
-        else{ 
-            map.setPaintProperty(layer.value, geomType, color)};
+        var e = document.getElementById("myDropdown");
+        var layer = e.options[e.selectedIndex];
+        // console.log(layer)
+        map.setPaintProperty(layer.text, layer.value+"-color", color)
     });
     swatches.appendChild(swatch);
 });
-
-
 
 // STEP 4 MAKE DATASET/ZOOM BUTTONS
 myDataSets.forEach(function(zoomlevel) {
@@ -224,7 +273,6 @@ function init( ){
         callback.element.classList.remove('is-disabled');
 
         if (callback.index == 2) {
-            setGeom();
         } 
         else if (callback.index == 4){getID();}
         else if (callback.index == 3){getZoom();}
@@ -328,7 +376,7 @@ function recenterMap(plaats){
         var locatieString = plaats.response.docs[0].centroide_ll;
         var latlong = [];
         latlong.push(Number(locatieString.substring(6, 16)), Number(locatieString.substring(17, locatieString.length-1)));
-        console.log(latlong);
+        // console.log(latlong);
         map.jumpTo({
             center: latlong,
             zoom: 15,
@@ -336,5 +384,4 @@ function recenterMap(plaats){
             minZoom: 12
         });
     };
-
 
