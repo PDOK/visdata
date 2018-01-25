@@ -386,27 +386,6 @@
                 "text-color": "#535353"
             }
         },
-
-        {
-           "id": "airports",
-           "type": "symbol",
-           "source": "wm_vector",
-           "source-layer": "label",
-           "maxzoom": 20,
-           "minzoom": 8,
-           "filter": ["==", "lod2", "vliegveld, luchthaven"],
-           "layout":{
-                "symbol-placement": "point",
-                "symbol-avoid-edges" : false,
-                "symbol-spacing": 200,
-                "icon-size": 0.8,
-                "icon-image": "airport-15",
-                "icon-allow-overlap": false
-           },
-           "paint":{
-                "icon-color": "#007bc7"
-           }
-       }, 
          {
             "id": "labels_roads_top10",
             "type": "symbol",

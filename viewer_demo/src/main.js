@@ -6,8 +6,6 @@ var Bloodhound = require("bloodhound-js");
 var $ = require("jquery");
 
 
-mapboxgl.accessToken =  "pk.eyJ1IjoibmllbmViIiwiYSI6IlR6NWEzdmMifQ.dRVGdAluvTb9EIXVBREbzw";
-
 var bounds = [
     [2.59326, 50.72915], // Southwest coordinates
     [8.85636, 54.76957]  // Northeast coordinates
