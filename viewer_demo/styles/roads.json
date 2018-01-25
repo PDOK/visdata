@@ -135,6 +135,7 @@
             "minzoom": 7,
             "filter": ["==", "lod1", "residential"],
             "layout": {
+                "visibility": "visible",
                 "symbol-placement": "point",
                 "symbol-avoid-edges" : false,
                 "text-field":"{name}",

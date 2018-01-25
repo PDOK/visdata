@@ -449,6 +449,7 @@
             "minzoom": 7,
             "filter": ["==", "lod1", "residential"],
             "layout": {
+                "visibility": "visible",
                 "symbol-placement": "point",
                 "symbol-avoid-edges" : false,
                 "text-field":"{name}",
@@ -462,11 +463,37 @@
                         [100, 14],
                         [1000, 16],
                         [10000, 16],
-                        [100000, 18],
-                        [1000000, 20]
+                        [100000, 18]
                     ],
                     "default": 10
                 },
+                "text-max-width": 5,
+                "text-anchor": "center",
+                "text-line-height": 1,
+                "text-justify": "center",
+                "text-padding": 20,
+                "text-allow-overlap": false
+            },
+            "paint":{
+                "text-opacity": 1,
+                "text-color": "#535353"
+            }
+        },
+         {
+            "id": "high_prior_labels",
+            "type": "symbol",
+            "source": "wm_vector",
+            "source-layer": "label",
+            "maxzoom": 20,
+            "minzoom": 5,
+            "filter": ["==", "z_index", 1000000],
+            "layout": {
+                "visibility": "visible",
+                "symbol-placement": "point",
+                "symbol-avoid-edges" : false,
+                "text-field":"{name}",
+                "text-font": ["Rijksoverheid Sans Text TT Bold_2_0"],
+                "text-size": 20,
                 "text-max-width": 5,
                 "text-anchor": "center",
                 "text-line-height": 1,
