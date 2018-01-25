@@ -157,18 +157,19 @@ function switchStyle(){
 
 // STEP 2. LABELS TOGGLE ON OFF
 var click2 = 0;
-var toggleableLayerIds = ['labels', 'labels_roads_top10', 'building_labels', 'water_labels', 'labels_highway'];
+var toggleableLayerIds = ['labels', 'labels_roads_top10', 'building_labels', 'water_labels', 'labels_highway', 'high_prior_labels'];
 
 document.getElementById('toggle').addEventListener('click', toggleOnOff);
 function toggleOnOff(){
     var visibility = map.getLayoutProperty('labels', 'visibility');
-    if (visibility == 'visible'){
+    console.log(visibility)
+    if (visibility === 'visible'){
         for (var i = 0; i < toggleableLayerIds.length; i++){
-         map.setLayoutProperty(toggleableLayerIds[i], 'visibility', 'visible');
+         map.setLayoutProperty(toggleableLayerIds[i], 'visibility', 'none');
         }
     } else {
         for (var i = 0; i < toggleableLayerIds.length; i++){
-         map.setLayoutProperty(toggleableLayerIds[i], 'visibility', 'none');
+         map.setLayoutProperty(toggleableLayerIds[i], 'visibility', 'visible');
         }
     }
 };
@@ -180,7 +181,7 @@ function getLayers(){
     map.on('load', function(){
        var allLayers = map.getStyle().layers;
         allLayers = allLayers.filter(function( obj ) {
-            return obj.id !== 'labels' && obj.id !== 'labels_roads_top10' && obj.id !== 'building_labels' && obj.id !== 'water_labels' && obj.id !== 'labels_highway' && obj.id !== 'airports';
+            return obj.id !== 'labels' && obj.id !== 'labels_roads_top10' && obj.id !== 'building_labels' && obj.id !== 'water_labels' && obj.id !== 'labels_highway' && obj.id !== 'airports' && obj.id !== 'high_prior_labels';
         });
         // console.log(allLayers);
         allLayers.forEach(function(layer){
@@ -247,42 +248,42 @@ function getID() {
         });
 }
 
-// SCROLLAMA
-function init( ){
-    // Scrolllama
-    // instantiate the scrollama
-    var scroller = scrollama();
+// // SCROLLAMA
+// function init( ){
+//     // Scrolllama
+//     // instantiate the scrollama
+//     var scroller = scrollama();
 
-    // setup the instance, pass callback functions
-    scroller
-      .setup({
-        container: "#scroll",
-        graphic: ".scroll__graphic",
-        text: ".scroll__text",
-        step: ".step", // required
-        offset: 0.5, // optional, default = 0.5
-        debug: false // optional, default = false
-      })
-      .onStepEnter(handleStepEnter)
-      .onStepExit(handleStepExit);
+//     // setup the instance, pass callback functions
+//     scroller
+//       .setup({
+//         container: "#scroll",
+//         graphic: ".scroll__graphic",
+//         text: ".scroll__text",
+//         step: ".step", // required
+//         offset: 0.5, // optional, default = 0.5
+//         debug: false // optional, default = false
+//       })
+//       .onStepEnter(handleStepEnter)
+//       .onStepExit(handleStepExit);
 
-    window.addEventListener('resize', scroller.resize)
+//     window.addEventListener('resize', scroller.resize)
 
-    function handleStepEnter(callback){
-        callback.element.classList.add('is-active');
-        callback.element.classList.remove('is-disabled');
+//     function handleStepEnter(callback){
+//         callback.element.classList.add('is-active');
+//         callback.element.classList.remove('is-disabled');
 
-        if (callback.index == 2) {
-        } 
-        else if (callback.index == 4){getID();}
-        else if (callback.index == 3){getZoom();}
+//         if (callback.index == 2) {
+//         } 
+//         else if (callback.index == 4){getID();}
+//         else if (callback.index == 3){getZoom();}
 
-    }
-    function handleStepExit(callback){
-        callback.element.classList.remove('is-active');
-        callback.element.classList.add('is-disabled');
-    };
-};
+//     }
+//     function handleStepExit(callback){
+//         callback.element.classList.remove('is-active');
+//         callback.element.classList.add('is-disabled');
+//     };
+// };
 
 
 
