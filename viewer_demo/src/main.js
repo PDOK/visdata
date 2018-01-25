@@ -112,7 +112,7 @@ function switchStyle(){
             }
             var allLayers = map.getStyle().layers;
             allLayers = allLayers.filter(function( obj ) {
-                return obj.id !== 'labels' && obj.id !== 'labels_roads_top10' && obj.id !== 'building_labels' && obj.id !== 'water_labels' && obj.id !== 'labels_highway' && obj.id !== 'airports';
+                return obj.id !== 'low_prior_labels' && obj.id !== 'labels_roads_top10' && obj.id !== 'building_labels' && obj.id !== 'water_labels' && obj.id !== 'labels_highway' && obj.id !== 'airports' && obj.id !== 'medium_prior_labels' && obj.id !== 'high_prior_labels';
             });
             allLayers.forEach(function(layer){
                 var drop = document.createElement('option');
@@ -135,7 +135,7 @@ function switchStyle(){
         }
             var allLayers = map.getStyle().layers;
             allLayers = allLayers.filter(function( obj ) {
-                return obj.id !== 'labels' && obj.id !== 'labels_roads_top10' && obj.id !== 'building_labels' && obj.id !== 'water_labels' && obj.id !== 'labels_highway' && obj.id !== 'airports';
+                return obj.id !== 'low_prior_labels' && obj.id !== 'labels_roads_top10' && obj.id !== 'building_labels' && obj.id !== 'water_labels' && obj.id !== 'labels_highway' && obj.id !== 'airports' && obj.id !== 'medium_prior_labels' && obj.id !== 'high_prior_labels';
             });
             allLayers.forEach(function(layer){
                 var drop = document.createElement('option');
@@ -155,11 +155,11 @@ function switchStyle(){
 
 // STEP 2. LABELS TOGGLE ON OFF
 var click2 = 0;
-var toggleableLayerIds = ['labels', 'labels_roads_top10', 'building_labels', 'water_labels', 'labels_highway', 'high_prior_labels'];
+var toggleableLayerIds = ['low_prior_labels', 'medium_prior_labels','labels_roads_top10', 'building_labels', 'water_labels', 'labels_highway', 'high_prior_labels'];
 
 document.getElementById('toggle').addEventListener('click', toggleOnOff);
 function toggleOnOff(){
-    var visibility = map.getLayoutProperty('labels', 'visibility');
+    var visibility = map.getLayoutProperty('low_prior_labels', 'visibility');
     console.log(visibility)
     if (visibility === 'visible'){
         for (var i = 0; i < toggleableLayerIds.length; i++){
@@ -179,7 +179,7 @@ function getLayers(){
     map.on('load', function(){
        var allLayers = map.getStyle().layers;
         allLayers = allLayers.filter(function( obj ) {
-            return obj.id !== 'labels' && obj.id !== 'labels_roads_top10' && obj.id !== 'building_labels' && obj.id !== 'water_labels' && obj.id !== 'labels_highway' && obj.id !== 'airports' && obj.id !== 'high_prior_labels';
+            return obj.id !== 'low_prior_labels' && obj.id !== 'labels_roads_top10' && obj.id !== 'building_labels' && obj.id !== 'water_labels' && obj.id !== 'labels_highway' && obj.id !== 'airports' && obj.id !== 'medium_prior_labels' && obj.id !== 'high_prior_labels';
         });
         // console.log(allLayers);
         allLayers.forEach(function(layer){
