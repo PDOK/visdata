@@ -1,9 +1,11 @@
 var mapboxgl = require('mapbox-gl');
-var scrollama = require('scrollama');
+// var scrollama = require('scrollama');
 var d3 = require('d3');
 var typeahead = require("typeahead.js");
 var Bloodhound = require("bloodhound-js");
-var $ = require("jquery");
+var $ = jQuery = require('jquery');
+// var ScrollMagic = require('scrollmagic');
+var bootstrap = require('bootstrap');
 
 
 var bounds = [

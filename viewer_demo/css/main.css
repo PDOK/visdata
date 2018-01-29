@@ -4,28 +4,35 @@ html, body {
   padding: 0;
   -webkit-font-smoothing: antialiased; 
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  -webkit-overflow-scrolling: auto;
+  position: absolute;
+}
 }
 
 h1 {
-  color: #ffffff;
+  color: #f9f9f9;
   font-size: 3em;  
 }
 
-h2, h3, h4 {
-    color: #ffffff;
-
-}
-
-p {
+h2, h3, h4, p {
   color: #f9f9f9;
+
 }
 
-/* Map canvas related styles */
-
+/* MAP CANVAS & related styles */
 #map { 
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
   background-color: #f9f9f9;
   cursor: move;
   -webkit-tap-highlight-color: transparent;
+  position: absolute;
+
 }
 
 .mapboxgl-ctrl-attrib {
@@ -37,64 +44,61 @@ p {
   text-decoration: underline;
 }
 
-.scroll {
-  position: relative;
+/*SCROLL AREA BOTTOM*/
+/*mobile devices smaller then 768 || equal to bootstrap xs*/
+@media screen and (max-width: 768px) {
+  .container{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    height: 50%;
+    bottom:0px;
+    position: fixed;
+  }
 }
 
-.scroll__graphic {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  background-color: #f9f9f9;
-  cursor: move;
+/*SCROLL AREA RIGHT*/
+/*All devices with screen larget then768 || bootstrap ms, md, lr*/
+@media screen and (min-width: 768px) {
+  .container{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    top: 50%;
+    bottom: 0px;
+    right:0px;
+    height: 100%;
+    margin-right: 10px;
+  }
 }
 
-.scroll__graphic.is-fixed {
-  position: fixed;
+.row{
+  margin-top:10px;
 }
 
-.scroll__graphic.is-bottom {
-  bottom: 0;
-  top: auto;
-}
-
-.scroll__text {
-  z-index: 10000;
-  position: absolute;
-  right: 10px;
-  top: 0;
-  height: auto;
-  width: 30%;
-  padding: 1rem;
-  cursor: all-scroll;
-}
-
+/*STEP CONTAINERS*/
 .step {
   background-color: #E17000;
   opacity: 1;
   padding: 1rem;
-  margin-bottom: 30px;
+  padding: 2rem;
+  font-size: 18px;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  height: auto;
+  cursor: all-scroll;
 }
-
-#first-step {
+/*
+#step-0 {
   margin-top: 25%;
 }
 
-#last-step {
+#step-5 {
   margin-bottom:500px;
-}
+}*/
 
-.centered {
-  z-index:100000;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  /* bring your own prefixes */
-  transform: translate(-50%, -50%);
-}
-
+/*STEP CONTAINER CONTENT*/
 fieldset {
   border: none;
   padding: 0;
@@ -131,14 +135,16 @@ fieldset:last-child {
   background-color: #f9f9f9;
 }
 
-/*SEARCH BAR*/
-.scroll__graphic #search_bar{
+
+/*SEARCH BAR position*/
+#search_bar{
   z-index: 10000;
-  position: absolute;
   top: 10px;
   left: 50px;
+  position: absolute;
 }
 
+/*SEARCH BAR style*/
 span.twitter-typeahead .tt-menu,
 span.twitter-typeahead .tt-dropdown-menu {
   position: absolute;
