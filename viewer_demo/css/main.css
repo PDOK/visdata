@@ -44,9 +44,44 @@ h2, h3, h4, p {
   text-decoration: underline;
 }
 
-/*SCROLL AREA BOTTOM*/
-/*mobile devices smaller then 768 || equal to bootstrap xs*/
-@media screen and (max-width: 768px) {
+
+/*// Extra small devices (portrait phones, less than 576px)*/
+@media screen and (max-width: 767.98px){ 
+  .container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    height: 50%;
+    bottom:0px;
+  }
+  #fake-row{
+    height: 50%;
+  }
+ }
+
+/*// Extra large devices (large desktops, 1200px and up)
+*/
+@media screen and (min-width: 768px) { 
+  .container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    top: 50%;
+    bottom: 0px;
+    right:0px;
+    height: 100%;
+    margin-right: 0px;
+  } 
+    #fake-row{
+    height: 0;
+  }
+}
+
+
+
+
+/*mobile devices smaller then 768 || equal to bootstrap xs ms*/
+/*@media screen and (max-width: 768px) {
   .container{
     overflow-y: scroll;
     overflow-x: hidden;
@@ -55,11 +90,11 @@ h2, h3, h4, p {
     bottom:0px;
     position: fixed;
   }
-}
+}*/
 
 /*SCROLL AREA RIGHT*/
-/*All devices with screen larget then768 || bootstrap ms, md, lr*/
-@media screen and (min-width: 768px) {
+/*All devices with screen larget then768 || bootstrap  md, lr*/
+/*@media screen and (min-width: 768px) {
   .container{
     overflow-y: scroll;
     overflow-x: hidden;
@@ -70,7 +105,7 @@ h2, h3, h4, p {
     height: 100%;
     margin-right: 10px;
   }
-}
+}*/
 
 .row{
   margin-top:10px;
