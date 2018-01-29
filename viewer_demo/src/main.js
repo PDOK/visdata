@@ -204,7 +204,7 @@ colors.forEach(function(color) {
     swatch.addEventListener('click', function() {
         var e = document.getElementById("myDropdown");
         var layer = e.options[e.selectedIndex];
-        // console.log(layer)
+        console.log(layer)
         map.setPaintProperty(layer.text, layer.value+"-color", color)
     });
     swatches.appendChild(swatch);

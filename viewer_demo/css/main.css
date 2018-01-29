@@ -10,17 +10,7 @@ html, body {
   -webkit-overflow-scrolling: auto;
   position: absolute;
 }
-}
 
-h1 {
-  color: #f9f9f9;
-  font-size: 3em;  
-}
-
-h2, h3, h4, p {
-  color: #f9f9f9;
-
-}
 
 /* MAP CANVAS & related styles */
 #map { 
@@ -32,7 +22,6 @@ h2, h3, h4, p {
   cursor: move;
   -webkit-tap-highlight-color: transparent;
   position: absolute;
-
 }
 
 .mapboxgl-ctrl-attrib {
@@ -48,6 +37,7 @@ h2, h3, h4, p {
 /*// Extra small devices (portrait phones, less than 576px)*/
 @media screen and (max-width: 767.98px){ 
   .container {
+    z-index: 10000;
     overflow-y: scroll;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
@@ -63,6 +53,7 @@ h2, h3, h4, p {
 */
 @media screen and (min-width: 768px) { 
   .container {
+    z-index: 10000;
     overflow-y: scroll;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
@@ -71,41 +62,12 @@ h2, h3, h4, p {
     right:0px;
     height: 100%;
     margin-right: 0px;
+    width: 100%;
   } 
     #fake-row{
     height: 0;
   }
 }
-
-
-
-
-/*mobile devices smaller then 768 || equal to bootstrap xs ms*/
-/*@media screen and (max-width: 768px) {
-  .container{
-    overflow-y: scroll;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    height: 50%;
-    bottom:0px;
-    position: fixed;
-  }
-}*/
-
-/*SCROLL AREA RIGHT*/
-/*All devices with screen larget then768 || bootstrap  md, lr*/
-/*@media screen and (min-width: 768px) {
-  .container{
-    overflow-y: scroll;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    top: 50%;
-    bottom: 0px;
-    right:0px;
-    height: 100%;
-    margin-right: 10px;
-  }
-}*/
 
 .row{
   margin-top:10px;
@@ -124,41 +86,41 @@ h2, h3, h4, p {
   height: auto;
   cursor: all-scroll;
 }
-/*
+
 #step-0 {
-  margin-top: 25%;
+  margin-top: 10px;
 }
 
 #step-5 {
-  margin-bottom:500px;
-}*/
-
-/*STEP CONTAINER CONTENT*/
-fieldset {
-  border: none;
-  padding: 0;
-  margin: 0 0 10px;
-  height: 60px;
+  margin-bottom:30px;
 }
 
-fieldset:last-child {
-  margin: 0;
+/*STEP CONTAINER CONTENT*/
+h1 {
+  color: #f9f9f9;
+  font-size: 3em;  
+}
+
+h2, h3, h4, p, ul {
+  color: #f9f9f9;
+}
+
+button{
+  cursor: pointer;
+  color: #939393;
+}
+
+label{
+  color: #f9f9f9;
+  font-size: 1em;
+  margin-top: 5px;
 }
 
 #swatches button {
   display: inline-block;
-  width: 36px;
-  height: 15px;
+  width: 34px;
+  height: 18px;
   border: none;
-  cursor: pointer;
-}
-
-#layer{
-  cusor:pointer;
-}
-
-#current_zoom{
-  margin-top: 100px;
 }
 
 #opties button {
@@ -166,10 +128,10 @@ fieldset:last-child {
   width: 100px;
   margin: 2px;
   height: 30px;
-  cursor: pointer;
   background-color: #f9f9f9;
+  border: none;
+  font-size: 0.8em;
 }
-
 
 /*SEARCH BAR position*/
 #search_bar{
