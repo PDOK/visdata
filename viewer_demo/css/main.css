@@ -75,8 +75,7 @@ html, body {
 
 /*STEP CONTAINERS*/
 .step {
-  background-color: #E17000;
-  opacity: 0.7;
+  background-color: rgba(225, 112, 0, 0.7);
   padding: 1rem;
   padding: 2rem;
   font-size: 18px;
