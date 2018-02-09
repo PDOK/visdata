@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Beta Vector Tiles - PDOK</title>
+		<title>Vector Tiles BRT en BGT - PDOK</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="shortcut icon" href="img/pdok_favicon.ico">
 		<link rel="stylesheet" href="css/bootstrap.css">
@@ -23,7 +23,7 @@
 				<div class="col-xs-12 col-sm-5 col-sm-offset-7 col-md-5 col-md-offset-7 col-lg-5 col-lg-offset-7 "> 
 					<div class="step" id="step-0"> 
 						<img src="img/pdok_log.png">
-						<h1>Beta Vector Tiles Demo </h1>
+						<h1>Vector Tiles BRT en BGT</h1>
 						<p><b>Navigatie</b>: kantel de kaart door de <i>rechtermuisknop</i> in te houden.</p>
 						<hr />
 						<p>Scroll hier naar beneden voor meer.</p>
@@ -34,8 +34,8 @@
 				<div class="col-xs-12 col-sm-5 col-sm-offset-7 col-md-5 col-md-offset-7 col-lg-5 col-lg-offset-7 "> 
 						<div class="step" id="step-1">
 							<h2>Vector tiles</h2>
-							<p>De kaart bestaat uit zogenaamde <b>vector tiles</b> in plaats van raster tegels. De kaart verschijnt sneller op het scherm en je kan makkelijk de stijl aanpassen. De kaart wordt namelijk in de browser getekend.</p>
-							<p>De data wordt 1 keer opgehaald, maar we kunnen oneindig veel stijlen toepassen.</p>
+							<p>De kaart bestaat uit zogenaamde <b>vector tegels</b> in plaats van raster tegels. De kaart verschijnt sneller op het scherm en je kunt makkelijk de stijl aanpassen. De kaart wordt namelijk in jouw browser getekend.</p>
+							<p>De data wordt 1 keer opgehaald, maar je kunt oneindig veel stijlen toepassen.</p>
 							<p><button id="switch" >Klik hier</button> voor een andere stijl.</p>
 						</div>
 					</div>
@@ -79,11 +79,49 @@
 				<div class="col-xs-12 col-sm-5 col-sm-offset-7 col-md-5 col-md-offset-7 col-lg-5 col-lg-offset-7 "> 
 					<div class="step" id="step-4">
 						<h2>Brondata</h2>
-						<p>De kaart bestaat uit data uit de <abbr title="Basisregistratie Grootschalige Topografie">BGT</abbr> en <abbr title="Basisregistratie Topografie">BRT</abbr>. Op elk zoomniveau staat vast welke data je ziet. Zo begint de <abbr title="Basisregistratie Grootschalige Topografie">BGT</abbr> pas bij zoomniveau 16 en zie je de Top1000NL op zoomniveau 0 tot 6.</p>
+						<p>De kaart bestaat uit data uit de <abbr title="Basisregistratie Grootschalige Topografie">BGT</abbr> en <abbr title="Basisregistratie Topografie">BRT</abbr>. Op elk zoomniveau staat vast welke data je ziet. Zo begint de <abbr title="Basisregistratie Grootschalige Topografie">BGT</abbr> pas bij zoomniveau 16 en zie je de TOP1000NL op zoomniveau 0 tot 6.</p>
 						<h4>Bekijk het hier:</h4>
 						<div id="opties"></div>
 						<label>Je ziet nu zoomniveau: </label>
 						<label id="current_zoom"> 00 </label>
+						<p></p>
+						<p>Overzicht datasets en zoomniveaus:</p>
+						<div>
+							<table>
+								<tr>
+									<th>Dataset</th>
+									<th>Zoomniveau</th>
+								</tr>
+								<tr>
+									<td>TOP1000NL</td>
+									<td>0 - 5</td>
+								</tr>
+								<tr>
+									<td>TOP500NL</td>
+									<td>6 - 7</td>
+								</tr>
+								<tr>
+									<td>TOP2500NL</td>
+									<td>8 - 9</td>
+								</tr>
+								<tr>
+									<td>TOP100NL</td>
+									<td>10 - 11</td>
+								</tr>
+								<tr>
+									<td>TOP50NL</td>
+									<td>12 - 13</td>
+								</tr>
+								<tr>
+									<td>TOP10NL</td>
+									<td>14 - 15</td>
+								</tr>
+								<tr>
+									<td>BGT</td>
+									<td>16 - 19</td>
+								</tr>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -94,7 +132,15 @@
 						<p>Beweeg je muis over de kaart om het originele ID te zien:</p>
 						<label id="original_id"> GMLid	</label>
 						<hr />
-						<p>Vector-tegels bevatten naast de geometrie ook de eigenschappen (attributen) van de kaartobjecten. Hiermee kan je deze stijlen, filteren en er interactie aan toevoegen. Om de vector-tegels snel te houden is een selectie van de objecteigenschappen gemaakt, bedoeld om makkelijk te stijlen. Om de relatie met de originele data te houden is ook het originele ID van de objecten meegegeven.</p>
+						<p>Vector tiles bevatten naast de geometrie ook de eigenschappen (attributen) van de kaartobjecten. Hiermee kun je deze stijlen, filteren en er interactie aan toevoegen. Om de vector tiles snel te houden, is een selectie van de objecteigenschappen gemaakt, bedoeld om makkelijk te stijlen. Om de relatie met de originele data te houden, is ook het originele ID van de objecten meegegeven.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-5 col-sm-offset-7 col-md-5 col-md-offset-7 col-lg-5 col-lg-offset-7 "> 
+					<div class="step" id="step-6">
+						<h2>Zelf aan de slag</h2>
+						<p>In onze Github repository vind je meer informatie over hoe je zelf met de vector tiles aan de slag kunt gaan: <a href="https://github.com/PDOK/vectortiles-bgt-brt">https://github.com/PDOK/vectortiles-bgt-brt</a>.</p>
 					</div>
 				</div>
 			</div>

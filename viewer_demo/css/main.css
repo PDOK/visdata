@@ -90,7 +90,7 @@ html, body {
   margin-top: 10px;
 }
 
-#step-5 {
+#step-6 {
   margin-bottom:30px;
 }
 
@@ -113,6 +113,11 @@ label{
   color: #f9f9f9;
   font-size: 1em;
   margin-top: 5px;
+}
+
+th, td {
+  color: #f9f9f9;
+  padding-right: 0.5em;
 }
 
 #swatches button {
@@ -241,4 +246,3 @@ span.twitter-typeahead {
 .tt-highlight{
   color:#317581;
 }
-
