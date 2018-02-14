@@ -330,7 +330,7 @@ function enableBloodhound() {
         datumTokenizer: function(d){return Bloodhound.tokenizers.whitespace(d.value);},
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         remote: {
-            url: 'http://geodata.nationaalgeoregister.nl/locatieserver/suggest?rows=10&fq=type:woonplaats&q=%QUERY',
+            url: 'https://geodata.nationaalgeoregister.nl/locatieserver/suggest?rows=10&fq=type:woonplaats&q=%QUERY',
             wildcard: '%QUERY',
             transform: function(response){
                 return $.map(response.response.docs, function(item){
@@ -356,7 +356,7 @@ initSearch();
 
 function getCoordinates(suggestion){
     var plaats = suggestion.id;
-    var url = 'http://geodata.nationaalgeoregister.nl/locatieserver/lookup?wt=json&id='+plaats;
+    var url = 'https://geodata.nationaalgeoregister.nl/locatieserver/lookup?wt=json&id='+plaats;
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {

@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "attribution": "Kaartgegevens: <a href=\"https://www.kadaster.nl\">Kadaster</a>. Cartografie: <a href=\"https://webmapper.net\" target=\"_blank\">Webmapper</a>",
     "scheme": "xyz",
-    "tiles": ["http://geodata.nationaalgeoregister.nl/beta/topotiles/{z}/{x}/{y}.pbf"],
+    "tiles": ["https://geodata.nationaalgeoregister.nl/beta/topotiles/{z}/{x}/{y}.pbf"],
     "minzoom": 0,
     "maxzoom": 20
 }
