@@ -1,11 +1,11 @@
 {
     "version": 8,
     "name": "data",
-    "glyphs": "font/{fontstack}/{range}.pbf",
+    "glyphs": "https://geodata.nationaalgeoregister.nl/beta/topotiles-viewer/font/{fontstack}/{range}.pbf",
     "sources": {
         "wm_vector":{
             "type": "vector",
-            "url": "./styles/tilejson.json"
+            "url": "https://geodata.nationaalgeoregister.nl/beta/topotiles-viewer/styles/tilejson.json"
        }
     },
     "layers": [

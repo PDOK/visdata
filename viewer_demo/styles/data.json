@@ -4,7 +4,7 @@
     "sources": {
         "wm_vector":{
             "type": "vector",
-            "url": "./styles/tilejson.json"
+            "url": "https://geodata.nationaalgeoregister.nl/beta/topotiles-viewer/styles/tilejson.json"
        }
     },
     "layers": [
