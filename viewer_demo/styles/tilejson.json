@@ -1,12 +1,98 @@
 {
-    "tilejson": "1.0.0",
-    "name": "visdata",
+    "tilejson": "2.2.0",
+    "name": "PDOK Vector Tiles BRT+BGT",
     "description": "Referentiekaart gebaseerd op de BRT en BGT",
     "version": "1.0.0",
     "attribution": "Kaartgegevens: <a href=\"https://www.kadaster.nl\">Kadaster</a>. Cartografie: <a href=\"https://webmapper.net\" target=\"_blank\">Webmapper</a>",
     "scheme": "xyz",
-    "tiles": ["http://geodata.nationaalgeoregister.nl/beta/topotiles/{z}/{x}/{y}.pbf"],
+    "tiles": ["https://geodata.nationaalgeoregister.nl/beta/topotiles/{z}/{x}/{y}.pbf"],
     "minzoom": 0,
-    "maxzoom": 20
+    "maxzoom": 17,
+    "vector_layers": [
+		{
+			"id": "admin",
+			"description": "admin",
+			"minzoom": 0,
+			"maxzoom": 17,
+			"fields": {
+				"lod1": "String",
+				"name": "String",
+				"original_id": "String",
+				"z_index": "Number"
+			}
+		},
+		{ 
+			"id": "water",
+			"description": "water POLYGON",
+			"minzoom": 0,
+			"maxzoom": 17,
+			"fields": {
+				"lod1": "String",
+				"original_id": "String",
+				"z_index": "Number"
+			}
+		},
+		{ 
+			"id": "water-line",
+			"description": "water LINESTRING",
+			"minzoom": 0,
+			"maxzoom": 17,
+			"fields": {
+				"lod1": "String",
+				"original_id": "String",
+				"z_index": "Number"
+			}
+		},
+		{
+			"id": "terrain",
+			"description": "terrain",
+			"minzoom": 0,
+			"maxzoom": 17,
+			"fields": {
+				"lod1": "String",
+				"lod2": "String",
+				"original_id": "String",
+				"z_index": "Number"
+			}
+		},
+		{ 
+			"id": "urban",
+			"description": "urban",
+			"minzoom": 0,
+			"maxzoom": 17,
+			"fields": {
+				"lod1": "String",
+				"lod2": "String",
+				"original_id": "String",
+				"z_index": "Number"
+			}
+		},
+		{
+			"id": "infra",
+			"description": "infra",
+			"minzoom": 0,
+			"maxzoom": 17,
+			"fields": {
+				"lod1": "String",
+				"lod2": "String",
+				"name": "String",
+				"original_id": "String",
+				"z_index": "Number"
+			}
+		},
+		{
+			"id": "label",
+			"description": "label",
+			"minzoom": 0,
+			"maxzoom": 17,
+			"fields": {
+				"lod1": "String",
+				"lod2": "String",
+				"name": "String",
+				"original_id": "String",
+				"rotation": "Number",
+				"z_index": "Number"
+			}
+		}
+	]
 }
-
